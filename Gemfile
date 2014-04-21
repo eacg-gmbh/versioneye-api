@@ -14,6 +14,16 @@ gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.gi
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 
+group :assets do
+  gem 'therubyracer'          , '~> 0.12.0'
+  gem 'sass'                  , :require => 'sass'
+  gem 'sass-rails'            , '~> 3.2.6'
+  gem 'coffee-rails'          , '~> 3.2.0'
+  gem 'uglifier'              , '~> 2.5.0'
+  gem 'yui-compressor'        , '~> 0.12.0'
+  gem 'turbo-sprockets-rails3', '~> 0.3.0'
+end
+
 group :development do
   gem 'capistrano'        , '3.1.0'
   gem 'capistrano-rails'  , '1.1.1'
