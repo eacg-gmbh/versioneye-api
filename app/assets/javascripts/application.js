@@ -12,5 +12,5 @@
 //= require swagger/lib/underscore-min.js
 //= require swagger/lib/backbone-min.js
 //= require swagger/lib/swagger.js
+//= require swagger/lib/highlight.7.3.pack.js
 //= require swagger/swagger-ui.js
-//= require swagger/lib/highlight.7.3.pack
