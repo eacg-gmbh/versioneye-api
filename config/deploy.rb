@@ -8,12 +8,12 @@ set :assets_roles, [:app]   # Defaults to [:web]
 set :application, 'versioneye'
 
 set :scm     , :git
-set :repo_url, 'git@github.com:versioneye/versioneye.git'
+set :repo_url, 'git@github.com:versioneye/versioneye-api.git'
 set :branch  , "master"
 
 set :ssh_options, {:forward_agent => true}
 set :user       , "ubuntu"
-set :deploy_to  , '/var/www/versioneye'
+set :deploy_to  , '/var/www/versioneye-api'
 set :linked_dirs, %w(pids log)
 
 set :format   , :pretty
@@ -38,21 +38,21 @@ namespace :deploy do
   desc 'Start application'
   task :start do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "/etc/init.d/unicorn.sh start"
+      execute "/etc/init.d/api.sh start"
     end
   end
 
   desc 'Stop application'
   task :stop do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "/etc/init.d/unicorn.sh stop"
+      execute "/etc/init.d/api.sh stop"
     end
   end
 
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "/etc/init.d/unicorn.sh restart"
+      execute "/etc/init.d/api.sh restart"
     end
   end
 
