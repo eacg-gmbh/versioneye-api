@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 ruby "2.1.1"
 
 gem 'rails'              , '~> 3.2.17'
-gem 'jquery-rails'       , '~> 2.2.1'
 gem 'unicorn'            , '~> 4.8.2'
 gem 'grape'              , '~> 0.6.1'
 gem 'grape-entity'       , '~> 0.3.0'
