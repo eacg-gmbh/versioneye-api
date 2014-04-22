@@ -10,7 +10,7 @@ class SwaggersController < ApplicationController
 
     version = params.has_key?(:version) ? params[:version] : 'v2'
     @api_url = "/api/#{version}"
-    render :layout => 'plain'
+    # render :layout => 'plain'
   end
 
 end

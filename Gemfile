@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 ruby "2.1.1"
 
 gem 'rails'              , '~> 3.2.17'
+gem 'jquery-rails'       , '~> 2.2.1'
 gem 'unicorn'            , '~> 4.8.2'
 gem 'grape'              , '~> 0.6.1'
 gem 'grape-entity'       , '~> 0.3.0'
@@ -12,7 +13,6 @@ gem 'htmlentities'       , '~> 4.3.1'
 
 gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v0.5.5'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
-
 
 group :assets do
   gem 'therubyracer'          , '~> 0.12.0'
