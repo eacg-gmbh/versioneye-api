@@ -109,5 +109,5 @@
     "aws_secret_access_key": "env_AWS_S3_SECRET_ACCESS_KEY",
     "s3_infographics_bucket": "veye_prod_infographics",
     "s3_projects_bucket": "veye_prod_projects"
-  },
+  }
 }
