@@ -1,12 +1,13 @@
 require 'grape-entity'
 
 module EntitiesV2
+
   class ProductEntity < Grape::Entity
     expose :name     , :documentation => {:type => 'string', :desc => 'name of package'}
-    expose :prod_key , :documentation => {:type => 'string', :desc => 'product key for given package'}
-    expose :prod_type, :documentation => {:type => 'string', :desc => 'product type of package'}
-    expose :version  , :documentation => {:desc => 'Latest version'}
     expose :language , :documentation => {:desc => 'Programming language'}
+    expose :prod_key , :documentation => {:type => 'string', :desc => 'product key for given package'}
+    expose :version  , :documentation => {:desc => 'Latest version'}
+    expose :prod_type, :documentation => {:type => 'string', :desc => 'product type of package'}
   end
 
   class ProductEntityDetailed < ProductEntity
@@ -16,4 +17,5 @@ module EntitiesV2
     expose :description , :documentation => {:desc => 'description of package'}
     expose :updated_at  , :documentation => {:desc => 'Date of last update'}
   end
+
 end
