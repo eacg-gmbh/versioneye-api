@@ -1,6 +1,7 @@
 module EntitiesV2
   require_relative 'entities/product_entity.rb'
   require_relative 'entities/product_search_entity.rb'
+  require_relative 'entities/product_reference_entity.rb'
 
   require_relative 'entities/project_entity.rb'
   require_relative 'entities/project_dependency_entity.rb'
