@@ -79,11 +79,11 @@ module ProductHelpers
   def fetch_product(lang, prod_key)
     lang = parse_language(lang)
     prod_key = decode_prod_key(prod_key)
-    @current_product = Product.fetch_product(lang, prod_key)
-    if @current_product.nil?
-      error! "Wrong product key: `#{params[:prod_key]}` don't exists.", 404
+    current_product = Product.fetch_product(lang, prod_key)
+    if current_product.nil?
+      error! "Zero results for prod_key `#{params[:prod_key]}`", 404
     end
-    @current_product
+    current_product
   end
 
   def save_search_log(query, products, start)
