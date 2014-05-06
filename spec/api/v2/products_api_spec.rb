@@ -126,24 +126,35 @@ describe V2::ProductsApiV2 do
   end
 
 
-  describe "accessing follow with instantaneous authorization" do
+  describe "references" do
     before(:each) do
-      @test_user = UserFactory.create_new 10
-      @test_product = ProductFactory.create_new 103
-      @user_api = ApiFactory.create_new @test_user
-      @safe_prod_key = encode_prod_key(@test_product.prod_key)
+      @user = UserFactory.create_new 11
+      @user_api = ApiFactory.create_new @user
+
+      @product = ProductFactory.create_new 103
+      @product_1 = ProductFactory.create_new 104
+      @product_2 = ProductFactory.create_new 105
+      @product_3 = ProductFactory.create_new 106
+      @product_4 = ProductFactory.create_new 107
+
+      @dep_1 = DependencyFactory.create_new @product_1, @product, true
+      @dep_2 = DependencyFactory.create_new @product_2, @product, true
+      @dep_3 = DependencyFactory.create_new @product_3, @product, true
+      @dep_4 = DependencyFactory.create_new @product_4, @product_1, true
+
+      @safe_prod_key = encode_prod_key(@product.prod_key)
     end
 
-    it "fails when user skips authorization key" do
-      get "#{product_uri}/#{@test_product.language}/#{@safe_prod_key}/follow"
-      response.status.should == 401
-      delete "/api/v1/sessions"
-    end
+    it "returns the existing references" do
+      Product.count.should eq(5)
+      Dependency.count.should eq(4)
 
-    it "returns success if user, who's not authorized yet, tries to check follow" do
-      get "#{product_uri}/#{@test_product.language}/#{@safe_prod_key}/follow", :api_key => @user_api.api_key
+      get "#{product_uri}/#{@product.language}/#{@safe_prod_key}/references"
       response.status.should == 200
-      delete "/api/v1/sessions"
+      response_data = JSON.parse(response.body)
+
+      results = response_data["results"]
+      results.count.should eq(3)
     end
   end
 
