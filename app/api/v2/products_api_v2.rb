@@ -23,21 +23,14 @@ module V2
       desc "search packages", {
         notes: %q[
 
-                It returns same results as our web application. But you get it as JSON objects -
+                This resource returns same results as our web application. But you get it as JSON objects -
                 the result is an JSON array of product objects.
-
-                #### Requirements for arguments
-
-                 * The search term must contain at least 2 characters.
-                   Otherwise the service will respond with status 400 - bad request.
-                 * Languages should be empty or commaseparated list of string
-                 * Paging variable `page` should be a positive integer value
 
                 When there's no match for the query, the result array will be empty.
               ]
       }
       params do
-        requires :q, :type => String, :desc => "Query string"
+        requires :q, :type => String, :desc => "Query string. At least 2 characters."
         optional :lang, :type => String,
                         :desc => %q[Filter results by programming languages;
                                   For filtering multiple languages submit a comma separated list of language strings.
@@ -72,7 +65,7 @@ module V2
       desc "detailed information for specific package", {
         notes: %q[
 
-                  Please replace all slashes `/` through colons `:` and all dots through `~`!
+                  Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
                   Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
@@ -103,7 +96,7 @@ module V2
 
       desc "check your following status", {
         notes: %q[
-                  Please replace all slashes `/` through colons `:` and all dots through `~`!
+                  Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
                   Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
@@ -139,7 +132,7 @@ module V2
       desc "follow your favorite software package", {
         notes: %q[
 
-                  Please replace all slashes `/` through colons `:` and all dots through `~`!
+                  Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
                   Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
@@ -178,7 +171,7 @@ module V2
 
       desc "unfollow given software package", {
         notes: %Q[
-          Please replace all slashes `/` through colons `:` and all dots through `~`!
+          Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
           Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
@@ -219,7 +212,7 @@ module V2
         notes: %q[
                 It returns the references of a package.
 
-                Please replace all slashes `/` through colons `:` and all dots through `~`!
+                Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
                 Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
               ]
