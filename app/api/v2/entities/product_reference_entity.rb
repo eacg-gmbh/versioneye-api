@@ -12,8 +12,8 @@ module EntitiesV2
 
   class ProductReferenceEntity < Grape::Entity
     expose :query  , using: ProductReferenceQueryEntity
-    expose :entries, using: ProductEntity, as: "results"
     expose :paging , using: PagingEntity
+    expose :entries, using: ProductEntity, as: "results"
   end
 
 end
