@@ -23,34 +23,26 @@ module V2
       desc "search packages", {
         notes: %q[
 
-                It returns same results as our SaaS application. But you get it as JSON objects -
-                the result is an JSON array of product objects and it's good way to find out products keys.
+                It returns same results as our web application. But you get it as JSON objects -
+                the result is an JSON array of product objects.
 
                 #### Requirements for arguments
 
                  * The search term must contain at least 2 characters.
-                   Otherwise service will respond with status 400 - bad request.
+                   Otherwise the service will respond with status 400 - bad request.
                  * Languages should be empty or commaseparated list of string
-                 * Paging variable `page` should be positive integer
+                 * Paging variable `page` should be a positive integer value
 
-                When there's no match for query, then result's array will be just empty JSON array.
-
-                #### Response codes
-
-                It responses 400 when your's search term was too short.
-
+                When there's no match for the query, the result array will be empty.
               ]
       }
       params do
         requires :q, :type => String, :desc => "Query string"
         optional :lang, :type => String,
                         :desc => %q[Filter results by programming languages;
-                                  It has to be comma-separated list of languages.
-                                  For example, if you want to search Java: then just
-                                  java or if you want to search packages for Java, Ruby and NodeJS
-                                  , then use java,ruby,nodejs.
+                                  For filtering multiple languages submit a comma separated list of language strings.
                                 ]
-        optional :g, :type => String, :desc => "Specify group-id for Java projects"
+        optional :g, :type => String, :desc => "Filter by GroupID. This is Java/Maven specific"
         optional :page, :type => Integer, :desc => "Specify page for paging", :regexp => /^[\d]+$/
       end
       get '/search/:q' do
@@ -80,13 +72,9 @@ module V2
       desc "detailed information for specific package", {
         notes: %q[
 
-                  **NB!** If there are any special characters in `prod_key`,
-                  you must replace them by using 2 simple encodig rules to make product key URL safe!
+                  Please replace all slashes `/` through colons `:` and all dots through `~`!
 
-                  It means you must replace all slashes `/` in product key
-                  with colon `:` and dots `.` with tilde `~`.
-
-                  For example Clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+                  Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
                   #### Notes about status codes
 
@@ -115,12 +103,9 @@ module V2
 
       desc "check your following status", {
         notes: %q[
-                  NB! If there are any special characters in `prod_key`,
-                  you must replace it to make it URL safe!
+                  Please replace all slashes `/` through colons `:` and all dots through `~`!
 
-                  Special character such as `/` should be replaced with colon `:`.
-
-                  For example `junit/junit` has to be transformed to  `junit:junit`.
+                  Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
                   #### Notes about status codes
 
@@ -153,15 +138,10 @@ module V2
 
       desc "follow your favorite software package", {
         notes: %q[
-                  It's good for bookmarking and getting notifications for specific library.
 
-                  NB! If there are some special characters in `prod_key`,
-                  you must replace it to make it URL safe!
+                  Please replace all slashes `/` through colons `:` and all dots through `~`!
 
-                  Special characters such as `/` should
-                  be replaced with characters `:` for slash.
-
-                  For example `junit/junit` has to be transormed to  `junit:junit`.
+                  Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
                   #### Notes about status codes
 
@@ -198,7 +178,9 @@ module V2
 
       desc "unfollow given software package", {
         notes: %Q[
-          You can use this API endpoint to unfollow the library.
+          Please replace all slashes `/` through colons `:` and all dots through `~`!
+
+          Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
           #### Response codes
 
@@ -236,6 +218,10 @@ module V2
       desc "references", {
         notes: %q[
                 It returns the references of a package.
+
+                Please replace all slashes `/` through colons `:` and all dots through `~`!
+
+                Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
               ]
       }
       params do
@@ -245,7 +231,7 @@ module V2
       end
       get '/:lang/:prod_key/references' do
         language = get_language_param(params[:lang])
-        prod_key = params[:prod_key]
+        prod_key = params[:prod_key].to_s.downcase
         page     = params[:page]
         page     = 1 if page.to_i < 1
 
@@ -254,7 +240,7 @@ module V2
           error! "No package for `#{params[:lang]}`/`#{params[:prod_key]}`", 404
         end
 
-        response   = Dependency.references product.language, prod_key, page
+        response = Dependency.references product.language, product.prod_key, page
         if response[:prod_keys].nil? || response[:prod_keys].empty?
           error! "Zero references for `#{params[:lang]}`/`#{params[:prod_key]}`", 404
         end
