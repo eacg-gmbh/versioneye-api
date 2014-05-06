@@ -102,7 +102,8 @@ module V2
 
                   #### Notes about status codes
 
-                  It will respond with 404, when given product with given product doesnt exists.
+                  This resource will returns the status code 404 if there is no product
+                  for the given prod_key.
               ]
       }
       params do
@@ -215,6 +216,11 @@ module V2
                 Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
                 Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+
+                #### Notes about status codes
+
+                This resource will return the status code 404 if there is no product for
+                the given prod_key or the product has 0 references.
               ]
       }
       params do
