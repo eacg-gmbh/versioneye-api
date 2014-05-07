@@ -63,5 +63,6 @@ Versioneye::Application.configure do
     c.web_endpoint = Settings.instance.github_base_url
   end
 
-end
+  ENV['API_BASE_PATH'] = "#{Settings.instance.server_url}/api"
 
+end
