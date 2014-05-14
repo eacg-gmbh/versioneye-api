@@ -125,7 +125,7 @@ module V2
         datafile = ActionDispatch::Http::UploadedFile.new( params[:project_file] )
         project_file = {'datafile' => datafile}
 
-        new_project = ProjectService.upload project_file, current_user, true
+        new_project = ProjectImportService.import_from_upload project_file, current_user, true
         if new_project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
         end

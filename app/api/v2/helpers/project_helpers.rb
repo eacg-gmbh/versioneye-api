@@ -31,7 +31,7 @@ module ProjectHelpers
   end
 
   def upload_and_store file
-    project = ProjectService.upload file, current_user, true
+    project = ProjectImportService.import_from_upload file, current_user, true
     ProjectService.store project
     project
   end
