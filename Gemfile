@@ -3,7 +3,7 @@ ruby "2.1.1"
 
 gem 'rails'              , '~> 3.2.17'
 gem 'unicorn'            , '~> 4.8.2'
-gem 'grape'              , '~> 0.6.1'
+gem 'grape'              , '~> 0.7.0'
 gem 'grape-entity'       , '~> 0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
 gem 'ruby_regex'         , '~> 0.1.0'
@@ -24,7 +24,7 @@ group :assets do
 end
 
 group :development do
-  gem 'capistrano'        , '3.2.0'
+  gem 'capistrano'        , '3.2.1'
   gem 'capistrano-rails'  , '1.1.1'
   gem 'capistrano-bundler', '1.1.2'
   gem 'psych'             , '~> 2.0.5'
@@ -44,7 +44,7 @@ group :test do
   gem 'capybara-firebug'  , '~> 2.0.0'
   gem 'fakeweb'           , '~> 1.3.0'
   gem 'vcr'               , '~> 2.9.0',  :require => false
-  gem 'webmock'           , '~> 1.17.0', :require => false
+  gem 'webmock'           , '~> 1.18.0', :require => false
   gem 'database_cleaner'  , '~> 1.2.0'
   gem 'factory_girl'      , '~> 4.4.0'
   gem 'factory_girl_rails', '~> 4.4.0'
