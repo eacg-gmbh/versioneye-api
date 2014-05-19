@@ -126,7 +126,6 @@ module V2
         project_file = {'datafile' => datafile}
 
         project = ProjectUpdateService.update_from_upload project, project_file, current_user, true
-        new_project = ProjectImportService.import_from_upload project_file, current_user, true
         if project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
         end
