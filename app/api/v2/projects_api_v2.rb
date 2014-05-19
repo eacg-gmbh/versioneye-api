@@ -84,13 +84,13 @@ module V2
         datafile = ActionDispatch::Http::UploadedFile.new( params[:upload] )
         project_file = {'datafile' => datafile}
 
-        @project = upload_and_store( project_file )
-        if @project.nil?
+        project = upload_and_store( project_file )
+        if project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
         end
 
-        @project = add_dependency_licences(@project)
-        present @project, with: EntitiesV2::ProjectEntity, :type => :full
+        project = add_dependency_licences(project)
+        present project, with: EntitiesV2::ProjectEntity, :type => :full
       end
 
 
@@ -130,7 +130,7 @@ module V2
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
         end
 
-        Rails.cache.delete( @project.id.to_s )
+        Rails.cache.delete( project.id.to_s )
         # project = add_dependency_licences(project)
 
         present project, with: EntitiesV2::ProjectEntity, :type => :full
@@ -179,12 +179,12 @@ module V2
       get '/:project_key/licenses' do
         authorized?
 
-        @project = ProjectsApiV2.fetch_project @current_user, params[:project_key]
-        error!("Project `#{params[:project_key]}` don't exists", 400) if @project.nil?
+        project = ProjectsApiV2.fetch_project @current_user, params[:project_key]
+        error!("Project `#{params[:project_key]}` don't exists", 400) if project.nil?
 
         licenses = {}
 
-        @project.dependencies.each do |dep|
+        project.dependencies.each do |dep|
           license = "unknown"
           unless dep[:prod_key].nil?
             product = Product.fetch_product( dep.language, dep.prod_key )
