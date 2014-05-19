@@ -109,8 +109,8 @@ module V2
       post '/:project_key' do
         authorized?
 
-        @project = fetch_project_by_key_and_user( params[:project_key], current_user )
-        if @project.nil?
+        project = fetch_project_by_key_and_user( params[:project_key], current_user )
+        if project.nil?
           error! "Project `#{params[:project_key]}` don't exists", 400
         end
 
@@ -125,16 +125,16 @@ module V2
         datafile = ActionDispatch::Http::UploadedFile.new( params[:project_file] )
         project_file = {'datafile' => datafile}
 
+        project = ProjectUpdateService.update_from_upload project, project_file, current_user, true
         new_project = ProjectImportService.import_from_upload project_file, current_user, true
-        if new_project.nil?
+        if project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
         end
 
-        @project.update_from new_project
         Rails.cache.delete( @project.id.to_s )
         # project = add_dependency_licences(project)
 
-        present @project, with: EntitiesV2::ProjectEntity, :type => :full
+        present project, with: EntitiesV2::ProjectEntity, :type => :full
       end
 
 
