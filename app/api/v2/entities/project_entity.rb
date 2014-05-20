@@ -7,6 +7,8 @@ module EntitiesV2
     expose :project_key
     expose :name
     expose :project_type
+    expose :public
+    expose :private_project, :as => :private_scm
     expose :private_project, :as => :private
     expose :period
     expose :source
