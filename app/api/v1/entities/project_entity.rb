@@ -9,7 +9,6 @@ module EntitiesV1
     expose :project_type
     expose :public
     expose :private_project, :as => :private
-    expose :private_project, :as => :private_scm
     expose :period
     expose :source
     expose :dep_number
