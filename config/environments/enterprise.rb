@@ -24,7 +24,6 @@ Versioneye::Application.configure do
   config.assets.debug = false
   config.assets.compile = true
   config.assets.digest = true
-
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w( application.css application_lp.css *.js )
 
@@ -48,6 +47,7 @@ Versioneye::Application.configure do
   Settings.instance.nexus_url = GlobalSetting.default.nexus_url
 
   config.active_support.deprecation = :notify
+
   config.action_mailer.delivery_method = :smtp
   EmailSettingService.update_action_mailer_from_db
   Settings.instance.smtp_sender_email = EmailSettingService.email_setting.sender_email
@@ -58,11 +58,11 @@ Versioneye::Application.configure do
 
   routes.default_url_options = { host: Settings.instance.server_host, port: Settings.instance.server_port }
 
+  ENV['API_BASE_PATH'] = "#{Settings.instance.server_url}/api"
+
   Octokit.configure do |c|
     c.api_endpoint = Settings.instance.github_api_url
     c.web_endpoint = Settings.instance.github_base_url
   end
-
-  ENV['API_BASE_PATH'] = "#{Settings.instance.server_url}/api"
 
 end
