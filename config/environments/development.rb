@@ -1,14 +1,15 @@
 Versioneye::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # In the development environment your application's code is reloaded on
-  # every request.  This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = false
+  # Code is not reloaded between requests
+  config.cache_classes = true
   config.action_controller.perform_caching = false
   config.cache_store = :dalli_store, Settings.instance.memcache_servers,{
     :username => Settings.instance.memcache_username, :password => Settings.instance.memcache_password,
     :namespace => 'veye', :expires_in => 1.day, :compress => true }
+
+  # Full error reports are disabled and caching is turned on
+  config.consider_all_requests_local = false
 
   config.serve_static_assets = true
   config.action_dispatch.x_sendfile_header = nil
@@ -16,31 +17,52 @@ Versioneye::Application.configure do
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
 
-  # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
-
-  # Print deprecation notices to the Rails logger
-  config.active_support.deprecation = :log
-
-  # Only use best-standards-support built into browsers
-  config.action_dispatch.best_standards_support = :builtin
-
-  # Do not compress assets
+  # Compress JavaScripts and CSS
   config.assets.compress = false
-
-  # Expands the lines which load the assets
+  config.assets.css_compressor = :yui
+  config.assets.js_compressor = :uglifier
   config.assets.debug = true
+  config.assets.compile = true
+  config.assets.digest = true
+  # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+  config.assets.precompile += %w( application.css application_lp.css *.js )
 
+  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  config.force_ssl = false
+
+  # See everything in the log (default is :info)
   config.log_level = :debug
 
-  # config.action_mailer.delivery_method       = :postmark # :sendmail
-  # config.action_mailer.postmark_settings = { :api_key => Settings.instance.postmark_api_key }
+  config.i18n.fallbacks = true
+
+  Settings.instance.server_url  = GlobalSetting.default.server_url
+  Settings.instance.server_host = GlobalSetting.default.server_host
+  Settings.instance.server_port = GlobalSetting.default.server_port
+
+  Settings.instance.github_base_url      = GlobalSetting.default.github_base_url
+  Settings.instance.github_api_url       = GlobalSetting.default.github_api_url
+  Settings.instance.github_client_id     = GlobalSetting.default.github_client_id
+  Settings.instance.github_client_secret = GlobalSetting.default.github_client_secret
+
+  Settings.instance.nexus_url = GlobalSetting.default.nexus_url
+
+  config.active_support.deprecation = :notify
 
   config.action_mailer.delivery_method = :test
-  config.action_mailer.default_url_options = { :host => 'localhost' }
+  EmailSettingService.update_action_mailer_from_db
+  Settings.instance.smtp_sender_email = EmailSettingService.email_setting.sender_email
+  Settings.instance.smtp_sender_name  = EmailSettingService.email_setting.sender_name
+  config.action_mailer.perform_deliveries    = false
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.raise_delivery_errors = true
 
-  ENV['API_BASE_PATH'] = "http://127.0.0.1:3000/api"
+  routes.default_url_options = { host: Settings.instance.server_host, port: Settings.instance.server_port }
 
-  routes.default_url_options = { host: "localhost", port: 3000 }
+  ENV['API_BASE_PATH'] = "#{Settings.instance.server_url}/api"
+
+  Octokit.configure do |c|
+    c.api_endpoint = Settings.instance.github_api_url
+    c.web_endpoint = Settings.instance.github_base_url
+  end
 
 end
