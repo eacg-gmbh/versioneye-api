@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 9110c3aa56e97bb34f515e80dabaa379bf2967a4
-  tag: v1.4.1
+  revision: ea244247bfffaf234354b0977d7d9d724eaaf457
+  tag: v1.7.1
   specs:
-    versioneye-core (1.4.1)
+    versioneye-core (1.7.1)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       cocoapods-core (~> 0.32.0)
@@ -64,7 +64,7 @@ GEM
     ansi (1.4.3)
     arel (3.0.3)
     awesome_print (1.2.0)
-    aws-sdk (1.40.3)
+    aws-sdk (1.42.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
     axiom-types (0.1.1)
@@ -228,7 +228,7 @@ GEM
     multi_json (1.10.0)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    nap (0.7.0)
+    nap (0.8.0)
     naturalsorter (2.0.10)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
