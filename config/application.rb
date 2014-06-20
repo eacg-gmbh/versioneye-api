@@ -19,7 +19,13 @@ end
 module Versioneye
   class Application < Rails::Application
 
-    VersioneyeCore.new
+    begin
+      p " instantiate VersioneyeCore ... "
+      VersioneyeCore.new
+    rescue => e
+      p e.message
+      p e.backtrace.join("\n")
+    end
 
     AWS.config(
       :s3_endpoint => Settings.instance.aws_s3_endpoint,

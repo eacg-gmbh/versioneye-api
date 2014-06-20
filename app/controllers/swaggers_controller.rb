@@ -1,6 +1,8 @@
 class SwaggersController < ApplicationController
 
   def index
+    Settings.instance.reload_from_db GlobalSetting.new
+
     user_api = nil
     user = current_user
     if user
