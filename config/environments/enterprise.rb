@@ -4,7 +4,7 @@ Versioneye::Application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
   config.action_controller.perform_caching = false
-  config.cache_store = :dalli_store, Settings.instance.memcache_servers,{
+  config.cache_store = :dalli_store, ["#{Settings.instance.memcache_addr}:#{Settings.instance.memcache_port}"],{
     :username => Settings.instance.memcache_username, :password => Settings.instance.memcache_password,
     :namespace => 'veye', :expires_in => 1.day, :compress => true }
 
@@ -34,17 +34,6 @@ Versioneye::Application.configure do
   config.log_level = :info
 
   config.i18n.fallbacks = true
-
-  Settings.instance.server_url  = GlobalSetting.default.server_url
-  Settings.instance.server_host = GlobalSetting.default.server_host
-  Settings.instance.server_port = GlobalSetting.default.server_port
-
-  Settings.instance.github_base_url      = GlobalSetting.default.github_base_url
-  Settings.instance.github_api_url       = GlobalSetting.default.github_api_url
-  Settings.instance.github_client_id     = GlobalSetting.default.github_client_id
-  Settings.instance.github_client_secret = GlobalSetting.default.github_client_secret
-
-  Settings.instance.nexus_url = GlobalSetting.default.nexus_url
 
   config.active_support.deprecation = :notify
 
