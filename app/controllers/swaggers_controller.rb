@@ -2,6 +2,7 @@ class SwaggersController < ApplicationController
 
   def index
     Settings.instance.reload_from_db GlobalSetting.new
+    ENV['API_BASE_PATH'] = "#{Settings.instance.server_url}/api"
 
     user_api = nil
     user = current_user
