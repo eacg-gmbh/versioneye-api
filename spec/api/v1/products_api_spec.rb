@@ -27,6 +27,7 @@ describe ProductsApiV1 do
 
   def fill_db_with_products
     EsProduct.reset
+    Product.delete_all
     test_products = []
     55.times do |i|
       prod = FactoryGirl.create(:product,
