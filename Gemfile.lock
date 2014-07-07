@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 8280867bbd7ea6a4119dd558bb6b1e492dce050a
-  tag: v2.0.3
+  revision: c764aa1c561d93ca9f0c68c53696f4e015a6b293
+  tag: v2.0.9
   specs:
-    versioneye-core (2.0.3)
+    versioneye-core (2.0.9)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       cocoapods-core (~> 0.33.0)
@@ -16,7 +16,7 @@ GIT
       naturalsorter (~> 2.0.10)
       nokogiri (~> 1.6.0)
       oauth (~> 0.4.7)
-      octokit (~> 3.1.0)
+      octokit (~> 3.2.0)
       pdfkit (~> 0.6.2)
       persistent_httparty (~> 0.1.0)
       semverly (~> 1.0.0)
@@ -240,7 +240,7 @@ GEM
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
     oauth (0.4.7)
-    octokit (3.1.2)
+    octokit (3.2.0)
       sawyer (~> 0.5.3)
     ori (0.1.0)
     origin (1.1.0)
