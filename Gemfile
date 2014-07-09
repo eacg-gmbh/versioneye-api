@@ -2,7 +2,8 @@ source 'http://rubygems.org'
 ruby "2.1.1"
 
 gem 'rails'              , '~> 3.2.19'
-gem 'unicorn'            , '~> 4.8.3'
+# gem 'unicorn'            , '~> 4.8.3'
+gem 'puma'                 , '~> 2.8.2'
 gem 'grape'              , '~> 0.7.0'
 gem 'grape-entity'       , '~> 0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
@@ -28,10 +29,10 @@ group :development do
   gem 'capistrano-rails'  , '1.1.1'
   gem 'capistrano-bundler', '1.1.2'
   gem 'psych'             , '~> 2.0.5'
-  gem 'irbtools'          , '1.6.1'
   gem 'terminal-notifier' , '~> 1.6.0'
   gem 'fakes3'            , '0.1.5.2'
-  gem 'debugger'          , '~> 1.6.8'
+  # gem 'debugger'          , '~> 1.6.8'
+  # gem 'irbtools'          , '1.6.1'
 end
 
 group :test do
