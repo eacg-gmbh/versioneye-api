@@ -239,13 +239,17 @@ module V2
           error! "No package for `#{params[:lang]}`/`#{params[:prod_key]}`", 404
         end
 
-        response = Dependency.references product.language, product.prod_key, page
-        if response[:prod_keys].nil? || response[:prod_keys].empty?
+        reference = ReferenceService.find_by language, product.prod_key
+        if reference.nil?
           error! "Zero references for `#{params[:lang]}`/`#{params[:prod_key]}`", 404
         end
 
-        products    = Product.by_prod_keys product.language, response[:prod_keys]
-        total_count = response[:count]
+        products   = reference.products page
+        if products.nil? || products.empty?
+          error! "Zero references for `#{params[:lang]}`/`#{params[:prod_key]}`", 404
+        end
+
+        total_count = reference.ref_count
 
         query_data = Api.new lang: language, prod_key: prod_key
         paging     = make_paging_for_references( page, total_count )

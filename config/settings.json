@@ -1,5 +1,6 @@
 {
   "development": {
+    "ga_account": "",
     "nexus_url": "http://nexus.pro",
     "bitbucket_secret": "yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ",
     "bitbucket_token": "HgSkE62pTT3HmxFGAm",
@@ -39,6 +40,7 @@
     "aws_secret_access_key": "aws_bullshit_bingo_secret"
   },
   "test": {
+    "ga_account": "",
     "nexus_url": "http://nexus.pro",
     "bitbucket_secret": "yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ",
     "bitbucket_token": "HgSkE62pTT3HmxFGAm",
@@ -77,9 +79,11 @@
     "aws_s3_port": 4567,
     "aws_use_ssl": false,
     "aws_access_key_id": "aws_bullshit_bingo_access_key",
-    "aws_secret_access_key": "aws_bullshit_bingo_secret"
+    "aws_secret_access_key": "aws_bullshit_bingo_secret",
+    "references_live_update": true
   },
   "production": {
+    "ga_account": "UA-32702672-1",
     "nexus_url": "http://nexus.pro",
     "bitbucket_secret": "env_BITBUCKET_SECRET",
     "bitbucket_token": "env_BITBUCKET_TOKEN",
@@ -119,6 +123,7 @@
     "s3_projects_bucket": "veye_prod_projects"
   },
   "enterprise": {
+    "ga_account": "",
     "projects_unlimited": true,
     "nexus_url": "http://nexus.pro",
     "server_url": "http://localhost:3000",
@@ -154,6 +159,7 @@
     "bitbucket_secret": "env_BITBUCKET_SECRET",
     "bitbucket_token": "env_BITBUCKET_TOKEN",
     "cocoapods_spec_git": "https://github.com/CocoaPods/Specs.git",
-    "cocoapods_spec": "/mnt/cocoapods/cocoapods-specs"
+    "cocoapods_spec": "/mnt/cocoapods/cocoapods-specs",
+    "references_live_update": true
   }
 }
