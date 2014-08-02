@@ -230,6 +230,7 @@ module V2
       end
       get '/:lang/:prod_key/references' do
         language = get_language_param(params[:lang])
+        language = LanguageService.language_for( language )
         prod_key = params[:prod_key].to_s.downcase
         page     = params[:page]
         page     = 1 if page.to_i < 1
