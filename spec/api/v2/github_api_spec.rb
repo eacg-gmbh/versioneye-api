@@ -106,7 +106,7 @@ describe "GithubApiV2" do
 
       repos = JSON.parse response.body
       repos.should_not be_nil
-      repos.empty?.should_not be_true
+      repos.empty?.should_not be_truthy
       repos.count.should eql(2)
     end
 
@@ -121,7 +121,7 @@ describe "GithubApiV2" do
 
       repo = JSON.parse response.body
       repo.should_not be_nil
-      repo.has_key?('repo').should be_true
+      repo.has_key?('repo').should be_truthy
       repo['repo']['fullname'].should eql("spec/repo1")
     end
 
@@ -136,9 +136,9 @@ describe "GithubApiV2" do
 
       repo = JSON.parse response.body
       repo.should_not be_nil
-      repo.has_key?('repo').should be_true
+      repo.has_key?('repo').should be_truthy
       repo['repo']['fullname'].should eql("spec/repo1")
-      repo.has_key?('imported_projects').should be_true
+      repo.has_key?('imported_projects').should be_truthy
 
       project = repo['imported_projects'].first
       project["name"].should eql("spec_projectX")
@@ -153,9 +153,9 @@ describe "GithubApiV2" do
       response.status.should eql(200)
       msg = JSON.parse response.body
       msg.should_not be_nil
-      msg.empty?.should be_false
-      msg.has_key?('success').should be_true
-      msg['success'].should be_true
+      msg.empty?.should be_falsey
+      msg.has_key?('success').should be_truthy
+      msg['success'].should be_truthy
     end
   end
 
