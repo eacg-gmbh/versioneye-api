@@ -2,8 +2,7 @@ source 'http://rubygems.org'
 ruby "2.1.1"
 
 gem 'rails'              , '~> 3.2.19'
-# gem 'unicorn'            , '~> 4.8.3'
-gem 'puma'                 , '~> 2.8.2'
+gem 'puma'               , '~> 2.9.1'
 gem 'grape'              , '~> 0.7.0'
 gem 'grape-entity'       , '~> 0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
@@ -26,8 +25,8 @@ end
 
 group :development do
   gem 'capistrano'        , '3.2.1'
-  gem 'capistrano-rails'  , '1.1.1'
-  gem 'capistrano-bundler', '1.1.2'
+  gem 'capistrano-rails'  , '1.1.2'
+  gem 'capistrano-bundler', '1.1.3'
   gem 'psych'             , '~> 2.0.5'
   gem 'terminal-notifier' , '~> 1.6.0'
   gem 'fakes3'            , '0.1.5.2'
@@ -36,13 +35,13 @@ group :development do
 end
 
 group :test do
-  gem 'simplecov'         , '~> 0.8.0'
+  gem 'simplecov'         , '~> 0.9.0'
   gem 'turn'              , :require => false
   gem 'rspec'             , '~> 2.14.0'
   gem 'rspec-rails'       , '~> 2.14.0'
   gem 'rspec-mocks'       , '~> 2.14.0'
-  gem 'capybara'          , '~> 2.3.0'
-  gem 'capybara-firebug'  , '~> 2.0.0'
+  gem 'capybara'          , '~> 2.4.1'
+  gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'fakeweb'           , '~> 1.3.0'
   gem 'vcr'               , '~> 2.9.2',  :require => false
   gem 'webmock'           , '~> 1.18.0', :require => false
