@@ -123,18 +123,18 @@ describe V2::ProjectsApiV2 do
 
       data = JSON.parse response.body
 
-      data["success"].should be_true
+      data["success"].should be_truthy
       unknown_licences = data["licenses"]["unknown"].map {|x| x['name']}
       unknown_licences = unknown_licences.to_set
-      unknown_licences.include?("rack-protection").should be_true
-      unknown_licences.include?("sinatra").should be_true
+      unknown_licences.include?("rack-protection").should be_truthy
+      unknown_licences.include?("sinatra").should be_truthy
     end
 
     it "deletes existing project successfully" do
       response = delete "#{project_uri}/#{project_key}.json"
       response.status.should eql(200)
       msg = JSON.parse response.body
-      msg["success"].should be_true
+      msg["success"].should be_truthy
     end
   end
 

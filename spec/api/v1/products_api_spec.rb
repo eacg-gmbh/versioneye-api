@@ -128,7 +128,7 @@ describe ProductsApiV1 do
       response.status.should == 200
       response_data =  JSON.parse(response.body)
       response_data["prod_key"].should eql(@test_product.prod_key)
-      response_data["follows"].should be_false
+      response_data["follows"].should be_falsey
     end
 
     it "returns success if authorized user follows specific package" do
@@ -136,7 +136,7 @@ describe ProductsApiV1 do
       response.status.should == 201
       response_data =  JSON.parse(response.body)
       response_data["prod_key"].should eql(@test_product.prod_key)
-      response_data["follows"].should be_true
+      response_data["follows"].should be_truthy
     end
 
     it "returns proper response if authorized unfollows specific package" do
@@ -145,7 +145,7 @@ describe ProductsApiV1 do
 
       get "#{product_uri}/#{@safe_prod_key}/follow"
       response_data = JSON.parse(response.body)
-      response_data["follows"].should be_false
+      response_data["follows"].should be_falsey
     end
   end
 

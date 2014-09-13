@@ -10,7 +10,7 @@ gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 gem 'htmlentities'       , '~> 4.3.2'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v5.3.6'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v5.6.0'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :assets do
@@ -37,9 +37,9 @@ end
 group :test do
   gem 'simplecov'         , '~> 0.9.0'
   gem 'turn'              , :require => false
-  gem 'rspec'             , '~> 2.14.0'
-  gem 'rspec-rails'       , '~> 2.14.0'
-  gem 'rspec-mocks'       , '~> 2.14.0'
+  gem 'rspec'             , '~> 3.1'
+  gem 'rspec-rails'       , '~> 3.1'
+  gem 'rspec-mocks'       , '~> 3.1'
   gem 'capybara'          , '~> 2.4.1'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'fakeweb'           , '~> 1.3.0'
