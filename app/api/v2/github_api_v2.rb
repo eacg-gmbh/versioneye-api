@@ -157,8 +157,9 @@ module V2
         ]
       }
       params do
-        requires :repo_key, type: String, desc: "encoded repo name with optional branch info"
-        optional :branch, type: String, default: "master", desc: "the name of branch"
+        requires :repo_key, type: String, desc: "encoded repo name"
+        optional :branch, type: String, default: "master", desc: "the name of the branch"
+        optional :file, type: String, default: "Gemfile", desc: "the project file (default is Gemfile)"
       end
       post '/:repo_key' do
         authorized?
@@ -166,13 +167,15 @@ module V2
         github_connected?(user)
         repo_name = decode_prod_key(params[:repo_key])
         branch = params[:branch]
+        project_file = params[:file]
+        project_file = 'Gemfile' if project_file.to_s.empty?
 
         repo = user.github_repos.by_fullname(repo_name).first
         unless repo
           error! "We couldn't find the repository `#{repo_name}` in your account.", 400
         end
 
-        ProjectImportService.import_from_github(user, repo_name, 'Gemfile', branch)
+        ProjectImportService.import_from_github(user, repo_name, project_file, branch)
         projects = Project.by_user(current_user).by_github(repo_name).to_a
 
         present :repo, repo, with: EntitiesV2::RepoEntityDetailed
@@ -183,6 +186,8 @@ module V2
       #-- DELETE '/:repo_key' -------------------------------------------------
       desc "remove imported project", {
         notes: %q[
+          This Endpoint deletes a project on VersionEye!
+
           Due the limits of our current API framework, the repo key has to be
           encoded as url-safe string. That means all '/' has to be replaced with
           colons ':' and '.' has to be replaced with '~'.
@@ -192,8 +197,9 @@ module V2
         ]
       }
       params do
-        requires :repo_key, type: String, desc: "encoded repo-key with optional brnach info"
-        optional :branch, type: String, default: "master", desc: "to specify branch"
+        requires :repo_key, type: String, desc: "encoded repo-key"
+        optional :branch, type: String, default: "master", desc: "the name of the branch"
+        optional :file, type: String, default: "Gemfile", desc: "the project file (default is Gemfile)"
       end
       delete '/:repo_key' do
         authorized?
@@ -202,10 +208,17 @@ module V2
 
         repo_name = decode_prod_key(params[:repo_key])
         branch    = params[:branch]
+        project_file = params[:file]
+        project_file = 'Gemfile' if project_file.to_s.empty?
 
-        project = Project.by_user(user).by_github(repo_name).where(scm_branch: branch).shift
-        error!("Project doesnt exists", 400) if project.nil?
-        ProjectService.destroy project[:_id].to_s
+        projects = Project.by_user(user).by_github(repo_name).where(scm_branch: branch)
+        error!("Project doesnt exists", 400) if projects.nil? || projects.empty?
+
+        projects.each do |project|
+          next if !project.filename.eql?( project_file )
+          ProjectService.destroy project[:_id].to_s
+        end
+
         present :success, true
       end
 
