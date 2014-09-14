@@ -1,6 +1,7 @@
 require 'dalli'
 
 module CacheHelpers
+
   @@default_cache_options = {
     namespace: 'api2',
     expires_in: 300,
@@ -15,6 +16,7 @@ module CacheHelpers
 
     @@cache_client = Dalli::Client.new('localhost:11211', opts)
   end
+
   def get_cache(cache_key)
     init_cache({}) unless @@cache_client
     @@cache_client.get(cache_key)
@@ -24,4 +26,5 @@ module CacheHelpers
     init_cache({}) unless @@cache_client
     @@cache_client.get(cache_key, val)
   end
+
 end
