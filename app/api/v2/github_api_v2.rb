@@ -59,7 +59,7 @@ module V2
 
         if user.github_repos.all.count == 0
           # try to import users repos when there's no repos.
-          GitHubService.cached_user_repos(user)
+          GitHubService.cached_user_repos( user )
         end
 
         if params[:only_imported]
@@ -70,13 +70,16 @@ module V2
           repos = user.github_repos.where(query_filters).paginate(per_page: 30, page: page)
         end
 
-        repos.each do |repo|
-          imported_projects        = Project.by_user(user).by_github(repo[:fullname]).to_a
-          proj_keys                = imported_projects.map {|proj| proj[:project_key]}
-          repo[:imported_projects] = proj_keys.to_a
-          repo[:repo_key]          = encode_prod_key(repo[:fullname])
+        paging = []
+        if repos && !repos.empty?
+          repos.each do |repo|
+            imported_projects        = Project.by_user(user).by_github(repo[:fullname]).to_a
+            proj_keys                = imported_projects.map {|proj| proj[:project_key]}
+            repo[:imported_projects] = proj_keys.to_a
+            repo[:repo_key]          = encode_prod_key(repo[:fullname])
+          end
+          paging = make_paging_object(repos)
         end
-        paging = make_paging_object(repos)
 
         present :repos , repos , with: EntitiesV2::RepoEntity
         present :paging, paging, with: EntitiesV2::PagingEntity
@@ -167,6 +170,7 @@ module V2
         authorized?
         user = current_user
         github_connected?(user)
+
         repo_name = decode_prod_key(params[:repo_key])
         branch = params[:branch]
         project_file = params[:file]

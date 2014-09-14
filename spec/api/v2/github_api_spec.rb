@@ -4,7 +4,7 @@ require 'webmock'
 
 describe "GithubApiV2" do
 
-  let(:user)  {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com", terms: true, datenerhebung: true)}
+  let(:user) {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com", terms: true, datenerhebung: true)}
   let(:user2) {create(:user, username: "dontshow", fullname: "Don TShow", email: "dont@show.com", terms: true, datenerhebung: true)}
 
   let(:user_api) { ApiFactory.create_new(user) }
@@ -42,21 +42,21 @@ describe "GithubApiV2" do
 
     it "raises http error when asking list of repos" do
       get api_path,  nil, "HTTPS" => "on"
-      response.status.should eql(401)
+      response.status.should eq(401)
     end
 
     it "raises http error when asking info of repo" do
       get "#{api_path}/#{repo_key1}", nil, "HTTPS" => "on"
-      response.status.should eql(401)
+      response.status.should eq(401)
     end
 
     it "raises http error when trying to post new repo" do
       post "#{api_path}/#{repo_key1}", nil, "HTTPS" => "on"
-      response.status.should eql(401)
+      response.status.should eq(401)
     end
     it "raises http error when unauthorized user wants remove project" do
       delete "#{api_path}/#{repo_key1}", nil, "HTTPS" => "on"
-      response.status.should eql(401)
+      response.status.should eq(401)
     end
   end
 
@@ -67,7 +67,7 @@ describe "GithubApiV2" do
       user.github_token = nil
       user.save
       get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eql(401)
+      response.status.should eq(401)
     end
     it "does sync because connected to GitHub" do
       user_task_key = "#{user[:username]}-#{user[:github_id]}"
@@ -75,7 +75,7 @@ describe "GithubApiV2" do
       cache.delete user_task_key
 
       get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eql(200)
+      response.status.should eq(200)
       resp = JSON.parse response.body
       resp['status'].should eq("running")
     end
@@ -127,55 +127,55 @@ describe "GithubApiV2" do
 
     it "should show all user repos" do
       get api_path, {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eql(200)
+      response.status.should eq(200)
 
       repos = JSON.parse response.body
       repos.should_not be_nil
       repos.empty?.should_not be_truthy
-      repos.count.should eql(2)
+      repos.count.should eq(2)
     end
 
-    it "should raise error when user tries to access repository which doest exists" do
+    it "should raise error when user tries to access repository which doesnt exists" do
       get "#{api_path}/pedestal:pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eql(400)
+      response.status.should eq(400)
     end
 
     it "should show repo info" do
       get "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eql(200)
+      response.status.should eq(200)
 
       repo = JSON.parse response.body
       repo.should_not be_nil
       repo.has_key?('repo').should be_truthy
-      repo['repo']['fullname'].should eql("spec/repo1")
+      repo['repo']['fullname'].should eq("spec/repo1")
     end
 
     it "should raise error when user tries to import repository which doesnt exists" do
       post "#{api_path}/pedestal:pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eql(400)
+      response.status.should eq(400)
     end
 
     it "should create new object with repo key" do
       post "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eql(201)
+      response.status.should eq(201)
 
       repo = JSON.parse response.body
       repo.should_not be_nil
       repo.has_key?('repo').should be_truthy
-      repo['repo']['fullname'].should eql("spec/repo1")
+      repo['repo']['fullname'].should eq("spec/repo1")
       repo.has_key?('imported_projects').should be_truthy
 
       project = repo['imported_projects'].first
-      project["name"].should eql("spec_projectX")
+      project["name"].should eq("spec_projectX")
     end
 
     it "should raise error when user tries to remove repository which doesnt exists" do
       delete "#{api_path}/pedestal:pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eql(400)
+      response.status.should eq(400)
     end
     it "should remove project with repo key" do
       delete "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eql(200)
+      response.status.should eq(200)
       msg = JSON.parse response.body
       msg.should_not be_nil
       msg.empty?.should be_falsey
@@ -188,7 +188,7 @@ describe "GithubApiV2" do
   describe "github_hook" do
     it "should return 200" do
       post "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eql(201)
+      response.status.should eq(201)
     end
   end
 
