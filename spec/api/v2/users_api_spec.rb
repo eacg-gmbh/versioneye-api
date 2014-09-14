@@ -1,11 +1,13 @@
 require 'spec_helper'
 
 describe V2::UsersApiV2 do
+
   before(:each) do
     @root_uri = "/api/v2"
     @me_uri = "#{@root_uri}/me"
     @users_uri = "#{@root_uri}/users"
   end
+
 
   describe "not authorized user tries to access to user data" do
     it "returns authorization error when asking user's profile" do
@@ -40,6 +42,7 @@ describe V2::UsersApiV2 do
     end
   end
 
+
   describe "authorized user access own data" do
     before(:each) do
       @test_user = UserFactory.create_new
@@ -59,6 +62,7 @@ describe V2::UsersApiV2 do
       response.status.should == 200
     end
   end
+
 
   describe "authorized user access notifications" do
     before(:each) do
