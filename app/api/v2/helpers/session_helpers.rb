@@ -29,7 +29,7 @@ module SessionHelpers
 
   def github_connected?( user )
     return true if user.github_account_connected?
-    error! "Github account is not connected. Check your settings on www.versioneye.com", 401
+    error! "Github account is not connected. Check your settings on https://www.versioneye.com/settings/connect", 401
     false
   end
 
