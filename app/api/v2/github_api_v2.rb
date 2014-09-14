@@ -85,24 +85,26 @@ module V2
 
       #-- GET '/github/sync' --------------------------------------------------
       desc "re-load github data", {
-        notes: %q[Reimports data from Github.]
+        notes: %q[
+          Reimports ALL GitHub Repositories. This Endpoint fetches meta information to all
+          repositories in your GitHub account. Meta information such as repo name, branches and
+          supported project files.
+        ]
       }
-      params do
-        optional :force, type: String, default: 'false', desc: "remove previous data and import again"
-      end
       get '/sync' do
         authorized?
         user = current_user
         github_connected?(user)
-        msg = {changed: false}
-        allowed_params = Set.new [true, 'true', 't', 'T', 1 , '1']
 
-        if allowed_params.include? params[:force]
-          repos = GitHubService.update_repos_for_user(user)
-          msg = {changed: true, msg: "Changed - pulled #{user.github_repos.all.count} repos"} if repos
+        cache = Versioneye::Cache.instance.mc
+        user_task_key = "#{user[:username]}-#{user[:github_id]}"
+        task_status   = cache.get( user_task_key )
+
+        if task_status != GitHubService::A_TASK_RUNNING && task_status != GitHubService::A_TASK_DONE
+          task_status = GitHubService.update_repos_for_user(user)
         end
 
-        present msg
+        present :status, task_status
       end
 
 

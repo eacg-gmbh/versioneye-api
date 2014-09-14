@@ -4,7 +4,7 @@ require 'webmock'
 
 describe "GithubApiV2" do
 
-  let(:user) {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com", terms: true, datenerhebung: true)}
+  let(:user)  {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com", terms: true, datenerhebung: true)}
   let(:user2) {create(:user, username: "dontshow", fullname: "Don TShow", email: "dont@show.com", terms: true, datenerhebung: true)}
 
   let(:user_api) { ApiFactory.create_new(user) }
@@ -12,13 +12,17 @@ describe "GithubApiV2" do
   let(:repo1) {create(:github_repo, user_id: user.id.to_s, github_id: 1,
                       fullname: "spec/repo1", user_login: "a",
                       owner_login: "versioneye", owner_type: "user")}
+
   let(:repo2) {create(:github_repo, user_id: user.id.to_s, github_id: 2,
                       fullname: "spec/repo2", user_login: "a",
                       owner_login: "versioneye", owner_type: "user")}
+
   let(:repo3) {create(:github_repo, user_id: user2.id.to_s, github_id: 3,
                     fullname: "spec/repo2", user_login: "b",
                     owner_login: "dont", owner_type: "user")}
+
   let(:repo_key1) {Product.encode_prod_key(repo1[:fullname])}
+
   let(:project1) {create(:project_with_deps,
                          deps_count: 3,
                          name: "spec_projectX",
@@ -31,7 +35,6 @@ describe "GithubApiV2" do
 
 
   describe "when user is unauthorized" do
-
     before :each do
       FakeWeb.allow_net_connect = true
       WebMock.allow_net_connect!
@@ -56,6 +59,28 @@ describe "GithubApiV2" do
       response.status.should eql(401)
     end
   end
+
+
+  describe "sync" do
+    it "does not sync because not connected to GitHub" do
+      user.github_id = nil
+      user.github_token = nil
+      user.save
+      get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+      response.status.should eql(401)
+    end
+    it "does sync because connected to GitHub" do
+      user_task_key = "#{user[:username]}-#{user[:github_id]}"
+      cache = Versioneye::Cache.instance.mc
+      cache.delete user_task_key
+
+      get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+      response.status.should eql(200)
+      resp = JSON.parse response.body
+      resp['status'].should eq("running")
+    end
+  end
+
 
   describe "when user is properly authorized" do
     before :each do
@@ -159,13 +184,12 @@ describe "GithubApiV2" do
     end
   end
 
-  describe "github_hook" do
 
+  describe "github_hook" do
     it "should return 200" do
       post "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
       response.status.should eql(201)
     end
-
   end
 
 end
