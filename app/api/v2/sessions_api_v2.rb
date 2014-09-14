@@ -7,6 +7,8 @@ module V2
     helpers SessionHelpers
 
     resource :sessions do
+
+
       desc "returns session info for authorized users", {
         notes: %q[If current user has active session, then this
                 method will return 200 with short user profile.
@@ -23,6 +25,7 @@ module V2
         }
       end
 
+
       desc "creates new sessions", {
         notes: %q[ You need to append your api_key to request. ]
       }
@@ -34,6 +37,7 @@ module V2
         (authorized?) ? "true" : "false"
       end
 
+
       desc "delete current session aka log out.", {
         notes: %q[Close current session. It's very handy method when you re-generated
                   your current API-key.]
@@ -43,6 +47,8 @@ module V2
         clear_session
         {:message => "Session is closed now."}
       end
+
+
     end
   end
 end
