@@ -1,6 +1,7 @@
 {
   "development": {
     "ga_account": "",
+    "projects_unlimited": false,
     "nexus_url": "http://nexus.pro",
     "bitbucket_secret": "yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ",
     "bitbucket_token": "HgSkE62pTT3HmxFGAm",
@@ -43,6 +44,7 @@
   },
   "test": {
     "ga_account": "",
+    "projects_unlimited": false,
     "nexus_url": "http://nexus.pro",
     "bitbucket_secret": "yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ",
     "bitbucket_token": "HgSkE62pTT3HmxFGAm",
@@ -88,6 +90,7 @@
   },
   "production": {
     "ga_account": "UA-32702672-1",
+    "projects_unlimited": false,
     "nexus_url": "http://nexus.pro",
     "bitbucket_secret": "env_BITBUCKET_SECRET",
     "bitbucket_token": "env_BITBUCKET_TOKEN",
