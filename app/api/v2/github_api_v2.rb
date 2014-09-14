@@ -32,7 +32,7 @@ module V2
           to update your GitHub credentials.
 
           **PS** If it's shows no or old data, then you can use the `github/sync` endpoint
-          to update your account.
+          to update your account with the current meta data from GitHub.
         ]
       }
       params do
@@ -108,61 +108,6 @@ module V2
         end
 
         present :status, task_status
-      end
-
-
-      #-- GET '/github/search' ------------------------------------------------
-      desc "search github repositories on github", {
-        notes: %q[
-          "This api allows you to search github repositories on github."
-        ]
-      }
-      params do
-        requires :q, type: String, desc: "search term"
-        optional :langs, type: String, desc: "filter results by languages"
-        optional :users, type: String, desc: "comma-separated list of usernames"
-        optional :page, type: Integer, default: 1, desc: "pagination number"
-      end
-      get '/search' do
-        authorized?
-        user = current_user
-        github_connected?(user)
-
-        page = params[:page]
-        per_page = 30
-        q = params[:q].to_s
-
-        if q.nil? or q.empty?
-          error! "Search term is unspecified", 400
-        end
-
-        search_results = Github.search(q, params[:langs], params[:users], page, per_page)
-        total_count = search_results['total_count']
-        results = process_search_results(search_results)
-
-        present :results, results
-        present :paging, list_to_paging(results, page, total_count, per_page), with: EntitiesV2::PagingEntity
-      end
-
-
-      #-- POST '/hook' -----------------------------------------------
-      desc "GitHub Hook", {
-        notes: %q[This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ]
-      }
-      params do
-        requires :project_id, type: String, desc: "Project ID"
-      end
-      post '/hook/:project_id' do
-        Rails.logger.info "hook params: #{params}"
-        authorized?
-        project = Project.find_by_id( params[:project_id] )
-
-        if project && project.collaborator?( current_user )
-          Thread.new{ ProjectService.update( project, project.notify_after_api_update ) }
-          present :success, true
-        else
-          present :success, "No! You do not have access to this project!"
-        end
       end
 
 
@@ -263,6 +208,29 @@ module V2
         ProjectService.destroy project[:_id].to_s
         present :success, true
       end
+
+
+      #-- POST '/hook' -----------------------------------------------
+      desc "GitHub Hook", {
+        notes: %q[This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ]
+      }
+      params do
+        requires :project_id, type: String, desc: "Project ID"
+      end
+      post '/hook/:project_id' do
+        Rails.logger.info "hook params: #{params}"
+        authorized?
+        project = Project.find_by_id( params[:project_id] )
+
+        if project && project.collaborator?( current_user )
+          Thread.new{ ProjectService.update( project, project.notify_after_api_update ) }
+          present :success, true
+        else
+          present :success, "No! You do not have access to this project!"
+        end
+      end
+
+
 
     end #end of resource block
   end
