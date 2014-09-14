@@ -25,14 +25,14 @@ module V2
       #-- GET '/' -------------------------------------------------------------
       desc "lists your's github repos", {
         notes: %q[
-          It shows all repositories you and your's organization have hosted on Github.
+          This endpoint shows all repositories from your Github account.
 
-          This enpoint expects that you have github account already connected and tokens
-          are still valid. If not, then please visit **settings page**.
-          to update your github credentials.
+          This enpoint expects that you have a GitHub account connected and the token
+          is still valid. If that is not the case please visit **https://www.versioneye.com/settings/connect**.
+          to update your GitHub credentials.
 
-          **PS** If it's shows old data, then you can use `github/sync` endpoint
-          to import the latest changes.
+          **PS** If it's shows no or old data, then you can use the `github/sync` endpoint
+          to update your account.
         ]
       }
       params do
@@ -58,7 +58,7 @@ module V2
         query_filters[:owner_type]  = params[:org_type] unless params[:org_type].nil?
 
         if user.github_repos.all.count == 0
-          #try to import users repos when there's no repos.
+          # try to import users repos when there's no repos.
           GitHubService.cached_user_repos(user)
         end
 
@@ -89,6 +89,9 @@ module V2
           Reimports ALL GitHub Repositories. This Endpoint fetches meta information to all
           repositories in your GitHub account. Meta information such as repo name, branches and
           supported project files.
+
+          This endpoint works asynchronously and returns a status code. The status code is either
+          **running** or **done**.
         ]
       }
       get '/sync' do
