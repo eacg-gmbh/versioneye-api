@@ -12,6 +12,7 @@ module V2
     helpers UserHelpers
 
     resource :me do
+
       desc "shows profile of authorized user", {
         notes: %q[
             On Swagger, you can create session by adding additional parameter :api_key.
@@ -26,6 +27,7 @@ module V2
         present @current_user, with: EntitiesV2::UserDetailedEntity
       end
 
+
       desc "shows favorite packages for authorized user"
       params do
         optional :page, type: Integer, desc: "page number for pagination"
@@ -34,6 +36,7 @@ module V2
         authorized?
         make_favorite_response(@current_user, params[:page], 30)
       end
+
 
       desc "shows comments of authorized user"
       params do
@@ -44,14 +47,20 @@ module V2
         make_comment_response(@current_user, params[:page], 30)
       end
 
+
       desc "shows unread notifications of authorized user", {
-        notes: "It will show your's latest notifications. Currently it returns just latest 30 notifications."
+        notes: %q[
+          This Endpoint returns the 30 latest notifications.
+
+          If there are new versions out there for software packages you follow directly on VersionEye, then
+          each new version is a new **notification** for your account.
+        ]
       }
       get '/notifications' do
         authorized?
 
         unread_notifications = Notification.by_user(@current_user).desc(:created_at).limit(30)
-        temp_notice = Notification.new #grape can't handle plain Hashs w.o to_json
+        temp_notice = Notification.new # Grape can't handle plain Hashs w.o to_json
         temp_notice[:user_info] = @current_user
         temp_notice[:unread] = unread_notifications.count
         temp_notice[:notifications] = unread_notifications
