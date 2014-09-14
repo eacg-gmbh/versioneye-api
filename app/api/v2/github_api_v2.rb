@@ -25,13 +25,13 @@ module V2
       #-- GET '/' -------------------------------------------------------------
       desc "lists your's github repos", {
         notes: %q[
-          This endpoint shows all repositories from your Github account.
+          This endpoint shows all imported repositories from your Github account.
 
           This enpoint expects that you have a GitHub account connected and the token
           is still valid. If that is not the case please visit **https://www.versioneye.com/settings/connect**.
           to update your GitHub credentials.
 
-          **PS** If it's shows no or old data, then you can use the `github/sync` endpoint
+          If it's shows no or old data, then you can use the `github/sync` endpoint
           to update your account with the current meta data from GitHub.
         ]
       }
@@ -114,6 +114,8 @@ module V2
       #-- GET '/:repo_key' ----------------------------------------------------
       desc "shows the detailed information for the repository", {
         notes: %q[
+          This Endpoint returns detailed information about a GitHub repository.
+
           Due the limits of our current API framework, the repo key has to be
           encoded as url-safe string. That means all '/' has to be replaced with
           colons ':' and '.' has to be replaced with '~'.
@@ -146,7 +148,7 @@ module V2
       #-- POST '/:repo_key' --------------------------------------------------
       desc "imports project file from github", {
         notes: %q[
-          You can use this API to import your github repo as project.
+          Use this Endpoint to import a project file from GitHub. This will create a new project on VersionEye.
 
           Due the limits of our current API framework, the repo key has to be
           encoded as url-safe string. That means all '/' has to be replaced with
