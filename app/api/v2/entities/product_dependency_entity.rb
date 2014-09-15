@@ -5,6 +5,7 @@ module EntitiesV2
     expose :name
     expose :dep_prod_key
     expose :version
+    expose :parsed_version
     expose :group_id
     expose :artifact_id
     expose :scope
