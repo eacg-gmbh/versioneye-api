@@ -1,4 +1,5 @@
 require 'grape-entity'
+require_relative 'product_dependency_entity.rb'
 
 module EntitiesV2
 
@@ -16,6 +17,7 @@ module EntitiesV2
     expose :license_info, :documentation => {:type => 'string', :desc => 'licence of package'}
     expose :description , :documentation => {:desc => 'description of package'}
     expose :updated_at  , :documentation => {:desc => 'Date of last update'}
+    expose :dependencies, :using => ProductDependencyEntity, :if => { :type => :full}
   end
 
 end

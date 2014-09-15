@@ -131,7 +131,7 @@ module V2
         end
 
         Rails.cache.delete( project.id.to_s )
-        # project = add_dependency_licences(project)
+        project = add_dependency_licences(project)
 
         present project, with: EntitiesV2::ProjectEntity, :type => :full
       end
