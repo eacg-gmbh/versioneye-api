@@ -82,6 +82,8 @@ module ProductHelpers
     current_product = Product.fetch_product(lang, prod_key)
     if current_product.nil?
       error! "Zero results for prod_key `#{params[:prod_key]}`", 404
+    else
+      current_product.version = VersionService.newest_version_from( current_product.versions )
     end
     current_product
   end
