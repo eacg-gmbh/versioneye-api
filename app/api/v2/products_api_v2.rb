@@ -90,7 +90,7 @@ module V2
           error! error_msg, 404
         end
 
-        present product, with: EntitiesV2::ProductEntityDetailed
+        present product, with: EntitiesV2::ProductEntityDetailed, type: :full
       end
 
 
