@@ -49,5 +49,10 @@ module ProjectHelpers
       end
     end
     project
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
+    project
   end
+
 end
