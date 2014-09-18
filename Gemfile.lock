@@ -1,13 +1,13 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: afcb1c7643dad8367b1862209172c88ac759e4b7
-  tag: v5.6.2
+  revision: 87e6f8e98507a35c02ed8fd9223797049ea341b4
+  tag: v5.6.6
   specs:
-    versioneye-core (5.6.2)
+    versioneye-core (5.6.6)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       bunny (~> 1.4.0)
-      cocoapods-core (~> 0.33.0)
+      cocoapods-core (~> 0.34.0.rc2)
       dalli (~> 2.7.0)
       httparty (~> 0.13.1)
       json (~> 1.8.0)
@@ -77,7 +77,7 @@ GEM
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
     builder (3.0.4)
-    bunny (1.4.0)
+    bunny (1.4.1)
       amq-protocol (>= 1.9.2)
     capistrano (3.2.1)
       i18n
@@ -100,11 +100,11 @@ GEM
       selenium-webdriver
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
-    cocoapods-core (0.33.1)
+    cocoapods-core (0.34.0.rc2)
       activesupport (>= 3.2.15)
       fuzzy_match (~> 2.0.4)
       json_pure (~> 1.8)
-      nap (~> 0.5)
+      nap (~> 0.8.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     coffee-rails (3.2.2)
