@@ -81,16 +81,45 @@ module V2
         requires :prod_key, :type => String,
                             :regexp => /[\w|:|~|-|\.]+/,
                             :desc => %Q["Encoded product key, replace all `/` and `.`]
+        optional :prod_version, :type => String, :desc => %Q["Version string"]
       end
       get '/:lang/:prod_key' do
         product = fetch_product(params[:lang], params[:prod_key])
 
-        if product.nil?
-          error_msg = "No such package for #{params[:lang]} with product key: `#{params[:prod_key]}`."
-          error! error_msg, 404
+        prod_version = params[:prod_version]
+        if !prod_version.to_s.empty?
+          version_obj = product.version_by_number prod_version
+          product.version = prod_version if version_obj
         end
 
         present product, with: EntitiesV2::ProductEntityDetailed, type: :full
+      end
+
+
+      desc "list versions of a package", {
+        notes: %q[
+
+                  Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
+
+                  Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+
+                  #### Notes about status codes
+
+                    * API returns 404, when the product with given product key doesnt exists.
+
+                    * Response 302 means that you didnt encode prod_key correctly.* (Replace all dots & slashes ) *
+              ]
+      }
+      params do
+        requires :lang, :type => String, :desc => %Q["Name of programming language"]
+        requires :prod_key, :type => String,
+                            :regexp => /[\w|:|~|-|\.]+/,
+                            :desc => %Q["Encoded product key, replace all `/` and `.`]
+      end
+      get '/:lang/:prod_key/versions' do
+        product = fetch_product(params[:lang], params[:prod_key])
+
+        present product, with: EntitiesV2::ProductEntityVersions, type: :full
       end
 
 

@@ -19,6 +19,11 @@ describe V2::ProductsApiV2 do
 
 
   describe "GET detailed info for specific packcage" do
+    it "returns error code for not existing product" do
+      package_url =  "#{product_uri}/ruby/not_exist"
+      get package_url
+      response.status.should eql(404)
+    end
     it "returns same product" do
       test_product = ProductFactory.create_new
       prod_key_safe = encode_prod_key( test_product.prod_key )
@@ -27,6 +32,42 @@ describe V2::ProductsApiV2 do
       response.status.should eql(200)
       response_data = JSON.parse(response.body)
       response_data["name"].should eql( test_product.name )
+      response_data["version"].should eql( test_product.version )
+    end
+    it "returns product with requested version" do
+      test_product = ProductFactory.create_new
+      test_product.add_version "test_1.0"
+      test_product.save
+      prod_key_safe = encode_prod_key( test_product.prod_key )
+      package_url =  "#{product_uri}/#{test_product.language}/#{prod_key_safe}?prod_version=test_1.0"
+      get package_url
+      response.status.should eql(200)
+      response_data = JSON.parse(response.body)
+      response_data["name"].should eql( test_product.name )
+      response_data["version"].should eql( "test_1.0" )
+    end
+  end
+
+
+  describe "GET versions for specific packcage" do
+    it "returns error code for not existing product" do
+      package_url =  "#{product_uri}/ruby/not_exist/versions"
+      get package_url
+      response.status.should eql(404)
+    end
+    it "returns the package with all versions" do
+      test_product = ProductFactory.create_new
+      test_product.add_version "1.0.0"
+      test_product.add_version "2.0.0"
+      test_product.add_version "3.0.0"
+      test_product.save
+      prod_key_safe = encode_prod_key( test_product.prod_key )
+      package_url =  "#{product_uri}/#{test_product.language}/#{prod_key_safe}/versions"
+      get package_url
+      response.status.should eql(200)
+      response_data = JSON.parse(response.body)
+      response_data["name"].should eql( test_product.name )
+      response_data["versions"].count.should eql( 4 )
     end
   end
 

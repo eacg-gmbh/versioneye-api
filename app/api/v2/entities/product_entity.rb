@@ -1,5 +1,6 @@
 require 'grape-entity'
 require_relative 'product_dependency_entity.rb'
+require_relative 'product_version_entity.rb'
 
 module EntitiesV2
 
@@ -9,6 +10,10 @@ module EntitiesV2
     expose :prod_key , :documentation => {:type => 'string', :desc => 'product key for given package'}
     expose :version  , :documentation => {:desc => 'Latest version'}
     expose :prod_type, :documentation => {:type => 'string', :desc => 'product type of package'}
+  end
+
+  class ProductEntityVersions < ProductEntity
+    expose :versions, :using => ProductVersionEntity, :if => { :type => :full}
   end
 
   class ProductEntityDetailed < ProductEntity
