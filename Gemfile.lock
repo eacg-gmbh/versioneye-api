@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 104e27fe7ff0a035b247132d6365e9af0eae1beb
-  tag: v6.1.2
+  revision: 9b497cbc8419d2f4008092d522058aaa2389e221
+  tag: v6.2.0
   specs:
-    versioneye-core (6.1.2)
+    versioneye-core (6.2.0)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       bundler (= 1.7.3)
@@ -331,7 +331,7 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
-    webmock (1.18.0)
+    webmock (1.19.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
     websocket (1.2.1)
@@ -381,6 +381,6 @@ DEPENDENCIES
   uglifier (~> 2.5.1)
   vcr (~> 2.9.2)
   versioneye-core!
-  webmock (~> 1.18.0)
+  webmock (~> 1.19.0)
   will_paginate_mongoid (= 2.0.1)
   yui-compressor (~> 0.12.0)
