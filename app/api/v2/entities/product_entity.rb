@@ -25,6 +25,7 @@ module EntitiesV2
     expose :license_info, :documentation => {:type => 'string', :desc => 'licence of package'}
     expose :description , :documentation => {:desc => 'description of package'}
     expose :updated_at  , :documentation => {:desc => 'Date of last update'}
+    expose :released_string, :documentation => {:desc => 'Release date of this version'}
     expose :dependencies, :using => ProductDependencyEntity, :if => { :type => :full }
     expose :license_list, :as => "licenses", :using => ProductLicenseEntity, :if => { :type => :full }
     expose :http_version_links_combined, :as => "links", :using => ProductLinkEntity, :if => { :type => :full }
