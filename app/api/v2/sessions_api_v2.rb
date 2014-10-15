@@ -8,6 +8,10 @@ module V2
 
     resource :sessions do
 
+      before do
+        track_apikey
+      end
+
 
       desc "returns session info for authorized users", {
         notes: %q[If current user has active session, then this

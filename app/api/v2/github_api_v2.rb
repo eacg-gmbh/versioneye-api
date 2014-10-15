@@ -11,14 +11,12 @@ module V2
     helpers SessionHelpers
     helpers PagingHelpers
     helpers ProductHelpers
-    helpers CacheHelpers
     helpers SearchHelpers
 
     resource :github do
 
       before do
         track_apikey
-        init_cache({expires_in: 300})
       end
 
 

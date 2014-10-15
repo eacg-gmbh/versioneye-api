@@ -3,8 +3,8 @@ module SessionHelpers
 
   def authorized?
     @api_key = header['api_key']
-    @api_key = params[:api_key]
-    cookies[:api_key] = @api_key unless @api_key.nil?
+    @api_key = params[:api_key] if @api_key.to_s.empty?
+    cookies[:api_key] = @api_key if @api_key
     @current_user = current_user()
     if @current_user.nil?
       error! "Request not authorized.", 401
@@ -13,7 +13,7 @@ module SessionHelpers
   end
 
   def authorize( token )
-    @current_user = User.authenticate_with_apikey(token)
+    @current_user = User.authenticate_with_apikey( token )
     if @current_user.nil?
       error! "API token not valid.", 531
     end
@@ -23,7 +23,7 @@ module SessionHelpers
 
   def current_user
     cookie_token  = cookies[:api_key]
-    @current_user = authorize(cookie_token) unless cookie_token.nil?
+    @current_user = authorize( cookie_token ) if cookie_token
     @current_user
   end
 
@@ -40,15 +40,23 @@ module SessionHelpers
   end
 
   def track_apikey
-    api_key = (request[:api_key] or request.cookies["api_key"])
+    api_key = request[:api_key]
+    api_key = request.cookies["api_key"] if api_key.to_s.empty?
 
     user_api = Api.where(api_key: api_key).shift
-    return false if api_key.nil? or user_api.nil?
+    if user_api
+      user = User.find_by_id user_api.user_id
+    end
 
-    user = User.find_by_id user_api.user_id
+    method = "GET"
+    method = "POST" if request.post?
+
+    protocol = "http://"
+    protocol = "https://" if request.ssl?
 
     call_data = {
-      fullpath: "#{request.host_with_port}/#{request.fullpath}",
+      fullpath: "#{protocol}#{request.host_with_port}#{request.fullpath}",
+      http_method: method,
       ip:       request.ip,
       api_key:  api_key,
       user_id:  (user.nil?) ? nil : user.id

@@ -12,6 +12,9 @@ module V2
     helpers UserHelpers
 
     resource :me do
+      before do
+        track_apikey
+      end
 
       desc "shows profile of authorized user", {
         notes: %q[
@@ -79,9 +82,9 @@ module V2
         requires :username, :type => String, :desc => "username"
       end
       get '/:username' do
-          authorized?
-          @user = User.find_by_username(params[:username])
-          present @user, with: EntitiesV2::UserEntity
+        authorized?
+        @user = User.find_by_username(params[:username])
+        present @user, with: EntitiesV2::UserEntity
       end
 
       desc "shows user's favorite packages"
@@ -90,11 +93,11 @@ module V2
         optional :page, :type => Integer, :desc => "Pagination number"
       end
       get '/:username/favorites' do
-         authorized?
-         @user = User.find_by_username(params[:username])
-         error!("User with username `#{params[:username]}` don't exists.", 400) if @user.nil?
+        authorized?
+        @user = User.find_by_username(params[:username])
+        error!("User with username `#{params[:username]}` don't exists.", 400) if @user.nil?
 
-         make_favorite_response(@user, params[:page], 30)
+        make_favorite_response(@user, params[:page], 30)
       end
 
       desc "shows user's comments"
