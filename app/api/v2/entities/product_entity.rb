@@ -1,6 +1,7 @@
 require 'grape-entity'
 require_relative 'product_dependency_entity.rb'
 require_relative 'product_link_entity.rb'
+require_relative 'product_archive_entity.rb'
 require_relative 'product_license_entity.rb'
 require_relative 'product_version_entity.rb'
 
@@ -27,6 +28,7 @@ module EntitiesV2
     expose :dependencies, :using => ProductDependencyEntity, :if => { :type => :full }
     expose :license_list, :as => "licenses", :using => ProductLicenseEntity, :if => { :type => :full }
     expose :http_version_links_combined, :as => "links", :using => ProductLinkEntity, :if => { :type => :full }
+    expose :archives, :using => ProductArchiveEntity, :if => { :type => :full }
   end
 
 end
