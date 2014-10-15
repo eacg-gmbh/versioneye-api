@@ -184,6 +184,7 @@ describe V2::ProductsApiV2 do
       @dep_4 = DependencyFactory.create_new @product_4, @product_1, true
 
       @safe_prod_key = encode_prod_key(@product.prod_key)
+      LanguageService.cache.delete "distinct_languages"
     end
 
     it "returns the existing references" do
