@@ -42,7 +42,8 @@ module ProductHelpers
     special_languages = {
       "php" => "PHP",
       "node.js" =>  "Node.JS",
-      "nodejs" => "Node.JS"
+      "nodejs" => "Node.JS",
+      "javascript" => "JavaScript"
     }
 
     parsed_lang = lang.downcase
@@ -80,6 +81,7 @@ module ProductHelpers
     lang = parse_language(lang)
     prod_key = decode_prod_key(prod_key)
     current_product = Product.fetch_product(lang, prod_key)
+    current_product = Product.fetch_bower( prod_key ) if current_product.nil?
     if current_product.nil?
       error! "Zero results for prod_key `#{params[:prod_key]}`", 404
     else
