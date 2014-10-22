@@ -41,7 +41,9 @@
     "aws_s3_port": 4567,
     "aws_use_ssl": false,
     "aws_access_key_id": "aws_bullshit_bingo_access_key",
-    "aws_secret_access_key": "aws_bullshit_bingo_secret"
+    "aws_secret_access_key": "aws_bullshit_bingo_secret",
+    "default_project_period": "daily",
+    "default_project_public": false
   },
   "test": {
     "ga_account": "",
@@ -88,7 +90,9 @@
     "aws_use_ssl": false,
     "aws_access_key_id": "aws_bullshit_bingo_access_key",
     "aws_secret_access_key": "aws_bullshit_bingo_secret",
-    "references_live_update": true
+    "references_live_update": true,
+    "default_project_period": "daily",
+    "default_project_public": false
   },
   "production": {
     "ga_account": "UA-32702672-1",
@@ -132,7 +136,9 @@
     "aws_access_key_id": "env_AWS_S3_ACCESS_KEY_ID",
     "aws_secret_access_key": "env_AWS_S3_SECRET_ACCESS_KEY",
     "s3_infographics_bucket": "veye_prod_infographics",
-    "s3_projects_bucket": "veye_prod_projects"
+    "s3_projects_bucket": "veye_prod_projects",
+    "default_project_period": "daily",
+    "default_project_public": false
   },
   "enterprise": {
     "ga_account": "",
@@ -175,6 +181,8 @@
     "bitbucket_token": "env_BITBUCKET_TOKEN",
     "cocoapods_spec_git": "https://github.com/CocoaPods/Specs.git",
     "cocoapods_spec": "/mnt/cocoapods/cocoapods-specs",
-    "references_live_update": true
+    "references_live_update": true,
+    "default_project_period": "daily",
+    "default_project_public": true
   }
 }
