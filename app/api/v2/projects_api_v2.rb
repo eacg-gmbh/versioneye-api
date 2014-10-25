@@ -59,7 +59,7 @@ module V2
       end
 
 
-      desc "upload project file", {
+      desc "upload project file and create a new project", {
         notes: %q[
 
               To use this resource you need either an active session or you have to append
