@@ -258,18 +258,14 @@ module V2
         optional :page, :type => Integer, :desc => "Page for paging", :regexp => /^[\d]+$/
       end
       get '/:lang/:prod_key/references' do
-        language = get_language_param(params[:lang])
-        language = LanguageService.language_for( language )
-        prod_key = params[:prod_key].to_s.downcase
         page     = params[:page]
         page     = 1 if page.to_i < 1
-
-        product   = fetch_product language, prod_key
+        product = fetch_product(params[:lang], params[:prod_key])
         if product.nil?
           error! "No package for `#{params[:lang]}`/`#{params[:prod_key]}`", 404
         end
 
-        reference = ReferenceService.find_by language, product.prod_key
+        reference = ReferenceService.find_by product.language, product.prod_key
         if reference.nil?
           error! "Zero references for `#{params[:lang]}`/`#{params[:prod_key]}`", 404
         end
@@ -281,7 +277,7 @@ module V2
 
         total_count = reference.ref_count
 
-        query_data = Api.new lang: language, prod_key: prod_key
+        query_data = Api.new lang: product.language, prod_key: product.prod_key
         paging     = make_paging_for_references( page, total_count )
         results    = Api.new query: query_data, paging: paging, entries: products
 
