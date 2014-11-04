@@ -11,5 +11,7 @@ module EntitiesV2
     expose :admin
     expose :deleted
     expose :notifications
+    expose :enterprise_projects
+    expose :active
   end
 end
