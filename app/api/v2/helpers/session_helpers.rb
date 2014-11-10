@@ -57,7 +57,7 @@ module SessionHelpers
     call_data = {
       fullpath: "#{protocol}#{request.host_with_port}#{request.fullpath}",
       http_method: method,
-      ip:       request.ip,
+      ip:       env['REMOTE_ADDR'],
       api_key:  api_key,
       user_id:  (user.nil?) ? nil : user.id
     }
