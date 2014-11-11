@@ -331,7 +331,7 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
-    webmock (1.19.0)
+    webmock (1.20.4)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
     websocket (1.2.1)
@@ -381,6 +381,6 @@ DEPENDENCIES
   uglifier (~> 2.5.1)
   vcr (~> 2.9.2)
   versioneye-core!
-  webmock (~> 1.19.0)
+  webmock (~> 1.20.0)
   will_paginate_mongoid (= 2.0.1)
   yui-compressor (~> 0.12.0)
