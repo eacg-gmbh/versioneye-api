@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 99e571639535b69987ac447f8c5ca6755cd8e1cc
-  tag: v7.0.9
+  revision: 5c476899dc5779affba086738735d61c09757409
+  tag: v7.0.13
   specs:
-    versioneye-core (7.0.9)
+    versioneye-core (7.0.13)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       bundler (~> 1.7.11)
@@ -154,7 +154,7 @@ GEM
     ice_nine (0.11.1)
     journey (1.0.4)
     json (1.8.1)
-    kgio (2.9.2)
+    kgio (2.9.3)
     kramdown (1.5.0)
     libv8 (3.16.14.7)
     log4r (1.1.10)
