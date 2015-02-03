@@ -11,6 +11,8 @@ class DependencyFactory
     dependency.dep_prod_key = dep_product.prod_key
     dependency.prod_type    = dep_product.prod_type
     dependency.language     = dep_product.language
+    dependency.group_id     = dep_product.group_id
+    dependency.artifact_id  = dep_product.artifact_id
     dependency.scope        = Dependency::A_SCOPE_COMPILE
 
     if store
