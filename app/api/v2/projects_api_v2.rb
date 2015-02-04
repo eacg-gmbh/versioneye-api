@@ -209,6 +209,44 @@ module V2
       desc "merge a project into another one", {
         notes: %q[
 
+              This endpoint merges a project (child_id) into another project (group_id/artifact_id). 
+              This endpoint is specially for Maven based projects! 
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
+      params do
+        requires :group_id,    :type => String, :desc => "GroupId of the parent project"
+        requires :artifact_id, :type => String, :desc => "ArtifactId of the parent project"
+        requires :child_id,    :type => String, :desc => "Project ID of the child"
+      end
+      get '/:group_id/:artifact_id/merge_ga/:child_id' do
+        authorized?
+
+        group_id    = params[:group_id].to_s.gsub('~', '.').gsub(':', '/')
+        artifact_id = params[:artifact_id].to_s.gsub('~', '.').gsub(':', '/')
+        child_id    = params[:child_id]
+
+        parent = Project.find_by_ga group_id, artifact_id
+        if parent.nil? 
+          error! "Project `#{group_id}/#{artifact_id}` doesn't exists", 400
+        end
+
+        child = Project.find child_id
+        if child.nil? 
+          error! "Project `#{child_id}` doesn't exists", 400
+        end
+
+        ProjectService.merge_by_ga group_id, artifact_id, child_id, current_user.id 
+
+        {success: true}
+      end
+
+
+      desc "merge a project into another one", {
+        notes: %q[
+
               This endpoint merges a project (child_id) into another project (parent_id). 
               To use this resource you need either an active session or you have to append
               your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
