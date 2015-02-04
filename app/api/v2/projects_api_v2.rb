@@ -205,6 +205,79 @@ module V2
         {success: true, licenses: licenses}
       end
 
+
+      desc "merge a project into another one", {
+        notes: %q[
+
+              This endpoint merges a project (child_id) into another project (parent_id). 
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
+      params do
+        requires :parent_id, :type => String, :desc => "Project ID of the parent"
+        requires :child_id, :type => String, :desc => "Project ID of the child"
+      end
+      get '/:parent_id/merge/:child_id' do
+        authorized?
+
+        parent_id = params[:parent_id]
+        child_id  = params[:child_id]
+
+        parent = Project.find parent_id
+        if parent.nil? 
+          error! "Project `#{parent_id}` doesn't exists", 400
+        end
+
+        child = Project.find child_id
+        if child.nil? 
+          error! "Project `#{child_id}` doesn't exists", 400
+        end
+
+        ProjectService.merge parent_id, child_id, current_user.id 
+
+        {success: true}
+      end
+
+
+      desc "unmerge a project", {
+        notes: %q[
+
+              This endpoint unmerges a project (child_id) from another project (parent_id). It makes the 
+              chilld again a separate project! 
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
+      params do
+        requires :parent_id, :type => String, :desc => "Project ID of the parent"
+        requires :child_id, :type => String, :desc => "Project ID of the child"
+      end
+      get '/:parent_id/unmerge/:child_id' do
+        authorized?
+
+        parent_id = params[:parent_id]
+        child_id  = params[:child_id]
+
+        parent = Project.find parent_id
+        if parent.nil? 
+          error! "Project `#{parent_id}` doesn't exists", 400
+        end
+
+        child = Project.find child_id
+        if child.nil? 
+          error! "Project `#{child_id}` doesn't exists", 400
+        end
+
+        ProjectService.unmerge parent_id, child_id, current_user.id 
+
+        {success: true}
+      end
+
+
+
     end
 
   end
