@@ -78,6 +78,43 @@ describe V2::ProjectsApiV2 do
     end
   end
 
+
+  describe "Update an existing project as authorized user" do
+    include Rack::Test::Methods
+
+    it "fails, when upload-file is missing" do
+      response = post "#{project_uri}/test_key", {:api_key => user_api.api_key}, "HTTPS" => "on"
+      response.status.should eq(400)
+    end
+
+    it "returns 400 if project not found" do
+      file = test_file
+      response = post "#{project_uri}/test_key", {
+        project_file: file,
+        api_key:   user_api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      response.status.should eq(400)
+    end
+
+    it "returns 200 after successfully project update" do
+      project = ProjectFactory.create_new test_user
+      Project.count.should eq(1)
+      update_uri = "#{project_uri}/#{project.id.to_s}?api_key=#{user_api.api_key}"
+      file = test_file
+      response = post update_uri, {
+        project_file: file,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      response.status.should eq(201)
+    end
+  end
+
+
   describe "Accessing not-existing project as authorized user" do
 
     it "fails when authorized user uses project key that don exist" do
