@@ -120,6 +120,31 @@ describe V2::ProjectsApiV2 do
 
     it "returns 200 after successfully merged" do
       parent = ProjectFactory.create_new test_user
+      parent.group_id = "com.spring"
+      parent.artifact_id = 'tx.core'
+      parent.save 
+
+      child = ProjectFactory.create_new test_user, {:name => "child"}, true 
+      Project.count.should eq(2)
+      Project.where(:parent_id.ne => nil).count.should eq(0)
+
+      group    = parent.group_id.gsub(".", "~")
+      artifact = parent.artifact_id.gsub(".", "~")
+      merge_uri = "#{project_uri}/#{group}/#{artifact}/merge_ga/#{child.id.to_s}?api_key=#{user_api.api_key}"
+      response = get merge_uri
+      response.status.should eq(200)
+      Project.where(:parent_id.ne => nil).count.should eq(1)
+      child = Project.find child.id 
+      child.parent_id.to_s.should eq(parent.id.to_s)
+    end
+  end
+
+
+  describe "Merge existing projects as authorized user" do
+    include Rack::Test::Methods
+
+    it "returns 200 after successfully merged" do
+      parent = ProjectFactory.create_new test_user
       Project.count.should eq(1)
 
       child = ProjectFactory.create_new test_user, {:name => "child"}, true 
