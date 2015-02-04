@@ -328,7 +328,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.7.11)
+  bundler (~> 1.7.12)
   capybara (~> 2.4.1)
   capybara-firebug (~> 2.1.0)
   coffee-rails (~> 3.2.0)
