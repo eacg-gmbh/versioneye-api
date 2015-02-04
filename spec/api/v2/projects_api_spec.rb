@@ -115,6 +115,50 @@ describe V2::ProjectsApiV2 do
   end
 
 
+  describe "Merge existing projects as authorized user" do
+    include Rack::Test::Methods
+
+    it "returns 200 after successfully merged" do
+      parent = ProjectFactory.create_new test_user
+      Project.count.should eq(1)
+
+      child = ProjectFactory.create_new test_user, {:name => "child"}, true 
+      Project.count.should eq(2)
+      Project.where(:parent_id.ne => nil).count.should eq(0)
+
+      merge_uri = "#{project_uri}/#{parent.id.to_s}/merge/#{child.id.to_s}?api_key=#{user_api.api_key}"
+      response = get merge_uri
+      response.status.should eq(200)
+      Project.where(:parent_id.ne => nil).count.should eq(1)
+      child = Project.find child.id 
+      child.parent_id.to_s.should eq(parent.id.to_s)
+    end
+  end
+
+
+  describe "UnMerge existing projects as authorized user" do
+    include Rack::Test::Methods
+
+    it "returns 200 after successfully unmerged" do
+      parent = ProjectFactory.create_new test_user
+      Project.count.should eq(1)
+
+      child = ProjectFactory.create_new test_user, {:name => "child"}, true 
+      Project.count.should eq(2)
+      child.parent_id = parent.id.to_s 
+      child.save 
+      Project.where(:parent_id.ne => nil).count.should eq(1)
+
+      merge_uri = "#{project_uri}/#{parent.id.to_s}/unmerge/#{child.id.to_s}?api_key=#{user_api.api_key}"
+      response = get merge_uri
+      response.status.should eq(200)
+      Project.where(:parent_id.ne => nil).count.should eq(0)
+      child = Project.find child.id 
+      child.parent_id.to_s.should eq("")
+    end
+  end
+
+
   describe "Accessing not-existing project as authorized user" do
 
     it "fails when authorized user uses project key that don exist" do
