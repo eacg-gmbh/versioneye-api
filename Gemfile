@@ -18,7 +18,7 @@ group :assets do
   gem 'sass'                  , :require => 'sass'
   gem 'sass-rails'            , '~> 3.2.6'
   gem 'coffee-rails'          , '~> 3.2.0'
-  gem 'uglifier'              , '~> 2.5.1'
+  gem 'uglifier'              , '~> 2.7.0'
   gem 'yui-compressor'        , '~> 0.12.0'
   gem 'turbo-sprockets-rails3', '~> 0.3.0'
 end
