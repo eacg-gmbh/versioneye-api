@@ -29,7 +29,7 @@ group :development do
   # gem 'capistrano-bundler', '1.1.3'
   gem 'psych'             , '~> 2.0.5'
   gem 'terminal-notifier' , '~> 1.6.0'
-  gem 'fakes3'            , '0.1.6.1'
+  gem 'fakes3'            , '~> 0.1.7'
   # gem 'debugger'          , '~> 1.6.8'
   # gem 'irbtools'          , '1.6.1'
 end
