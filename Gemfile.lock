@@ -190,7 +190,7 @@ GEM
       persistent_http (< 2)
     polyglot (0.3.5)
     psych (2.0.8)
-    puma (2.10.2)
+    puma (2.11.0)
       rack (>= 1.1, < 2.0)
     rack (1.4.5)
     rack-accept (0.4.5)
@@ -342,7 +342,7 @@ DEPENDENCIES
   grape-swagger!
   htmlentities (~> 4.3.2)
   psych (~> 2.0.5)
-  puma (~> 2.10.2)
+  puma (~> 2.11.0)
   rails (~> 3.2.19)
   rspec (~> 3.1)
   rspec-mocks (~> 3.1)
