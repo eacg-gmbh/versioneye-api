@@ -1,0 +1,738 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token hasghha88as7f7277181
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 15 Feb 2015 17:58:26 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1020'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4972'
+      X-Ratelimit-Reset:
+      - '1424023283'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Sun, 15 Feb 2015 17:11:45 GMT
+      Etag:
+      - '"a92971b41b5e1223a3556026985be3ee"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 2E0500FA:72C9:2CCE039B:54E0DE41
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 8a5c38021a5cd7cef7b8f49a296fee40
+    body:
+      encoding: UTF-8
+      string: '{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false,"public_repos":1,"public_gists":0,"followers":0,"following":0,"created_at":"2015-01-08T13:14:33Z","updated_at":"2015-02-15T17:11:45Z"}'
+    http_version: 
+  recorded_at: Sun, 15 Feb 2015 17:58:26 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user/orgs?access_token=hasghha88as7f7277181
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token hasghha88as7f7277181
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 15 Feb 2015 17:58:26 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4971'
+      X-Ratelimit-Reset:
+      - '1424023283'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Etag:
+      - '"d6af202737bd9213f4669ba1c7fe3a91"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - admin:org, read:org, repo, user, write:org
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 2E0500FA:72C9:2CCE048B:54E0DE42
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 139317cebd6caf9cd03889139437f00b
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+  recorded_at: Sun, 15 Feb 2015 17:58:26 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.7.1
+      Content-Type:
+      - application/json
+      Authorization:
+      - token hasghha88as7f7277181
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 15 Feb 2015 17:58:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4970'
+      X-Ratelimit-Reset:
+      - '1424023283'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Sun, 15 Feb 2015 17:11:45 GMT
+      Etag:
+      - W/"a92971b41b5e1223a3556026985be3ee"
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 2E0500FA:72C7:22266F87:54E0DE42
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 474556b853193c38f1b14328ce2d1b7d
+    body:
+      encoding: UTF-8
+      string: '{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false,"public_repos":1,"public_gists":0,"followers":0,"following":0,"created_at":"2015-01-08T13:14:33Z","updated_at":"2015-02-15T17:11:45Z"}'
+    http_version: 
+  recorded_at: Sun, 15 Feb 2015 17:58:27 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user/repos?access_token=hasghha88as7f7277181&page=1&per_page=30
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token hasghha88as7f7277181
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 15 Feb 2015 17:58:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '4837'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4969'
+      X-Ratelimit-Reset:
+      - '1424023283'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Etag:
+      - '"208c6c7099fe7dae4b8548e0d5d432a5"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 2E0500FA:72C8:28970713:54E0DE43
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 065b43cd9674091fec48a221b420fbb3
+    body:
+      encoding: UTF-8
+      string: '[{"id":30834526,"name":"docker_web_ui","full_name":"veye1test/docker_web_ui","owner":{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/veye1test/docker_web_ui","description":"Web
+        Interface for the Docker Remote API","fork":true,"url":"https://api.github.com/repos/veye1test/docker_web_ui","forks_url":"https://api.github.com/repos/veye1test/docker_web_ui/forks","keys_url":"https://api.github.com/repos/veye1test/docker_web_ui/keys{/key_id}","collaborators_url":"https://api.github.com/repos/veye1test/docker_web_ui/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/veye1test/docker_web_ui/teams","hooks_url":"https://api.github.com/repos/veye1test/docker_web_ui/hooks","issue_events_url":"https://api.github.com/repos/veye1test/docker_web_ui/issues/events{/number}","events_url":"https://api.github.com/repos/veye1test/docker_web_ui/events","assignees_url":"https://api.github.com/repos/veye1test/docker_web_ui/assignees{/user}","branches_url":"https://api.github.com/repos/veye1test/docker_web_ui/branches{/branch}","tags_url":"https://api.github.com/repos/veye1test/docker_web_ui/tags","blobs_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/refs{/sha}","trees_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees{/sha}","statuses_url":"https://api.github.com/repos/veye1test/docker_web_ui/statuses/{sha}","languages_url":"https://api.github.com/repos/veye1test/docker_web_ui/languages","stargazers_url":"https://api.github.com/repos/veye1test/docker_web_ui/stargazers","contributors_url":"https://api.github.com/repos/veye1test/docker_web_ui/contributors","subscribers_url":"https://api.github.com/repos/veye1test/docker_web_ui/subscribers","subscription_url":"https://api.github.com/repos/veye1test/docker_web_ui/subscription","commits_url":"https://api.github.com/repos/veye1test/docker_web_ui/commits{/sha}","git_commits_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/commits{/sha}","comments_url":"https://api.github.com/repos/veye1test/docker_web_ui/comments{/number}","issue_comment_url":"https://api.github.com/repos/veye1test/docker_web_ui/issues/comments/{number}","contents_url":"https://api.github.com/repos/veye1test/docker_web_ui/contents/{+path}","compare_url":"https://api.github.com/repos/veye1test/docker_web_ui/compare/{base}...{head}","merges_url":"https://api.github.com/repos/veye1test/docker_web_ui/merges","archive_url":"https://api.github.com/repos/veye1test/docker_web_ui/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/veye1test/docker_web_ui/downloads","issues_url":"https://api.github.com/repos/veye1test/docker_web_ui/issues{/number}","pulls_url":"https://api.github.com/repos/veye1test/docker_web_ui/pulls{/number}","milestones_url":"https://api.github.com/repos/veye1test/docker_web_ui/milestones{/number}","notifications_url":"https://api.github.com/repos/veye1test/docker_web_ui/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/veye1test/docker_web_ui/labels{/name}","releases_url":"https://api.github.com/repos/veye1test/docker_web_ui/releases{/id}","created_at":"2015-02-15T17:11:44Z","updated_at":"2015-02-15T17:11:45Z","pushed_at":"2014-12-23T20:17:26Z","git_url":"git://github.com/veye1test/docker_web_ui.git","ssh_url":"git@github.com:veye1test/docker_web_ui.git","clone_url":"https://github.com/veye1test/docker_web_ui.git","svn_url":"https://github.com/veye1test/docker_web_ui","homepage":null,"size":290,"stargazers_count":0,"watchers_count":0,"language":"Ruby","has_issues":false,"has_downloads":true,"has_wiki":true,"has_pages":false,"forks_count":0,"mirror_url":null,"open_issues_count":0,"forks":0,"open_issues":0,"watchers":0,"default_branch":"master","permissions":{"admin":true,"push":true,"pull":true}}]'
+    http_version: 
+  recorded_at: Sun, 15 Feb 2015 17:58:27 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.7.1
+      Content-Type:
+      - application/json
+      Authorization:
+      - token hasghha88as7f7277181
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 15 Feb 2015 17:58:28 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4968'
+      X-Ratelimit-Reset:
+      - '1424023283'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Sun, 15 Feb 2015 17:11:45 GMT
+      Etag:
+      - W/"a92971b41b5e1223a3556026985be3ee"
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 2E0500FA:72C9:2CCE0732:54E0DE44
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 065b43cd9674091fec48a221b420fbb3
+    body:
+      encoding: UTF-8
+      string: '{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false,"public_repos":1,"public_gists":0,"followers":0,"following":0,"created_at":"2015-01-08T13:14:33Z","updated_at":"2015-02-15T17:11:45Z"}'
+    http_version: 
+  recorded_at: Sun, 15 Feb 2015 17:58:28 GMT
+- request:
+    method: get
+    uri: https://api.github.com/repos/veye1test/docker_web_ui?access_token=hasghha88as7f7277181
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token hasghha88as7f7277181
+      Keep-Alive:
+      - 30
+      Host:
+      - api.github.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 15 Feb 2015 17:58:31 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '14579'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4967'
+      X-Ratelimit-Reset:
+      - '1424023283'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Sun, 15 Feb 2015 17:11:45 GMT
+      Etag:
+      - '"f135c07d3cd7ba542fbf421be12369c3"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 2E0500FA:72C7:2226745C:54E0DE47
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 173530fed4bbeb1e264b2ed22e8b5c20
+    body:
+      encoding: UTF-8
+      string: '{"id":30834526,"name":"docker_web_ui","full_name":"veye1test/docker_web_ui","owner":{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/veye1test/docker_web_ui","description":"Web
+        Interface for the Docker Remote API","fork":true,"url":"https://api.github.com/repos/veye1test/docker_web_ui","forks_url":"https://api.github.com/repos/veye1test/docker_web_ui/forks","keys_url":"https://api.github.com/repos/veye1test/docker_web_ui/keys{/key_id}","collaborators_url":"https://api.github.com/repos/veye1test/docker_web_ui/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/veye1test/docker_web_ui/teams","hooks_url":"https://api.github.com/repos/veye1test/docker_web_ui/hooks","issue_events_url":"https://api.github.com/repos/veye1test/docker_web_ui/issues/events{/number}","events_url":"https://api.github.com/repos/veye1test/docker_web_ui/events","assignees_url":"https://api.github.com/repos/veye1test/docker_web_ui/assignees{/user}","branches_url":"https://api.github.com/repos/veye1test/docker_web_ui/branches{/branch}","tags_url":"https://api.github.com/repos/veye1test/docker_web_ui/tags","blobs_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/refs{/sha}","trees_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees{/sha}","statuses_url":"https://api.github.com/repos/veye1test/docker_web_ui/statuses/{sha}","languages_url":"https://api.github.com/repos/veye1test/docker_web_ui/languages","stargazers_url":"https://api.github.com/repos/veye1test/docker_web_ui/stargazers","contributors_url":"https://api.github.com/repos/veye1test/docker_web_ui/contributors","subscribers_url":"https://api.github.com/repos/veye1test/docker_web_ui/subscribers","subscription_url":"https://api.github.com/repos/veye1test/docker_web_ui/subscription","commits_url":"https://api.github.com/repos/veye1test/docker_web_ui/commits{/sha}","git_commits_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/commits{/sha}","comments_url":"https://api.github.com/repos/veye1test/docker_web_ui/comments{/number}","issue_comment_url":"https://api.github.com/repos/veye1test/docker_web_ui/issues/comments/{number}","contents_url":"https://api.github.com/repos/veye1test/docker_web_ui/contents/{+path}","compare_url":"https://api.github.com/repos/veye1test/docker_web_ui/compare/{base}...{head}","merges_url":"https://api.github.com/repos/veye1test/docker_web_ui/merges","archive_url":"https://api.github.com/repos/veye1test/docker_web_ui/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/veye1test/docker_web_ui/downloads","issues_url":"https://api.github.com/repos/veye1test/docker_web_ui/issues{/number}","pulls_url":"https://api.github.com/repos/veye1test/docker_web_ui/pulls{/number}","milestones_url":"https://api.github.com/repos/veye1test/docker_web_ui/milestones{/number}","notifications_url":"https://api.github.com/repos/veye1test/docker_web_ui/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/veye1test/docker_web_ui/labels{/name}","releases_url":"https://api.github.com/repos/veye1test/docker_web_ui/releases{/id}","created_at":"2015-02-15T17:11:44Z","updated_at":"2015-02-15T17:11:45Z","pushed_at":"2014-12-23T20:17:26Z","git_url":"git://github.com/veye1test/docker_web_ui.git","ssh_url":"git@github.com:veye1test/docker_web_ui.git","clone_url":"https://github.com/veye1test/docker_web_ui.git","svn_url":"https://github.com/veye1test/docker_web_ui","homepage":null,"size":290,"stargazers_count":0,"watchers_count":0,"language":"Ruby","has_issues":false,"has_downloads":true,"has_wiki":true,"has_pages":false,"forks_count":0,"mirror_url":null,"open_issues_count":0,"forks":0,"open_issues":0,"watchers":0,"default_branch":"master","permissions":{"admin":true,"push":true,"pull":true},"parent":{"id":21104754,"name":"docker_web_ui","full_name":"versioneye/docker_web_ui","owner":{"login":"versioneye","id":3974102,"avatar_url":"https://avatars.githubusercontent.com/u/3974102?v=3","gravatar_id":"","url":"https://api.github.com/users/versioneye","html_url":"https://github.com/versioneye","followers_url":"https://api.github.com/users/versioneye/followers","following_url":"https://api.github.com/users/versioneye/following{/other_user}","gists_url":"https://api.github.com/users/versioneye/gists{/gist_id}","starred_url":"https://api.github.com/users/versioneye/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/versioneye/subscriptions","organizations_url":"https://api.github.com/users/versioneye/orgs","repos_url":"https://api.github.com/users/versioneye/repos","events_url":"https://api.github.com/users/versioneye/events{/privacy}","received_events_url":"https://api.github.com/users/versioneye/received_events","type":"Organization","site_admin":false},"private":false,"html_url":"https://github.com/versioneye/docker_web_ui","description":"Web
+        Interface for the Docker Remote API","fork":false,"url":"https://api.github.com/repos/versioneye/docker_web_ui","forks_url":"https://api.github.com/repos/versioneye/docker_web_ui/forks","keys_url":"https://api.github.com/repos/versioneye/docker_web_ui/keys{/key_id}","collaborators_url":"https://api.github.com/repos/versioneye/docker_web_ui/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/versioneye/docker_web_ui/teams","hooks_url":"https://api.github.com/repos/versioneye/docker_web_ui/hooks","issue_events_url":"https://api.github.com/repos/versioneye/docker_web_ui/issues/events{/number}","events_url":"https://api.github.com/repos/versioneye/docker_web_ui/events","assignees_url":"https://api.github.com/repos/versioneye/docker_web_ui/assignees{/user}","branches_url":"https://api.github.com/repos/versioneye/docker_web_ui/branches{/branch}","tags_url":"https://api.github.com/repos/versioneye/docker_web_ui/tags","blobs_url":"https://api.github.com/repos/versioneye/docker_web_ui/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/versioneye/docker_web_ui/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/versioneye/docker_web_ui/git/refs{/sha}","trees_url":"https://api.github.com/repos/versioneye/docker_web_ui/git/trees{/sha}","statuses_url":"https://api.github.com/repos/versioneye/docker_web_ui/statuses/{sha}","languages_url":"https://api.github.com/repos/versioneye/docker_web_ui/languages","stargazers_url":"https://api.github.com/repos/versioneye/docker_web_ui/stargazers","contributors_url":"https://api.github.com/repos/versioneye/docker_web_ui/contributors","subscribers_url":"https://api.github.com/repos/versioneye/docker_web_ui/subscribers","subscription_url":"https://api.github.com/repos/versioneye/docker_web_ui/subscription","commits_url":"https://api.github.com/repos/versioneye/docker_web_ui/commits{/sha}","git_commits_url":"https://api.github.com/repos/versioneye/docker_web_ui/git/commits{/sha}","comments_url":"https://api.github.com/repos/versioneye/docker_web_ui/comments{/number}","issue_comment_url":"https://api.github.com/repos/versioneye/docker_web_ui/issues/comments/{number}","contents_url":"https://api.github.com/repos/versioneye/docker_web_ui/contents/{+path}","compare_url":"https://api.github.com/repos/versioneye/docker_web_ui/compare/{base}...{head}","merges_url":"https://api.github.com/repos/versioneye/docker_web_ui/merges","archive_url":"https://api.github.com/repos/versioneye/docker_web_ui/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/versioneye/docker_web_ui/downloads","issues_url":"https://api.github.com/repos/versioneye/docker_web_ui/issues{/number}","pulls_url":"https://api.github.com/repos/versioneye/docker_web_ui/pulls{/number}","milestones_url":"https://api.github.com/repos/versioneye/docker_web_ui/milestones{/number}","notifications_url":"https://api.github.com/repos/versioneye/docker_web_ui/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/versioneye/docker_web_ui/labels{/name}","releases_url":"https://api.github.com/repos/versioneye/docker_web_ui/releases{/id}","created_at":"2014-06-22T20:37:08Z","updated_at":"2014-12-23T20:17:27Z","pushed_at":"2014-12-23T20:17:26Z","git_url":"git://github.com/versioneye/docker_web_ui.git","ssh_url":"git@github.com:versioneye/docker_web_ui.git","clone_url":"https://github.com/versioneye/docker_web_ui.git","svn_url":"https://github.com/versioneye/docker_web_ui","homepage":null,"size":290,"stargazers_count":3,"watchers_count":3,"language":"Ruby","has_issues":true,"has_downloads":true,"has_wiki":true,"has_pages":false,"forks_count":3,"mirror_url":null,"open_issues_count":0,"forks":3,"open_issues":0,"watchers":3,"default_branch":"master"},"source":{"id":21104754,"name":"docker_web_ui","full_name":"versioneye/docker_web_ui","owner":{"login":"versioneye","id":3974102,"avatar_url":"https://avatars.githubusercontent.com/u/3974102?v=3","gravatar_id":"","url":"https://api.github.com/users/versioneye","html_url":"https://github.com/versioneye","followers_url":"https://api.github.com/users/versioneye/followers","following_url":"https://api.github.com/users/versioneye/following{/other_user}","gists_url":"https://api.github.com/users/versioneye/gists{/gist_id}","starred_url":"https://api.github.com/users/versioneye/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/versioneye/subscriptions","organizations_url":"https://api.github.com/users/versioneye/orgs","repos_url":"https://api.github.com/users/versioneye/repos","events_url":"https://api.github.com/users/versioneye/events{/privacy}","received_events_url":"https://api.github.com/users/versioneye/received_events","type":"Organization","site_admin":false},"private":false,"html_url":"https://github.com/versioneye/docker_web_ui","description":"Web
+        Interface for the Docker Remote API","fork":false,"url":"https://api.github.com/repos/versioneye/docker_web_ui","forks_url":"https://api.github.com/repos/versioneye/docker_web_ui/forks","keys_url":"https://api.github.com/repos/versioneye/docker_web_ui/keys{/key_id}","collaborators_url":"https://api.github.com/repos/versioneye/docker_web_ui/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/versioneye/docker_web_ui/teams","hooks_url":"https://api.github.com/repos/versioneye/docker_web_ui/hooks","issue_events_url":"https://api.github.com/repos/versioneye/docker_web_ui/issues/events{/number}","events_url":"https://api.github.com/repos/versioneye/docker_web_ui/events","assignees_url":"https://api.github.com/repos/versioneye/docker_web_ui/assignees{/user}","branches_url":"https://api.github.com/repos/versioneye/docker_web_ui/branches{/branch}","tags_url":"https://api.github.com/repos/versioneye/docker_web_ui/tags","blobs_url":"https://api.github.com/repos/versioneye/docker_web_ui/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/versioneye/docker_web_ui/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/versioneye/docker_web_ui/git/refs{/sha}","trees_url":"https://api.github.com/repos/versioneye/docker_web_ui/git/trees{/sha}","statuses_url":"https://api.github.com/repos/versioneye/docker_web_ui/statuses/{sha}","languages_url":"https://api.github.com/repos/versioneye/docker_web_ui/languages","stargazers_url":"https://api.github.com/repos/versioneye/docker_web_ui/stargazers","contributors_url":"https://api.github.com/repos/versioneye/docker_web_ui/contributors","subscribers_url":"https://api.github.com/repos/versioneye/docker_web_ui/subscribers","subscription_url":"https://api.github.com/repos/versioneye/docker_web_ui/subscription","commits_url":"https://api.github.com/repos/versioneye/docker_web_ui/commits{/sha}","git_commits_url":"https://api.github.com/repos/versioneye/docker_web_ui/git/commits{/sha}","comments_url":"https://api.github.com/repos/versioneye/docker_web_ui/comments{/number}","issue_comment_url":"https://api.github.com/repos/versioneye/docker_web_ui/issues/comments/{number}","contents_url":"https://api.github.com/repos/versioneye/docker_web_ui/contents/{+path}","compare_url":"https://api.github.com/repos/versioneye/docker_web_ui/compare/{base}...{head}","merges_url":"https://api.github.com/repos/versioneye/docker_web_ui/merges","archive_url":"https://api.github.com/repos/versioneye/docker_web_ui/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/versioneye/docker_web_ui/downloads","issues_url":"https://api.github.com/repos/versioneye/docker_web_ui/issues{/number}","pulls_url":"https://api.github.com/repos/versioneye/docker_web_ui/pulls{/number}","milestones_url":"https://api.github.com/repos/versioneye/docker_web_ui/milestones{/number}","notifications_url":"https://api.github.com/repos/versioneye/docker_web_ui/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/versioneye/docker_web_ui/labels{/name}","releases_url":"https://api.github.com/repos/versioneye/docker_web_ui/releases{/id}","created_at":"2014-06-22T20:37:08Z","updated_at":"2014-12-23T20:17:27Z","pushed_at":"2014-12-23T20:17:26Z","git_url":"git://github.com/versioneye/docker_web_ui.git","ssh_url":"git@github.com:versioneye/docker_web_ui.git","clone_url":"https://github.com/versioneye/docker_web_ui.git","svn_url":"https://github.com/versioneye/docker_web_ui","homepage":null,"size":290,"stargazers_count":3,"watchers_count":3,"language":"Ruby","has_issues":true,"has_downloads":true,"has_wiki":true,"has_pages":false,"forks_count":3,"mirror_url":null,"open_issues_count":0,"forks":3,"open_issues":0,"watchers":3,"default_branch":"master"},"network_count":3,"subscribers_count":1}'
+    http_version: 
+  recorded_at: Sun, 15 Feb 2015 17:58:31 GMT
+- request:
+    method: get
+    uri: https://api.github.com/repos/veye1test/docker_web_ui/branches/master
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token hasghha88as7f7277181
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 15 Feb 2015 17:58:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '3350'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4966'
+      X-Ratelimit-Reset:
+      - '1424023283'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Etag:
+      - '"39b1d685ecae8c44e027373863180404"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 2E0500FA:72C7:2226754B:54E0DE47
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 318e55760cf7cdb40e61175a4d36cd32
+    body:
+      encoding: UTF-8
+      string: '{"name":"master","commit":{"sha":"fceb1bbfbfae7e40001ddf1498b3db34821afe06","commit":{"author":{"name":"reiz","email":"robert.reiz.81@gmail.com","date":"2014-12-23T20:16:47Z"},"committer":{"name":"reiz","email":"robert.reiz.81@gmail.com","date":"2014-12-23T20:16:47Z"},"message":"Merge
+        branch ''master'' of github.com:versioneye/docker_web_ui","tree":{"sha":"93812842a51745a96d383ae5fd19fd9282e3a5bd","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/93812842a51745a96d383ae5fd19fd9282e3a5bd"},"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/commits/fceb1bbfbfae7e40001ddf1498b3db34821afe06","comment_count":0},"url":"https://api.github.com/repos/veye1test/docker_web_ui/commits/fceb1bbfbfae7e40001ddf1498b3db34821afe06","html_url":"https://github.com/veye1test/docker_web_ui/commit/fceb1bbfbfae7e40001ddf1498b3db34821afe06","comments_url":"https://api.github.com/repos/veye1test/docker_web_ui/commits/fceb1bbfbfae7e40001ddf1498b3db34821afe06/comments","author":{"login":"reiz","id":652130,"avatar_url":"https://avatars.githubusercontent.com/u/652130?v=3","gravatar_id":"","url":"https://api.github.com/users/reiz","html_url":"https://github.com/reiz","followers_url":"https://api.github.com/users/reiz/followers","following_url":"https://api.github.com/users/reiz/following{/other_user}","gists_url":"https://api.github.com/users/reiz/gists{/gist_id}","starred_url":"https://api.github.com/users/reiz/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/reiz/subscriptions","organizations_url":"https://api.github.com/users/reiz/orgs","repos_url":"https://api.github.com/users/reiz/repos","events_url":"https://api.github.com/users/reiz/events{/privacy}","received_events_url":"https://api.github.com/users/reiz/received_events","type":"User","site_admin":false},"committer":{"login":"reiz","id":652130,"avatar_url":"https://avatars.githubusercontent.com/u/652130?v=3","gravatar_id":"","url":"https://api.github.com/users/reiz","html_url":"https://github.com/reiz","followers_url":"https://api.github.com/users/reiz/followers","following_url":"https://api.github.com/users/reiz/following{/other_user}","gists_url":"https://api.github.com/users/reiz/gists{/gist_id}","starred_url":"https://api.github.com/users/reiz/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/reiz/subscriptions","organizations_url":"https://api.github.com/users/reiz/orgs","repos_url":"https://api.github.com/users/reiz/repos","events_url":"https://api.github.com/users/reiz/events{/privacy}","received_events_url":"https://api.github.com/users/reiz/received_events","type":"User","site_admin":false},"parents":[{"sha":"2032fe2c31ad011ad7cced0cca23e8649b71ae5c","url":"https://api.github.com/repos/veye1test/docker_web_ui/commits/2032fe2c31ad011ad7cced0cca23e8649b71ae5c","html_url":"https://github.com/veye1test/docker_web_ui/commit/2032fe2c31ad011ad7cced0cca23e8649b71ae5c"},{"sha":"6faae614a9a322d23f759636822f993c4b700b22","url":"https://api.github.com/repos/veye1test/docker_web_ui/commits/6faae614a9a322d23f759636822f993c4b700b22","html_url":"https://github.com/veye1test/docker_web_ui/commit/6faae614a9a322d23f759636822f993c4b700b22"}]},"_links":{"self":"https://api.github.com/repos/veye1test/docker_web_ui/branches/master","html":"https://github.com/veye1test/docker_web_ui/tree/master"}}'
+    http_version: 
+  recorded_at: Sun, 15 Feb 2015 17:58:32 GMT
+- request:
+    method: get
+    uri: https://api.github.com/repos/veye1test/docker_web_ui/git/trees/fceb1bbfbfae7e40001ddf1498b3db34821afe06?recursive=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token hasghha88as7f7277181
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 15 Feb 2015 17:58:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '28330'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4965'
+      X-Ratelimit-Reset:
+      - '1424023283'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Sun, 15 Feb 2015 17:11:45 GMT
+      Etag:
+      - '"bd99ea4d2c45b9dd41303f02f6cea1ea"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 2E0500FA:72C4:C6F0D6F:54E0DE48
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 139317cebd6caf9cd03889139437f00b
+    body:
+      encoding: UTF-8
+      string: '{"sha":"fceb1bbfbfae7e40001ddf1498b3db34821afe06","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/fceb1bbfbfae7e40001ddf1498b3db34821afe06","tree":[{"path":".gitignore","mode":"100644","type":"blob","sha":"1a2c94dc523491dd1b597c8b3bf3f93ab4b3bed7","size":425,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/1a2c94dc523491dd1b597c8b3bf3f93ab4b3bed7"},{"path":"Gemfile","mode":"100644","type":"blob","sha":"ee154fb99e4a98b6bcd0fd65e5f997340363ec2f","size":523,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/ee154fb99e4a98b6bcd0fd65e5f997340363ec2f"},{"path":"Gemfile.lock","mode":"100644","type":"blob","sha":"f3741f6976bda7a3b62ab61a26903c14e1138c7a","size":3984,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/f3741f6976bda7a3b62ab61a26903c14e1138c7a"},{"path":"README.md","mode":"100644","type":"blob","sha":"b93357759a228d91295f6aad10be5549be5290d1","size":69,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/b93357759a228d91295f6aad10be5549be5290d1"},{"path":"README.rdoc","mode":"100644","type":"blob","sha":"dd4e97e22e159a585b20e21028f964827d5afa4e","size":478,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/dd4e97e22e159a585b20e21028f964827d5afa4e"},{"path":"Rakefile","mode":"100644","type":"blob","sha":"ba6b733dd2358d858f00445ebd91c214f0f5d2e5","size":249,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/ba6b733dd2358d858f00445ebd91c214f0f5d2e5"},{"path":"app","mode":"040000","type":"tree","sha":"da35ac0c16c2e6705c4376290273e9464beb369b","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/da35ac0c16c2e6705c4376290273e9464beb369b"},{"path":"app/assets","mode":"040000","type":"tree","sha":"c62d28cc6672f971add89db4c33c247aa6c230d5","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/c62d28cc6672f971add89db4c33c247aa6c230d5"},{"path":"app/assets/images","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"app/assets/images/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"app/assets/javascripts","mode":"040000","type":"tree","sha":"a8da6ff1d54190295eb6bef1ceab9d643c44edb4","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/a8da6ff1d54190295eb6bef1ceab9d643c44edb4"},{"path":"app/assets/javascripts/application.js","mode":"100644","type":"blob","sha":"d6925fa431be1ac585bf9a481e98f75107a6e6fb","size":664,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/d6925fa431be1ac585bf9a481e98f75107a6e6fb"},{"path":"app/assets/javascripts/bootstrap.min.js","mode":"100644","type":"blob","sha":"b04a0e82fffee109e8cd5e48b3f3aa2a9b2aceff","size":29110,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/b04a0e82fffee109e8cd5e48b3f3aa2a9b2aceff"},{"path":"app/assets/javascripts/containers.js.coffee","mode":"100644","type":"blob","sha":"24f83d18bbd38c24c4f7c3c2fc360cd68e857a2a","size":211,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/24f83d18bbd38c24c4f7c3c2fc360cd68e857a2a"},{"path":"app/assets/javascripts/images.js.coffee","mode":"100644","type":"blob","sha":"24f83d18bbd38c24c4f7c3c2fc360cd68e857a2a","size":211,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/24f83d18bbd38c24c4f7c3c2fc360cd68e857a2a"},{"path":"app/assets/javascripts/main.js","mode":"100644","type":"blob","sha":"036f7031720048a122a7878411c4e0eae4dfc13e","size":112,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/036f7031720048a122a7878411c4e0eae4dfc13e"},{"path":"app/assets/stylesheets","mode":"040000","type":"tree","sha":"02a069786706dee0de700fca899e4be630ae2a48","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/02a069786706dee0de700fca899e4be630ae2a48"},{"path":"app/assets/stylesheets/application.css","mode":"100644","type":"blob","sha":"a443db3401278f21dee3f448f317487a642967a9","size":683,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/a443db3401278f21dee3f448f317487a642967a9"},{"path":"app/assets/stylesheets/bootstrap-theme.min.css","mode":"100644","type":"blob","sha":"ba4bd28ae51616917024b5d4a8d2d20b969a9e31","size":13185,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/ba4bd28ae51616917024b5d4a8d2d20b969a9e31"},{"path":"app/assets/stylesheets/bootstrap.min.css","mode":"100644","type":"blob","sha":"679272d25859d55e9931101ef56656e2c50e5ea5","size":99961,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/679272d25859d55e9931101ef56656e2c50e5ea5"},{"path":"app/assets/stylesheets/containers.css.scss","mode":"100644","type":"blob","sha":"de8b7fb6cc9e9a7b1349a0e8ddd1d36e1483aef3","size":181,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/de8b7fb6cc9e9a7b1349a0e8ddd1d36e1483aef3"},{"path":"app/assets/stylesheets/images.css.scss","mode":"100644","type":"blob","sha":"8d74c213bddb24b3c755399d1ba8ca3874fedc8e","size":177,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/8d74c213bddb24b3c755399d1ba8ca3874fedc8e"},{"path":"app/assets/stylesheets/main.css","mode":"100644","type":"blob","sha":"113740de45f5d45369af076dbaf00b1424a6c474","size":71,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/113740de45f5d45369af076dbaf00b1424a6c474"},{"path":"app/controllers","mode":"040000","type":"tree","sha":"1dd5c95372214c70020555b3e880a3b8b488a4f6","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/1dd5c95372214c70020555b3e880a3b8b488a4f6"},{"path":"app/controllers/application_controller.rb","mode":"100644","type":"blob","sha":"4c1bf19f9b0d6cb0cfe2d914205a83233b3d1941","size":229,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/4c1bf19f9b0d6cb0cfe2d914205a83233b3d1941"},{"path":"app/controllers/concerns","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"app/controllers/concerns/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"app/controllers/containers_controller.rb","mode":"100644","type":"blob","sha":"f822d4238f18efbf30cbef2b00ea71c3a0f3cac9","size":2916,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/f822d4238f18efbf30cbef2b00ea71c3a0f3cac9"},{"path":"app/controllers/images_controller.rb","mode":"100644","type":"blob","sha":"1c03be1da2d9edc4567859cdf6a80b0811ccccc3","size":2476,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/1c03be1da2d9edc4567859cdf6a80b0811ccccc3"},{"path":"app/helpers","mode":"040000","type":"tree","sha":"7933f1c2ec68d9f92c6bad05c72c0db4329eb030","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/7933f1c2ec68d9f92c6bad05c72c0db4329eb030"},{"path":"app/helpers/application_helper.rb","mode":"100644","type":"blob","sha":"de6be7945c6a59798eb0ace177df38b05e98c2f0","size":29,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/de6be7945c6a59798eb0ace177df38b05e98c2f0"},{"path":"app/helpers/containers_helper.rb","mode":"100644","type":"blob","sha":"aa138f451cf715bcc4af7b57f5d6247e91dda67c","size":28,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/aa138f451cf715bcc4af7b57f5d6247e91dda67c"},{"path":"app/helpers/images_helper.rb","mode":"100644","type":"blob","sha":"ae16b674191368fcc58459df60b866fa08dc9522","size":1179,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/ae16b674191368fcc58459df60b866fa08dc9522"},{"path":"app/mailers","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"app/mailers/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"app/models","mode":"040000","type":"tree","sha":"615fb80266b7107675ef7d775853e81ec606e82a","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/615fb80266b7107675ef7d775853e81ec606e82a"},{"path":"app/models/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"app/models/concerns","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"app/models/concerns/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"app/views","mode":"040000","type":"tree","sha":"6bda0c2dea44bbfcf83ffd64fb49581698df935c","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/6bda0c2dea44bbfcf83ffd64fb49581698df935c"},{"path":"app/views/containers","mode":"040000","type":"tree","sha":"ed81b977ab3d7b9faa5be92136a8754f73f7f680","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/ed81b977ab3d7b9faa5be92136a8754f73f7f680"},{"path":"app/views/containers/index.html.erb","mode":"100644","type":"blob","sha":"92d72b001be23088c73ee44100f24904043361a0","size":1426,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/92d72b001be23088c73ee44100f24904043361a0"},{"path":"app/views/containers/kill.html.erb","mode":"100644","type":"blob","sha":"e41db32c9182a6ca7ca94cb47ace91d15f8930bf","size":78,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e41db32c9182a6ca7ca94cb47ace91d15f8930bf"},{"path":"app/views/containers/remove.html.erb","mode":"100644","type":"blob","sha":"06977b88ef716ee82140c6764224436460ba4eb8","size":82,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/06977b88ef716ee82140c6764224436460ba4eb8"},{"path":"app/views/containers/start.html.erb","mode":"100644","type":"blob","sha":"0a83feb80a626e3f06e671a5a65d6be3aeedbcac","size":80,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/0a83feb80a626e3f06e671a5a65d6be3aeedbcac"},{"path":"app/views/containers/stop.html.erb","mode":"100644","type":"blob","sha":"62603c64e3b839d0b905cc6d6e921003a42b82d1","size":78,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/62603c64e3b839d0b905cc6d6e921003a42b82d1"},{"path":"app/views/images","mode":"040000","type":"tree","sha":"60057236660bb2be2d62b645a75730545d7e194d","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/60057236660bb2be2d62b645a75730545d7e194d"},{"path":"app/views/images/index.html.erb","mode":"100644","type":"blob","sha":"1af03bfdf65eb4bfdc9295503004aef20e2c2e9c","size":729,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/1af03bfdf65eb4bfdc9295503004aef20e2c2e9c"},{"path":"app/views/images/remote_images.html.erb","mode":"100644","type":"blob","sha":"8aa2935ef311161a188f33b4804d8196a73288f5","size":434,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/8aa2935ef311161a188f33b4804d8196a73288f5"},{"path":"app/views/layouts","mode":"040000","type":"tree","sha":"c2450d3e3efb31116a161085dbff7320b4654f43","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/c2450d3e3efb31116a161085dbff7320b4654f43"},{"path":"app/views/layouts/application.html.erb","mode":"100644","type":"blob","sha":"93b7f4d19d77758f10d6d1892232477371f185c6","size":977,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/93b7f4d19d77758f10d6d1892232477371f185c6"},{"path":"app/views/shared","mode":"040000","type":"tree","sha":"a1a9279c41e59f5cf96965b0ed44d7e0d7521619","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/a1a9279c41e59f5cf96965b0ed44d7e0d7521619"},{"path":"app/views/shared/_input_error.html.erb","mode":"100644","type":"blob","sha":"ebf61a54ea1acf11db94a831db53e473e9e6b1d5","size":149,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/ebf61a54ea1acf11db94a831db53e473e9e6b1d5"},{"path":"app/views/shared/_messages.html.erb","mode":"100644","type":"blob","sha":"3f53a3845ff4de9fd696f76489c369c4c0d0966c","size":425,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/3f53a3845ff4de9fd696f76489c369c4c0d0966c"},{"path":"bin","mode":"040000","type":"tree","sha":"e501408c1cd4751068ac35eac88ce519d5da6046","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/e501408c1cd4751068ac35eac88ce519d5da6046"},{"path":"bin/bundle","mode":"100755","type":"blob","sha":"66e9889e8b4aeea1af13e2396fb70594232a2ae3","size":129,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/66e9889e8b4aeea1af13e2396fb70594232a2ae3"},{"path":"bin/rails","mode":"100755","type":"blob","sha":"7feb6a30e696bf9b94f204c6abb5c4d75f965046","size":220,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/7feb6a30e696bf9b94f204c6abb5c4d75f965046"},{"path":"bin/rake","mode":"100755","type":"blob","sha":"8017a0271d2130252500c4ef0f5bdf3b39582480","size":164,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/8017a0271d2130252500c4ef0f5bdf3b39582480"},{"path":"bin/spring","mode":"100755","type":"blob","sha":"253ec37c3451d65eb54c64d59cdeaf41a1c8aafc","size":510,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/253ec37c3451d65eb54c64d59cdeaf41a1c8aafc"},{"path":"config.ru","mode":"100644","type":"blob","sha":"5bc2a619e83ea182b17e2507c5e0f2f07f7cf18c","size":154,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/5bc2a619e83ea182b17e2507c5e0f2f07f7cf18c"},{"path":"config","mode":"040000","type":"tree","sha":"fda314161f50228f11f406422fb62ff310b371de","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/fda314161f50228f11f406422fb62ff310b371de"},{"path":"config/application.rb","mode":"100644","type":"blob","sha":"cac959224509596cf74a9be37148c27d0f78dca5","size":1206,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/cac959224509596cf74a9be37148c27d0f78dca5"},{"path":"config/boot.rb","mode":"100644","type":"blob","sha":"5e5f0c1fac0bcde58936530ada4fd08abcaf5a64","size":170,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/5e5f0c1fac0bcde58936530ada4fd08abcaf5a64"},{"path":"config/database.yml","mode":"100644","type":"blob","sha":"1c1a37ca8df8dafd501066d54086ca5693f4b204","size":552,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/1c1a37ca8df8dafd501066d54086ca5693f4b204"},{"path":"config/environment.rb","mode":"100644","type":"blob","sha":"ee8d90dc651948269f1b869953ff04774e737307","size":150,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/ee8d90dc651948269f1b869953ff04774e737307"},{"path":"config/environments","mode":"040000","type":"tree","sha":"5b2b4cc4ae898c1defd41e0165eede0a87987097","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/5b2b4cc4ae898c1defd41e0165eede0a87987097"},{"path":"config/environments/development.rb","mode":"100644","type":"blob","sha":"d8f3eed9b0954e76ac2ebb94fd5a6a65d9db2b2d","size":1424,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/d8f3eed9b0954e76ac2ebb94fd5a6a65d9db2b2d"},{"path":"config/environments/production.rb","mode":"100644","type":"blob","sha":"6b61d2edbd81e01cc1d89fd92b9449d179d26f11","size":3352,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/6b61d2edbd81e01cc1d89fd92b9449d179d26f11"},{"path":"config/environments/test.rb","mode":"100644","type":"blob","sha":"053f5b66d7f1746078024c7a74c637d4773135d0","size":1661,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/053f5b66d7f1746078024c7a74c637d4773135d0"},{"path":"config/initializers","mode":"040000","type":"tree","sha":"e60b035fb88acb62ea1831c620d5200bf5a30166","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/e60b035fb88acb62ea1831c620d5200bf5a30166"},{"path":"config/initializers/backtrace_silencers.rb","mode":"100644","type":"blob","sha":"59385cdf379bd06a8d2326dcd4de6d5cd5d3f5b0","size":404,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/59385cdf379bd06a8d2326dcd4de6d5cd5d3f5b0"},{"path":"config/initializers/cookies_serializer.rb","mode":"100644","type":"blob","sha":"7a06a89f0f9df784b2087d18b248f8d8c770eb72","size":128,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/7a06a89f0f9df784b2087d18b248f8d8c770eb72"},{"path":"config/initializers/filter_parameter_logging.rb","mode":"100644","type":"blob","sha":"4a994e1e7bb7ce28dcec98bad48b9a891d7dec51","size":194,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/4a994e1e7bb7ce28dcec98bad48b9a891d7dec51"},{"path":"config/initializers/inflections.rb","mode":"100644","type":"blob","sha":"ac033bf9dc846101320c96a5ce8aceb8c96ec098","size":647,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/ac033bf9dc846101320c96a5ce8aceb8c96ec098"},{"path":"config/initializers/mime_types.rb","mode":"100644","type":"blob","sha":"dc1899682b01c3a6d9673faf746e235fb64fc4d2","size":156,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/dc1899682b01c3a6d9673faf746e235fb64fc4d2"},{"path":"config/initializers/session_store.rb","mode":"100644","type":"blob","sha":"36266c866ba967b3271fc278ba5ff8a236c07e1e","size":145,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/36266c866ba967b3271fc278ba5ff8a236c07e1e"},{"path":"config/initializers/wrap_parameters.rb","mode":"100644","type":"blob","sha":"33725e95fd22b9053f75ef6626aa1af781ebe947","size":517,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/33725e95fd22b9053f75ef6626aa1af781ebe947"},{"path":"config/locales","mode":"040000","type":"tree","sha":"8cc55ec952dc192a233e062201d1e7e873ac3db0","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/8cc55ec952dc192a233e062201d1e7e873ac3db0"},{"path":"config/locales/en.yml","mode":"100644","type":"blob","sha":"0653957166e8182880bb87b56e36c257c988dd92","size":634,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/0653957166e8182880bb87b56e36c257c988dd92"},{"path":"config/routes.rb","mode":"100644","type":"blob","sha":"5756f3ff79f61894b009fcbc678a7f7433bbf6ef","size":2184,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/5756f3ff79f61894b009fcbc678a7f7433bbf6ef"},{"path":"config/secrets.yml","mode":"100644","type":"blob","sha":"adf34de93ee4718f56fbd0fdcf9e24d69cbea562","size":964,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/adf34de93ee4718f56fbd0fdcf9e24d69cbea562"},{"path":"db","mode":"040000","type":"tree","sha":"720da32755eeba453a49c8479045a23b13da2432","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/720da32755eeba453a49c8479045a23b13da2432"},{"path":"db/seeds.rb","mode":"100644","type":"blob","sha":"4edb1e857ee6c203463c7fa0387aae32496ec93d","size":343,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/4edb1e857ee6c203463c7fa0387aae32496ec93d"},{"path":"lib","mode":"040000","type":"tree","sha":"07d89d0b7e50929dea0dcf7e7354358c1133be86","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/07d89d0b7e50929dea0dcf7e7354358c1133be86"},{"path":"lib/assets","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"lib/assets/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"lib/tasks","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"lib/tasks/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"log","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"log/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"public","mode":"040000","type":"tree","sha":"23a3236904020a96c2a827875e3e065213747cda","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/23a3236904020a96c2a827875e3e065213747cda"},{"path":"public/404.html","mode":"100644","type":"blob","sha":"b612547fc21d079889046e65d1fb135ec6921eaa","size":1564,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/b612547fc21d079889046e65d1fb135ec6921eaa"},{"path":"public/422.html","mode":"100644","type":"blob","sha":"a21f82b3bdb817ecbc43f74c6fe360300739418a","size":1547,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/a21f82b3bdb817ecbc43f74c6fe360300739418a"},{"path":"public/500.html","mode":"100644","type":"blob","sha":"061abc587dcac4cdb1d62a890e4fd4bb20b8cb61","size":1477,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/061abc587dcac4cdb1d62a890e4fd4bb20b8cb61"},{"path":"public/favicon.ico","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"public/robots.txt","mode":"100644","type":"blob","sha":"3c9c7c01f30b90e009de2d15952ae83230f8e37a","size":202,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/3c9c7c01f30b90e009de2d15952ae83230f8e37a"},{"path":"test","mode":"040000","type":"tree","sha":"12cd51c8139b9ee4c69c6f04d75ce2949ceee4dc","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/12cd51c8139b9ee4c69c6f04d75ce2949ceee4dc"},{"path":"test/controllers","mode":"040000","type":"tree","sha":"c582c758638e2759961d0b9b0b83a5d27047bc41","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/c582c758638e2759961d0b9b0b83a5d27047bc41"},{"path":"test/controllers/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"test/controllers/containers_controller_test.rb","mode":"100644","type":"blob","sha":"3decad391c0698097e10c134cdfe75b39f413d7f","size":485,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/3decad391c0698097e10c134cdfe75b39f413d7f"},{"path":"test/controllers/images_controller_test.rb","mode":"100644","type":"blob","sha":"0fe1bc9a58ec87ad55a6bfbc40d9cc0ae33bac0f","size":163,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/0fe1bc9a58ec87ad55a6bfbc40d9cc0ae33bac0f"},{"path":"test/fixtures","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"test/fixtures/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"test/helpers","mode":"040000","type":"tree","sha":"5c4916ff76ea8f97fa7a3b34c63711e7731d6302","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/5c4916ff76ea8f97fa7a3b34c63711e7731d6302"},{"path":"test/helpers/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"test/helpers/containers_helper_test.rb","mode":"100644","type":"blob","sha":"de0e6af51118333e2d626db183de66e9996388ee","size":77,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/de0e6af51118333e2d626db183de66e9996388ee"},{"path":"test/helpers/images_helper_test.rb","mode":"100644","type":"blob","sha":"f2a0cf29de8dbdb7d009c13265cd720719903269","size":73,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/f2a0cf29de8dbdb7d009c13265cd720719903269"},{"path":"test/integration","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"test/integration/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"test/mailers","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"test/mailers/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"test/models","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"test/models/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"test/test_helper.rb","mode":"100644","type":"blob","sha":"bf95f818896aa79c8da7d425ce5e18a3896561df","size":450,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/bf95f818896aa79c8da7d425ce5e18a3896561df"},{"path":"unicorn.conf.rb","mode":"100644","type":"blob","sha":"13bc33b85da944f9fb305e1b27ea8e3464eef898","size":2395,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/13bc33b85da944f9fb305e1b27ea8e3464eef898"},{"path":"vendor","mode":"040000","type":"tree","sha":"8084e8e04d510cc28321f30a9646477cc50c235c","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/8084e8e04d510cc28321f30a9646477cc50c235c"},{"path":"vendor/assets","mode":"040000","type":"tree","sha":"3a683869f1bb0c1634de75700c316b3b36570dbd","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/3a683869f1bb0c1634de75700c316b3b36570dbd"},{"path":"vendor/assets/javascripts","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"vendor/assets/javascripts/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"},{"path":"vendor/assets/stylesheets","mode":"040000","type":"tree","sha":"29a422c19251aeaeb907175e9b3219a9bed6c616","url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees/29a422c19251aeaeb907175e9b3219a9bed6c616"},{"path":"vendor/assets/stylesheets/.keep","mode":"100644","type":"blob","sha":"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","size":0,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"}],"truncated":false}'
+    http_version: 
+  recorded_at: Sun, 15 Feb 2015 17:58:32 GMT
+- request:
+    method: get
+    uri: https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/ee154fb99e4a98b6bcd0fd65e5f997340363ec2f
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token hasghha88as7f7277181
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 15 Feb 2015 17:58:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '930'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4964'
+      X-Ratelimit-Reset:
+      - '1424023283'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Etag:
+      - '"2c73abb1d3940fbd2b87f83dda8ed91f"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 2E0500FA:72C5:131CB28B:54E0DE49
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - dc1ce2bfb41810a06c705e83b388572d
+    body:
+      encoding: UTF-8
+      string: '{"sha":"ee154fb99e4a98b6bcd0fd65e5f997340363ec2f","size":523,"url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs/ee154fb99e4a98b6bcd0fd65e5f997340363ec2f","content":"c291cmNlICdodHRwczovL3J1YnlnZW1zLm9yZycKCmdlbSAncmFpbHMnLCAn\nNC4yLjAnCmdlbSAnc2Fzcy1yYWlscycsICd+PiA1LjAuMCcKZ2VtICd1Z2xp\nZmllcicsICc+PSAxLjMuMCcKZ2VtICdjb2ZmZWUtcmFpbHMnLCAnfj4gNC4x\nLjAnCmdlbSAndGhlcnVieXJhY2VyJywgIHBsYXRmb3JtczogOnJ1YnkKCmdl\nbSAnanF1ZXJ5LXJhaWxzJwpnZW0gJ3R1cmJvbGlua3MnCmdlbSAnamJ1aWxk\nZXInLCAnfj4gMi4wJwpnZW0gJ3Nkb2MnLCAnfj4gMC40LjAnLCAgICAgICAg\nICBncm91cDogOmRvYwoKIyBTcHJpbmcgc3BlZWRzIHVwIGRldmVsb3BtZW50\nIGJ5IGtlZXBpbmcgeW91ciBhcHBsaWNhdGlvbiBydW5uaW5nIGluIHRoZSBi\nYWNrZ3JvdW5kLiBSZWFkIG1vcmU6IGh0dHBzOi8vZ2l0aHViLmNvbS9yYWls\ncy9zcHJpbmcKZ2VtICdzcHJpbmcnLCAgICAgICAgZ3JvdXA6IDpkZXZlbG9w\nbWVudAoKZ2VtICd1bmljb3JuJyAgICAgICAgICAgICAgLCAnfj4gNC44LjIn\nCmdlbSAnZG9ja2VyLWFwaScsICcxLjE3LjAnCg==\n","encoding":"base64"}'
+    http_version: 
+  recorded_at: Sun, 15 Feb 2015 17:58:33 GMT
+recorded_with: VCR 2.9.3
