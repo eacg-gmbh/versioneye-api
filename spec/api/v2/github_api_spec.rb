@@ -70,14 +70,68 @@ describe "GithubApiV2" do
       response.status.should eq(401)
     end
     it "does sync because connected to GitHub" do
-      user_task_key = "#{user[:username]}-#{user[:github_id]}"
-      cache = Versioneye::Cache.instance.mc
-      cache.delete user_task_key
+      VCR.use_cassette('github_sync', allow_playback_repeats: true) do
+        worker = Thread.new{ GitReposImportWorker.new.work }
 
-      get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(200)
-      resp = JSON.parse response.body
-      resp['status'].should eq("running")
+        user.github_id = '10449954'
+        user.github_token = 'hasghha88as7f7277181'
+        user.save 
+
+        user_task_key = "#{user[:username]}-#{user[:github_id]}"
+        cache = Versioneye::Cache.instance.mc
+        cache.delete user_task_key
+
+        get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        response.status.should eq(200)
+        resp = JSON.parse response.body
+        resp['status'].should eq("running")
+
+        sleep 4
+        user.github_repos.count.should eq(1)
+
+        worker.exit
+      end
+    end
+  end
+
+
+  describe 'import user repos' do 
+    it "should create new object with repo key" do
+      VCR.use_cassette('github_import', allow_playback_repeats: true) do
+        worker1 = Thread.new{ GitReposImportWorker.new.work }
+        worker2 = Thread.new{ GitRepoImportWorker.new.work }
+        worker3 = Thread.new{ ProjectUpdateWorker.new.work }
+
+        user.github_id = '10449954'
+        user.github_token = 'hasghha88as7f7277181'
+        user.save 
+
+        user_task_key = "#{user[:username]}-#{user[:github_id]}"
+        cache = Versioneye::Cache.instance.mc
+        cache.delete user_task_key
+
+        get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        sleep 5
+        
+        post "#{api_path}/veye1test:docker_web_ui", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        response.status.should eq(201)
+
+        repo = JSON.parse response.body
+        repo.should_not be_nil
+        repo.has_key?('repo').should be_truthy
+        repo['repo']['fullname'].should eq("veye1test/docker_web_ui")
+        repo.has_key?('imported_projects').should be_truthy
+
+        project = repo['imported_projects'].first
+        project["name"].should eq("veye1test/docker_web_ui")  
+
+        post "#{api_path}/hook/#{project['id']}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        response.status.should eq(201)
+
+        worker3.exit
+        worker2.exit
+        worker1.exit
+      end
     end
   end
 
@@ -155,20 +209,6 @@ describe "GithubApiV2" do
       response.status.should eq(400)
     end
 
-    it "should create new object with repo key" do
-      post "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(201)
-
-      repo = JSON.parse response.body
-      repo.should_not be_nil
-      repo.has_key?('repo').should be_truthy
-      repo['repo']['fullname'].should eq("spec/repo1")
-      repo.has_key?('imported_projects').should be_truthy
-
-      project = repo['imported_projects'].first
-      project["name"].should eq("spec_projectX")
-    end
-
     it "should raise error when user tries to remove repository which doesnt exists" do
       delete "#{api_path}/pedestal:pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
       response.status.should eq(400)
@@ -181,14 +221,6 @@ describe "GithubApiV2" do
       msg.empty?.should be_falsey
       msg.has_key?('success').should be_truthy
       msg['success'].should be_truthy
-    end
-  end
-
-
-  describe "github_hook" do
-    it "should return 200" do
-      post "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(201)
     end
   end
 
