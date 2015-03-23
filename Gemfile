@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'bundler'            , '~> 1.8.3'
+gem 'bundler'            , '~> 1.9.1'
 gem 'rails'              , '~> 3.2.21'
 gem 'puma'               , '~> 2.11.0'
 gem 'grape'              , '~> 0.7.0'
@@ -10,7 +10,7 @@ gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 gem 'htmlentities'       , '~> 4.3.2'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.6.1'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.7.1'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :assets do
@@ -29,7 +29,7 @@ group :development do
   # gem 'capistrano-bundler', '1.1.3'
   gem 'psych'             , '~> 2.0.5'
   gem 'terminal-notifier' , '~> 1.6.0'
-  gem 'fakes3'            , '~> 0.1.7'
+  gem 'fakes3'            , '~> 0.2.0'
   # gem 'debugger'          , '~> 1.6.8'
   # gem 'irbtools'          , '1.6.1'
 end
@@ -45,7 +45,7 @@ group :test do
   gem 'fakeweb'           , '~> 1.3.0'
   gem 'vcr'               , '~> 2.9.2',  :require => false
   gem 'webmock'           , '~> 1.20.0', :require => false
-  gem 'database_cleaner'  , '~> 1.3.0'
+  gem 'database_cleaner'  , '~> 1.4.0'
   gem 'factory_girl'      , '~> 4.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
 end
