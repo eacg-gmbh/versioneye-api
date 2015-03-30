@@ -2,6 +2,8 @@
   "development": {
     "ga_account": "",
     "projects_unlimited": false,
+    "projects_unique_ga": false,
+    "projects_unique_scm": false,
     "nexus_url": "http://nexus.pro",
     "bitbucket_base_url": "https://bitbucket.org",
     "bitbucket_secret": "yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ",
@@ -48,6 +50,8 @@
   "test": {
     "ga_account": "",
     "projects_unlimited": false,
+    "projects_unique_ga": false,
+    "projects_unique_scm": false,
     "nexus_url": "http://nexus.pro",
     "bitbucket_base_url": "https://bitbucket.org",
     "bitbucket_secret": "yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ",
@@ -97,6 +101,8 @@
   "production": {
     "ga_account": "UA-32702672-1",
     "projects_unlimited": false,
+    "projects_unique_ga": false,
+    "projects_unique_scm": false,
     "nexus_url": "http://nexus.pro",
     "bitbucket_base_url": "https://bitbucket.org",
     "bitbucket_secret": "env_BITBUCKET_SECRET",
@@ -143,6 +149,8 @@
   "enterprise": {
     "ga_account": "",
     "projects_unlimited": true,
+    "projects_unique_ga": false,
+    "projects_unique_scm": false,
     "nexus_url": "http://nexus.pro",
     "server_url": "http://localhost:3000",
     "server_host": "localhost",
