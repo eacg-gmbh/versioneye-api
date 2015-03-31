@@ -87,6 +87,8 @@ module V2
         project = upload_and_store( project_file )
         if project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
+        elsif project.is_a? String 
+          error! project, 500
         end
 
         project = add_dependency_licences(project)

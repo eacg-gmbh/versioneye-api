@@ -31,9 +31,9 @@ module ProjectHelpers
   end
 
   def upload_and_store file
-    project = ProjectImportService.import_from_upload file, current_user, true
-    ProjectService.store project
-    project
+    ProjectImportService.import_from_upload file, current_user, true
+  rescue => e 
+    return e.message
   end
 
   def add_dependency_licences(project)
