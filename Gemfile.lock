@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 5d4211913a5be71c3b0133758c1c7ccab0ca9422
-  tag: v7.7.8
+  revision: e6cbc4479be940f7362fdbf41e617176c9dff947
+  tag: v7.7.11
   specs:
-    versioneye-core (7.7.8)
+    versioneye-core (7.7.11)
       actionmailer (~> 3.2.21)
       aws-sdk (~> 2.0.31)
       bundler (~> 1.9.1)
@@ -68,15 +68,14 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.5.0)
     arel (3.0.3)
-    aws-sdk (2.0.33)
-      aws-sdk-resources (= 2.0.33)
-    aws-sdk-core (2.0.33)
+    aws-sdk (2.0.37)
+      aws-sdk-resources (= 2.0.37)
+    aws-sdk-core (2.0.37)
       builder (~> 3.0)
       jmespath (~> 1.0)
       multi_json (~> 1.0)
-      multi_xml (~> 0.5)
-    aws-sdk-resources (2.0.33)
-      aws-sdk-core (= 2.0.33)
+    aws-sdk-resources (2.0.37)
+      aws-sdk-core (= 2.0.37)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -93,9 +92,9 @@ GEM
     capybara-firebug (2.1.0)
       capybara (>= 1.0, < 3.0)
       selenium-webdriver
-    childprocess (0.5.5)
+    childprocess (0.5.6)
       ffi (~> 1.0, >= 1.0.11)
-    cocoapods-core (0.36.1)
+    cocoapods-core (0.36.3)
       activesupport (>= 3.2.15)
       fuzzy_match (~> 2.0.4)
       nap (~> 0.8.0)
@@ -104,7 +103,7 @@ GEM
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
-    coffee-script (2.3.0)
+    coffee-script (2.4.1)
       coffee-script-source
       execjs
     coffee-script-source (1.9.1)
@@ -120,7 +119,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     equalizer (0.0.11)
     erubis (2.7.0)
-    execjs (2.4.0)
+    execjs (2.5.1)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.5.0)
@@ -149,7 +148,7 @@ GEM
     grape-entity (0.3.0)
       activesupport
       multi_json (>= 1.3.2)
-    hashie (3.4.0)
+    hashie (3.4.1)
     hashr (0.0.22)
     hike (1.2.3)
     htmlentities (4.3.3)
@@ -240,9 +239,9 @@ GEM
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
       rspec-mocks (~> 3.2.0)
-    rspec-core (3.2.2)
+    rspec-core (3.2.3)
       rspec-support (~> 3.2.0)
-    rspec-expectations (3.2.0)
+    rspec-expectations (3.2.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.2.0)
     rspec-mocks (3.2.1)
@@ -289,8 +288,8 @@ GEM
       json (~> 1.8.1)
       mime-types (~> 1.25)
       rest-client (~> 1.4)
-    terminal-notifier (1.6.2)
-    therubyracer (0.12.1)
+    terminal-notifier (1.6.3)
+    therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
