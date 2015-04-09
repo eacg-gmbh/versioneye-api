@@ -130,6 +130,8 @@ module V2
         project = ProjectUpdateService.update_from_upload project, project_file, current_user, true
         if project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
+        elsif project.is_a? String 
+          error! project, 500
         end
 
         Rails.cache.delete( project.id.to_s )
