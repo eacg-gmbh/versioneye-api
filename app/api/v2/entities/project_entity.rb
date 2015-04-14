@@ -13,6 +13,8 @@ module EntitiesV2
     expose :source
     expose :dep_number
     expose :out_number
+    expose :licenses_red
+    expose :licenses_unknown
     expose :created_at
     expose :updated_at
     expose :dependencies, :using => ProjectDependencyEntity, :if => { :type => :full}
