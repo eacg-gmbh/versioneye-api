@@ -17,6 +17,7 @@ module EntitiesV2
     expose :licenses_unknown
     expose :created_at
     expose :updated_at
+    expose :license_whitelist_name, :as => :license_whitelist
     expose :dependencies, :using => ProjectDependencyEntity, :if => { :type => :full}
   end
 end
