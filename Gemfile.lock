@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 1ee9ac646a5191cc464da13fe79017f6dd4870e7
-  tag: v7.8.17
+  revision: 316f0fa7183ad67957d391a6bb65f3640aac179a
+  tag: v7.8.19
   specs:
-    versioneye-core (7.8.17)
+    versioneye-core (7.8.19)
       actionmailer (~> 3.2.21)
       aws-sdk (~> 2.0.31)
       bundler (~> 1.9.1)
@@ -68,14 +68,14 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.5.0)
     arel (3.0.3)
-    aws-sdk (2.0.39)
-      aws-sdk-resources (= 2.0.39)
-    aws-sdk-core (2.0.39)
+    aws-sdk (2.0.41)
+      aws-sdk-resources (= 2.0.41)
+    aws-sdk-core (2.0.41)
       builder (~> 3.0)
       jmespath (~> 1.0)
       multi_json (~> 1.0)
-    aws-sdk-resources (2.0.39)
-      aws-sdk-core (= 2.0.39)
+    aws-sdk-resources (2.0.41)
+      aws-sdk-core (= 2.0.41)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -164,7 +164,7 @@ GEM
     journey (1.0.4)
     json (1.8.2)
     kgio (2.9.3)
-    kramdown (1.6.0)
+    kramdown (1.7.0)
     libv8 (3.16.14.7)
     log4r (1.1.10)
     mail (2.5.4)
@@ -312,7 +312,7 @@ GEM
     turn (0.9.7)
       ansi
       minitest (~> 4)
-    tzinfo (0.3.43)
+    tzinfo (0.3.44)
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
