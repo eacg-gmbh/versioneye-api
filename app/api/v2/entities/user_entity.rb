@@ -9,7 +9,7 @@ module EntitiesV2
   class UserDetailedEntity < UserEntity
     expose :email
     expose :admin
-    expose :deleted
+    expose :deleted_user
     expose :notifications
     expose :enterprise_projects
     expose :active
