@@ -6,7 +6,7 @@ module EntitiesV1
 	class UserDetailedEntity < UserEntity
 	  expose :email
 	  expose :admin
-	  expose :deleted
+	  expose :deleted_user
 	  expose :notifications
 	end
 end
