@@ -1,0 +1,417 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token 07d9d399f1a8ff7880b
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 19 May 2015 10:42:08 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1020'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4975'
+      X-Ratelimit-Reset:
+      - '1432035130'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Mon, 27 Apr 2015 13:25:48 GMT
+      Etag:
+      - '"a83db890bd671849714f0ecd3dfb863f"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5B0A4DC9:6109:124AE45:555B1380
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 2811da37fbdda4367181b328b22b2499
+    body:
+      encoding: UTF-8
+      string: '{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false,"public_repos":4,"public_gists":0,"followers":0,"following":0,"created_at":"2015-01-08T13:14:33Z","updated_at":"2015-04-27T13:25:48Z"}'
+    http_version: 
+  recorded_at: Tue, 19 May 2015 10:42:08 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user/orgs?access_token=07d9d399f1a8ff7880b
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token 07d9d399f1a8ff7880b
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 19 May 2015 10:42:09 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4974'
+      X-Ratelimit-Reset:
+      - '1432035130'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Etag:
+      - '"64ec3dd0be828805c5e091df34e1113c"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - admin:org, read:org, repo, user, write:org
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5B0A4DC9:6108:1058002:555B1380
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 01d096e6cfe28f8aea352e988c332cd3
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+  recorded_at: Tue, 19 May 2015 10:42:09 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.8.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - token 07d9d399f1a8ff7880b
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 19 May 2015 10:42:09 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4973'
+      X-Ratelimit-Reset:
+      - '1432035130'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Mon, 27 Apr 2015 13:25:48 GMT
+      Etag:
+      - W/"a83db890bd671849714f0ecd3dfb863f"
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5B0A4DC9:6102:169D41:555B1381
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 4c8b2d4732c413f4b9aefe394bd65569
+    body:
+      encoding: UTF-8
+      string: '{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false,"public_repos":4,"public_gists":0,"followers":0,"following":0,"created_at":"2015-01-08T13:14:33Z","updated_at":"2015-04-27T13:25:48Z"}'
+    http_version: 
+  recorded_at: Tue, 19 May 2015 10:42:09 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user/repos?access_token=07d9d399f1a8ff7880b&page=1&per_page=30
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token 07d9d399f1a8ff7880b
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 19 May 2015 10:42:09 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '19382'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4972'
+      X-Ratelimit-Reset:
+      - '1432035130'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Etag:
+      - '"248db168a75b98f9e25f8a9880d6dab7"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5B0A4DC9:610A:13133DC:555B1381
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 13d09b732ebe76f892093130dc088652
+    body:
+      encoding: UTF-8
+      string: '[{"id":30957983,"name":"docker_web_ui","full_name":"veye1test/docker_web_ui","owner":{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/veye1test/docker_web_ui","description":"Web
+        Interface for the Docker Remote API","fork":true,"url":"https://api.github.com/repos/veye1test/docker_web_ui","forks_url":"https://api.github.com/repos/veye1test/docker_web_ui/forks","keys_url":"https://api.github.com/repos/veye1test/docker_web_ui/keys{/key_id}","collaborators_url":"https://api.github.com/repos/veye1test/docker_web_ui/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/veye1test/docker_web_ui/teams","hooks_url":"https://api.github.com/repos/veye1test/docker_web_ui/hooks","issue_events_url":"https://api.github.com/repos/veye1test/docker_web_ui/issues/events{/number}","events_url":"https://api.github.com/repos/veye1test/docker_web_ui/events","assignees_url":"https://api.github.com/repos/veye1test/docker_web_ui/assignees{/user}","branches_url":"https://api.github.com/repos/veye1test/docker_web_ui/branches{/branch}","tags_url":"https://api.github.com/repos/veye1test/docker_web_ui/tags","blobs_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/refs{/sha}","trees_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/trees{/sha}","statuses_url":"https://api.github.com/repos/veye1test/docker_web_ui/statuses/{sha}","languages_url":"https://api.github.com/repos/veye1test/docker_web_ui/languages","stargazers_url":"https://api.github.com/repos/veye1test/docker_web_ui/stargazers","contributors_url":"https://api.github.com/repos/veye1test/docker_web_ui/contributors","subscribers_url":"https://api.github.com/repos/veye1test/docker_web_ui/subscribers","subscription_url":"https://api.github.com/repos/veye1test/docker_web_ui/subscription","commits_url":"https://api.github.com/repos/veye1test/docker_web_ui/commits{/sha}","git_commits_url":"https://api.github.com/repos/veye1test/docker_web_ui/git/commits{/sha}","comments_url":"https://api.github.com/repos/veye1test/docker_web_ui/comments{/number}","issue_comment_url":"https://api.github.com/repos/veye1test/docker_web_ui/issues/comments{/number}","contents_url":"https://api.github.com/repos/veye1test/docker_web_ui/contents/{+path}","compare_url":"https://api.github.com/repos/veye1test/docker_web_ui/compare/{base}...{head}","merges_url":"https://api.github.com/repos/veye1test/docker_web_ui/merges","archive_url":"https://api.github.com/repos/veye1test/docker_web_ui/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/veye1test/docker_web_ui/downloads","issues_url":"https://api.github.com/repos/veye1test/docker_web_ui/issues{/number}","pulls_url":"https://api.github.com/repos/veye1test/docker_web_ui/pulls{/number}","milestones_url":"https://api.github.com/repos/veye1test/docker_web_ui/milestones{/number}","notifications_url":"https://api.github.com/repos/veye1test/docker_web_ui/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/veye1test/docker_web_ui/labels{/name}","releases_url":"https://api.github.com/repos/veye1test/docker_web_ui/releases{/id}","created_at":"2015-02-18T08:45:20Z","updated_at":"2015-02-18T08:45:20Z","pushed_at":"2014-12-23T20:17:26Z","git_url":"git://github.com/veye1test/docker_web_ui.git","ssh_url":"git@github.com:veye1test/docker_web_ui.git","clone_url":"https://github.com/veye1test/docker_web_ui.git","svn_url":"https://github.com/veye1test/docker_web_ui","homepage":null,"size":290,"stargazers_count":0,"watchers_count":0,"language":"Ruby","has_issues":false,"has_downloads":true,"has_wiki":true,"has_pages":false,"forks_count":0,"mirror_url":null,"open_issues_count":0,"forks":0,"open_issues":0,"watchers":0,"default_branch":"master","permissions":{"admin":true,"push":true,"pull":true}},{"id":34668159,"name":"lev","full_name":"veye1test/lev","owner":{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/veye1test/lev","description":"Lightweight
+        C++ wrapper for LibEvent 2 API ","fork":true,"url":"https://api.github.com/repos/veye1test/lev","forks_url":"https://api.github.com/repos/veye1test/lev/forks","keys_url":"https://api.github.com/repos/veye1test/lev/keys{/key_id}","collaborators_url":"https://api.github.com/repos/veye1test/lev/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/veye1test/lev/teams","hooks_url":"https://api.github.com/repos/veye1test/lev/hooks","issue_events_url":"https://api.github.com/repos/veye1test/lev/issues/events{/number}","events_url":"https://api.github.com/repos/veye1test/lev/events","assignees_url":"https://api.github.com/repos/veye1test/lev/assignees{/user}","branches_url":"https://api.github.com/repos/veye1test/lev/branches{/branch}","tags_url":"https://api.github.com/repos/veye1test/lev/tags","blobs_url":"https://api.github.com/repos/veye1test/lev/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/veye1test/lev/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/veye1test/lev/git/refs{/sha}","trees_url":"https://api.github.com/repos/veye1test/lev/git/trees{/sha}","statuses_url":"https://api.github.com/repos/veye1test/lev/statuses/{sha}","languages_url":"https://api.github.com/repos/veye1test/lev/languages","stargazers_url":"https://api.github.com/repos/veye1test/lev/stargazers","contributors_url":"https://api.github.com/repos/veye1test/lev/contributors","subscribers_url":"https://api.github.com/repos/veye1test/lev/subscribers","subscription_url":"https://api.github.com/repos/veye1test/lev/subscription","commits_url":"https://api.github.com/repos/veye1test/lev/commits{/sha}","git_commits_url":"https://api.github.com/repos/veye1test/lev/git/commits{/sha}","comments_url":"https://api.github.com/repos/veye1test/lev/comments{/number}","issue_comment_url":"https://api.github.com/repos/veye1test/lev/issues/comments{/number}","contents_url":"https://api.github.com/repos/veye1test/lev/contents/{+path}","compare_url":"https://api.github.com/repos/veye1test/lev/compare/{base}...{head}","merges_url":"https://api.github.com/repos/veye1test/lev/merges","archive_url":"https://api.github.com/repos/veye1test/lev/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/veye1test/lev/downloads","issues_url":"https://api.github.com/repos/veye1test/lev/issues{/number}","pulls_url":"https://api.github.com/repos/veye1test/lev/pulls{/number}","milestones_url":"https://api.github.com/repos/veye1test/lev/milestones{/number}","notifications_url":"https://api.github.com/repos/veye1test/lev/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/veye1test/lev/labels{/name}","releases_url":"https://api.github.com/repos/veye1test/lev/releases{/id}","created_at":"2015-04-27T13:25:47Z","updated_at":"2015-04-27T13:25:48Z","pushed_at":"2015-03-03T15:36:56Z","git_url":"git://github.com/veye1test/lev.git","ssh_url":"git@github.com:veye1test/lev.git","clone_url":"https://github.com/veye1test/lev.git","svn_url":"https://github.com/veye1test/lev","homepage":null,"size":200,"stargazers_count":0,"watchers_count":0,"language":"C++","has_issues":false,"has_downloads":true,"has_wiki":true,"has_pages":false,"forks_count":1,"mirror_url":null,"open_issues_count":0,"forks":1,"open_issues":0,"watchers":0,"default_branch":"master","permissions":{"admin":true,"push":true,"pull":true}},{"id":34154965,"name":"ploinFaces","full_name":"veye1test/ploinFaces","owner":{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/veye1test/ploinFaces","description":"With
+        ploinFaces you can define a flow/conversation for a JSF-App. A flow contains
+        views and attributes. If you leave the flow, the attributes will be removed
+        from the http-session. This is similar to SpringWebFlow, but much easier und
+        designed for JSF!","fork":true,"url":"https://api.github.com/repos/veye1test/ploinFaces","forks_url":"https://api.github.com/repos/veye1test/ploinFaces/forks","keys_url":"https://api.github.com/repos/veye1test/ploinFaces/keys{/key_id}","collaborators_url":"https://api.github.com/repos/veye1test/ploinFaces/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/veye1test/ploinFaces/teams","hooks_url":"https://api.github.com/repos/veye1test/ploinFaces/hooks","issue_events_url":"https://api.github.com/repos/veye1test/ploinFaces/issues/events{/number}","events_url":"https://api.github.com/repos/veye1test/ploinFaces/events","assignees_url":"https://api.github.com/repos/veye1test/ploinFaces/assignees{/user}","branches_url":"https://api.github.com/repos/veye1test/ploinFaces/branches{/branch}","tags_url":"https://api.github.com/repos/veye1test/ploinFaces/tags","blobs_url":"https://api.github.com/repos/veye1test/ploinFaces/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/veye1test/ploinFaces/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/veye1test/ploinFaces/git/refs{/sha}","trees_url":"https://api.github.com/repos/veye1test/ploinFaces/git/trees{/sha}","statuses_url":"https://api.github.com/repos/veye1test/ploinFaces/statuses/{sha}","languages_url":"https://api.github.com/repos/veye1test/ploinFaces/languages","stargazers_url":"https://api.github.com/repos/veye1test/ploinFaces/stargazers","contributors_url":"https://api.github.com/repos/veye1test/ploinFaces/contributors","subscribers_url":"https://api.github.com/repos/veye1test/ploinFaces/subscribers","subscription_url":"https://api.github.com/repos/veye1test/ploinFaces/subscription","commits_url":"https://api.github.com/repos/veye1test/ploinFaces/commits{/sha}","git_commits_url":"https://api.github.com/repos/veye1test/ploinFaces/git/commits{/sha}","comments_url":"https://api.github.com/repos/veye1test/ploinFaces/comments{/number}","issue_comment_url":"https://api.github.com/repos/veye1test/ploinFaces/issues/comments{/number}","contents_url":"https://api.github.com/repos/veye1test/ploinFaces/contents/{+path}","compare_url":"https://api.github.com/repos/veye1test/ploinFaces/compare/{base}...{head}","merges_url":"https://api.github.com/repos/veye1test/ploinFaces/merges","archive_url":"https://api.github.com/repos/veye1test/ploinFaces/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/veye1test/ploinFaces/downloads","issues_url":"https://api.github.com/repos/veye1test/ploinFaces/issues{/number}","pulls_url":"https://api.github.com/repos/veye1test/ploinFaces/pulls{/number}","milestones_url":"https://api.github.com/repos/veye1test/ploinFaces/milestones{/number}","notifications_url":"https://api.github.com/repos/veye1test/ploinFaces/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/veye1test/ploinFaces/labels{/name}","releases_url":"https://api.github.com/repos/veye1test/ploinFaces/releases{/id}","created_at":"2015-04-18T06:17:00Z","updated_at":"2015-04-18T06:17:01Z","pushed_at":"2012-04-01T20:08:03Z","git_url":"git://github.com/veye1test/ploinFaces.git","ssh_url":"git@github.com:veye1test/ploinFaces.git","clone_url":"https://github.com/veye1test/ploinFaces.git","svn_url":"https://github.com/veye1test/ploinFaces","homepage":"http://www.ploinfaces.org/","size":3112,"stargazers_count":0,"watchers_count":0,"language":"Java","has_issues":false,"has_downloads":true,"has_wiki":true,"has_pages":false,"forks_count":0,"mirror_url":null,"open_issues_count":0,"forks":0,"open_issues":0,"watchers":0,"default_branch":"master","permissions":{"admin":true,"push":true,"pull":true}},{"id":34155049,"name":"ploinMailFactory","full_name":"veye1test/ploinMailFactory","owner":{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/veye1test/ploinMailFactory","description":"The
+        ploinMailFactory (in the past \"javaMailFactory\") is a mailing framework
+        that provides extended features like a load balancing, templating mechanism,
+        multitenancy and localizaion. Internally it uses the commons-email API from
+        Apache.","fork":true,"url":"https://api.github.com/repos/veye1test/ploinMailFactory","forks_url":"https://api.github.com/repos/veye1test/ploinMailFactory/forks","keys_url":"https://api.github.com/repos/veye1test/ploinMailFactory/keys{/key_id}","collaborators_url":"https://api.github.com/repos/veye1test/ploinMailFactory/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/veye1test/ploinMailFactory/teams","hooks_url":"https://api.github.com/repos/veye1test/ploinMailFactory/hooks","issue_events_url":"https://api.github.com/repos/veye1test/ploinMailFactory/issues/events{/number}","events_url":"https://api.github.com/repos/veye1test/ploinMailFactory/events","assignees_url":"https://api.github.com/repos/veye1test/ploinMailFactory/assignees{/user}","branches_url":"https://api.github.com/repos/veye1test/ploinMailFactory/branches{/branch}","tags_url":"https://api.github.com/repos/veye1test/ploinMailFactory/tags","blobs_url":"https://api.github.com/repos/veye1test/ploinMailFactory/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/veye1test/ploinMailFactory/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/veye1test/ploinMailFactory/git/refs{/sha}","trees_url":"https://api.github.com/repos/veye1test/ploinMailFactory/git/trees{/sha}","statuses_url":"https://api.github.com/repos/veye1test/ploinMailFactory/statuses/{sha}","languages_url":"https://api.github.com/repos/veye1test/ploinMailFactory/languages","stargazers_url":"https://api.github.com/repos/veye1test/ploinMailFactory/stargazers","contributors_url":"https://api.github.com/repos/veye1test/ploinMailFactory/contributors","subscribers_url":"https://api.github.com/repos/veye1test/ploinMailFactory/subscribers","subscription_url":"https://api.github.com/repos/veye1test/ploinMailFactory/subscription","commits_url":"https://api.github.com/repos/veye1test/ploinMailFactory/commits{/sha}","git_commits_url":"https://api.github.com/repos/veye1test/ploinMailFactory/git/commits{/sha}","comments_url":"https://api.github.com/repos/veye1test/ploinMailFactory/comments{/number}","issue_comment_url":"https://api.github.com/repos/veye1test/ploinMailFactory/issues/comments{/number}","contents_url":"https://api.github.com/repos/veye1test/ploinMailFactory/contents/{+path}","compare_url":"https://api.github.com/repos/veye1test/ploinMailFactory/compare/{base}...{head}","merges_url":"https://api.github.com/repos/veye1test/ploinMailFactory/merges","archive_url":"https://api.github.com/repos/veye1test/ploinMailFactory/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/veye1test/ploinMailFactory/downloads","issues_url":"https://api.github.com/repos/veye1test/ploinMailFactory/issues{/number}","pulls_url":"https://api.github.com/repos/veye1test/ploinMailFactory/pulls{/number}","milestones_url":"https://api.github.com/repos/veye1test/ploinMailFactory/milestones{/number}","notifications_url":"https://api.github.com/repos/veye1test/ploinMailFactory/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/veye1test/ploinMailFactory/labels{/name}","releases_url":"https://api.github.com/repos/veye1test/ploinMailFactory/releases{/id}","created_at":"2015-04-18T06:20:38Z","updated_at":"2015-04-18T06:20:39Z","pushed_at":"2014-11-19T11:00:18Z","git_url":"git://github.com/veye1test/ploinMailFactory.git","ssh_url":"git@github.com:veye1test/ploinMailFactory.git","clone_url":"https://github.com/veye1test/ploinMailFactory.git","svn_url":"https://github.com/veye1test/ploinMailFactory","homepage":"http://ploinmailfactory.org/","size":1288,"stargazers_count":0,"watchers_count":0,"language":"Java","has_issues":false,"has_downloads":true,"has_wiki":true,"has_pages":false,"forks_count":0,"mirror_url":null,"open_issues_count":0,"forks":0,"open_issues":0,"watchers":0,"default_branch":"master","permissions":{"admin":true,"push":true,"pull":true}}]'
+    http_version: 
+  recorded_at: Tue, 19 May 2015 10:42:10 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.8.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - token 07d9d399f1a8ff7880b
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 19 May 2015 10:42:10 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4971'
+      X-Ratelimit-Reset:
+      - '1432035130'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Mon, 27 Apr 2015 13:25:48 GMT
+      Etag:
+      - W/"a83db890bd671849714f0ecd3dfb863f"
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 50fb47103b8a3f03b2cd
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5B0A4DC9:6103:2896B7:555B1382
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 173530fed4bbeb1e264b2ed22e8b5c20
+    body:
+      encoding: UTF-8
+      string: '{"login":"veye1test","id":10449954,"avatar_url":"https://avatars.githubusercontent.com/u/10449954?v=3","gravatar_id":"","url":"https://api.github.com/users/veye1test","html_url":"https://github.com/veye1test","followers_url":"https://api.github.com/users/veye1test/followers","following_url":"https://api.github.com/users/veye1test/following{/other_user}","gists_url":"https://api.github.com/users/veye1test/gists{/gist_id}","starred_url":"https://api.github.com/users/veye1test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/veye1test/subscriptions","organizations_url":"https://api.github.com/users/veye1test/orgs","repos_url":"https://api.github.com/users/veye1test/repos","events_url":"https://api.github.com/users/veye1test/events{/privacy}","received_events_url":"https://api.github.com/users/veye1test/received_events","type":"User","site_admin":false,"public_repos":4,"public_gists":0,"followers":0,"following":0,"created_at":"2015-01-08T13:14:33Z","updated_at":"2015-04-27T13:25:48Z"}'
+    http_version: 
+  recorded_at: Tue, 19 May 2015 10:42:10 GMT
+recorded_with: VCR 2.9.3
