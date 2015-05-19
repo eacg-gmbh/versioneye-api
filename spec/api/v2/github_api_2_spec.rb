@@ -36,7 +36,6 @@ describe "GithubApiV2" do
 
   describe "when user is unauthorized" do
     before :each do
-      FakeWeb.allow_net_connect = true
       WebMock.allow_net_connect!
     end
 
@@ -62,6 +61,9 @@ describe "GithubApiV2" do
 
 
   describe "sync" do
+    before :each do
+      WebMock.allow_net_connect!
+    end
     it "does not sync because not connected to GitHub" do
       user.github_id = nil
       user.github_token = nil
@@ -70,12 +72,11 @@ describe "GithubApiV2" do
       response.status.should eq(401)
     end
     it "does sync because connected to GitHub" do
-      VCR.use_cassette('github_sync', allow_playback_repeats: true) do
-        worker = Thread.new{ GitReposImportWorker.new.work }
-
+      worker = Thread.new{ GitReposImportWorker.new.work }
+      VCR.use_cassette('github_sync_hans', allow_playback_repeats: true) do
         user.github_id = '10449954'
-        user.github_token = 'hasghha88as7f7277181'
-        user.save 
+        user.github_token = '07d9d399f1a8ff7880b'
+        user.save.should be_truthy
 
         user_task_key = "#{user[:username]}-#{user[:github_id]}"
         cache = Versioneye::Cache.instance.mc
@@ -86,16 +87,25 @@ describe "GithubApiV2" do
         resp = JSON.parse response.body
         resp['status'].should eq("running")
 
-        sleep 4
-        user.github_repos.count.should eq(1)
+        p "sleep for a while"
+        sleep 7
 
-        worker.exit
+        get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        response.status.should eq(200)
+        resp = JSON.parse response.body
+        resp['status'].should eq("done")
+
+        user.github_repos.count.should eq(4)
       end
+      worker.exit
     end
   end
 
 
   describe 'import user repos' do 
+    before :each do
+      WebMock.allow_net_connect!
+    end
     it "should create new object with repo key" do
       VCR.use_cassette('github_import', allow_playback_repeats: true) do
         worker1 = Thread.new{ GitReposImportWorker.new.work }
@@ -132,95 +142,6 @@ describe "GithubApiV2" do
         worker2.exit
         worker1.exit
       end
-    end
-  end
-
-
-  describe "when user is properly authorized" do
-    before :each do
-      FakeWeb.allow_net_connect = false
-      FakeWeb.register_uri(:head, %r|https://api\.github\.com/user*|,
-                           {status: ["304", "Not Modified"], body: "Not modified"})
-      FakeWeb.register_uri(:get, %r|https://api\.github\.com/user*|, {body: "{}"})
-      FakeWeb.register_uri(:get, %r|https://api\.github\.com/repos/spec/repo1/branches*|,
-                           {body: %Q|
-                              {
-                                "name": "master",
-                                "commit": {
-                                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
-                                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc"
-                                }
-                              }
-                            |
-                          })
-      FakeWeb.register_uri(:get, %r|https://api.github.com/repos/spec/repo1/git/trees|,
-                           {body: %Q|
-                            {
-                            "sha": "9fb037999f264ba9a7fc6274d15fa3ae2ab98312",
-                            "url": "https://api.github.com/repos/octocat/Hello-World/trees/9fb037999f264ba9a7fc6274d15fa3ae2ab98312",
-                            "tree": [{
-                                      "path": "Gemfile",
-                                      "mode": "100644",
-                                      "type": "blob",
-                                      "size": 30,
-                                      "sha": "44b4fc6d56897b048c772eb4087f854f46256132",
-                                      "url": "https://api.github.com/repos/octocat/Hello-World/git/blobs/44b4fc6d56897b048c772eb4087f854f46256132"
-                                      }]
-                            }
-                            |
-                          })
-      repo1.save
-      repo2.save
-      project1.save
-    end
-
-    after :each do
-      FakeWeb.clean_registry
-      FakeWeb.allow_net_connect = true
-    end
-
-    it "should show all user repos" do
-      get api_path, {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(200)
-
-      repos = JSON.parse response.body
-      repos.should_not be_nil
-      repos.empty?.should_not be_truthy
-      repos.count.should eq(2)
-    end
-
-    it "should raise error when user tries to access repository which doesnt exists" do
-      get "#{api_path}/pedestal:pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(400)
-    end
-
-    it "should show repo info" do
-      get "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(200)
-
-      repo = JSON.parse response.body
-      repo.should_not be_nil
-      repo.has_key?('repo').should be_truthy
-      repo['repo']['fullname'].should eq("spec/repo1")
-    end
-
-    it "should raise error when user tries to import repository which doesnt exists" do
-      post "#{api_path}/pedestal:pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(400)
-    end
-
-    it "should raise error when user tries to remove repository which doesnt exists" do
-      delete "#{api_path}/pedestal:pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(400)
-    end
-    it "should remove project with repo key" do
-      delete "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(200)
-      msg = JSON.parse response.body
-      msg.should_not be_nil
-      msg.empty?.should be_falsey
-      msg.has_key?('success').should be_truthy
-      msg['success'].should be_truthy
     end
   end
 
