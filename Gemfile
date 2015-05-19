@@ -4,7 +4,7 @@ gem 'bundler'            , '~> 1.9.1'
 gem 'rails'              , '~> 3.2.21'
 gem 'puma'               , '~> 2.11.0'
 gem 'grape'              , '~> 0.7.0'
-gem 'grape-entity'       , '~> 0.3.0'
+gem 'grape-entity'       , '0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
 gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
@@ -42,10 +42,9 @@ group :test do
   gem 'rspec-mocks'       , '~> 3.1'
   gem 'capybara'          , '~> 2.4.1'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'fakeweb'           , '~> 1.3.0'
   gem 'vcr'               , '~> 2.9.2',  :require => false
   gem 'webmock'           , '~> 1.21.0', :require => false
-  gem 'database_cleaner'  , '~> 1.4.0'
+  gem 'database_cleaner'  , '~> 1.4.1'
   gem 'factory_girl'      , '~> 4.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
 end

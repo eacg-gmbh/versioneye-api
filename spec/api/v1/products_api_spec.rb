@@ -14,7 +14,6 @@ describe ProductsApiV1 do
 
   before :each do
     prod1.save
-    FakeWeb.allow_net_connect = true
   end
 
   after :each do

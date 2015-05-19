@@ -21,14 +21,11 @@ describe V2::ProjectsApiV2 do
   let(:product7) {create(:product_with_versions, versions_count: 4, name: "tilt",            prod_key: "tilt",            version: "1.3.3", license: "MIT")}
 
   before :all do
-    FakeWeb.allow_net_connect = true
     WebMock.allow_net_connect!
   end
 
   after :all do
     WebMock.allow_net_connect!
-    FakeWeb.allow_net_connect = true
-    FakeWeb.clean_registry
   end
 
   describe "Unauthorized user shouldnt have access, " do
