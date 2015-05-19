@@ -63,6 +63,11 @@ module SessionHelpers
     }
     new_api_call =  ApiCall.new call_data
     new_api_call.save
+  rescue => e 
+    p "ERROR in track_apikey - #{e.message}"
+    e.backtrace.each do |message| 
+      p " - #{message}"
+    end
   end
 
 end
