@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'vcr'
 require 'webmock'
 
-describe "GithubApiV2" do
+describe "GithubApiV2", :type => :request do
 
   let(:user) {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com", terms: true, datenerhebung: true)}
   let(:user2) {create(:user, username: "dontshow", fullname: "Don TShow", email: "dont@show.com", terms: true, datenerhebung: true)}
@@ -135,7 +135,10 @@ describe "GithubApiV2" do
         project = repo['imported_projects'].first
         project["name"].should eq("veye1test/docker_web_ui")  
 
-        post "#{api_path}/hook/#{project['id']}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        project_id = project['id']
+        p "project_id: #{project_id}" 
+
+        post "#{api_path}/hook/#{project_id}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
         response.status.should eq(201)
 
         worker3.exit

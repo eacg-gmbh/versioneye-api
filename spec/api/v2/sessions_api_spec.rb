@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe V2::SessionsApiV2 do
+describe V2::SessionsApiV2, :type => :request do
   describe "handling new sessions" do
     before(:each) do
       @sessions_url = "/api/v2/sessions"

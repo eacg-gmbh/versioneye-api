@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'vcr'
 require 'webmock'
 
-describe "GithubApiV2" do
+describe "GithubApiV2", :type => :request do
 
   describe "when user is properly authorized" do
 

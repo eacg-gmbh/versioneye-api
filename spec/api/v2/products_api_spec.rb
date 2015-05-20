@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe V2::ProductsApiV2 do
+describe V2::ProductsApiV2, :type => :request do
 
   let( :product_uri ) { "/api/v2/products" }
 

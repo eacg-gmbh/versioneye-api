@@ -3,14 +3,14 @@ require File.expand_path('../boot', __FILE__)
 require "versioneye-core"
 require "action_controller/railtie"
 require "action_mailer/railtie"
-require "active_resource/railtie"
+# require "active_resource/railtie"
 require "rails/test_unit/railtie"
 require "sprockets/railtie"
 
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-  Bundler.require *Rails.groups(:assets => %w(development test))
+  Bundler.require(*Rails.groups)
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
@@ -61,7 +61,7 @@ module Versioneye
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
-    config.autoload_paths += %W(#{config.root}/app/api/v1)
+    # config.autoload_paths += %W(#{config.root}/app/api/v1)
     config.autoload_paths += Dir["#{config.root}/app/api/**/"]
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
