@@ -1,14 +1,9 @@
-PATH
-  remote: vendor/gems
+GIT
+  remote: git@github.com:versioneye/versioneye-core.git
+  revision: 95ec6f9c21a9e867e787174a40b1164fa32fc535
+  tag: v7.10.13
   specs:
-    grape-swagger (0.6.0)
-      grape (>= 0.2.0)
-      kramdown
-
-PATH
-  remote: ~/workspace/versioneye/versioneye-core
-  specs:
-    versioneye-core (7.10.12)
+    versioneye-core (7.10.13)
       actionmailer (~> 4.2.1)
       aws-sdk (~> 2.0.31)
       bundler (~> 1.9.1)
@@ -31,6 +26,13 @@ PATH
       tire (~> 0.6.2)
       will_paginate_mongoid (= 2.0.1)
       wkhtmltopdf-binary (~> 0.9.9.1)
+
+PATH
+  remote: vendor/gems
+  specs:
+    grape-swagger (0.6.0)
+      grape (>= 0.2.0)
+      kramdown
 
 GEM
   remote: http://rubygems.org/
