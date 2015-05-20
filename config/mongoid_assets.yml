@@ -9,16 +9,16 @@ development:
       # Provides the hosts the default session can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
-        - 192.168.118.133:27017
+        - 192.168.118.128:27017
       options:
         # Change whether the session persists in safe mode by default.
         # (default: false)
-        safe: true
+        # safe: true
 
         # Change the default consistency model to :eventual or :strong.
         # :eventual will send reads to secondaries, :strong sends everything
         # to master. (default: :eventual)
-        consistency: :strong
+        # consistency: :strong
 
         # How many times Moped should attempt to retry an operation after
         # failure. (default: 30)
@@ -72,17 +72,17 @@ test:
     default:
       database: veye_test
       hosts:
-        - 192.168.118.133:27017
+        - 172.16.172.128:27017
       options:
-        options:
-        # Change whether the session persists in safe mode by default.
-        # (default: false)
-        safe: true
-        consistency: :strong
-        # In the test environment we lower the retries and retry interval to
-        # low amounts for fast failures.
-        max_retries: 1
-        retry_interval: 0
+        # options:
+        # # Change whether the session persists in safe mode by default.
+        # # (default: false)
+        # safe: true
+        # consistency: :strong
+        # # In the test environment we lower the retries and retry interval to
+        # # low amounts for fast failures.
+        # max_retries: 1
+        # retry_interval: 0
 
 production:
   # Configure available database sessions. (required)
@@ -95,16 +95,16 @@ production:
       # Provides the hosts the default session can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
-        - 192.168.118.133:27017
+        - 172.16.172.128:27017
       options:
         # Change whether the session persists in safe mode by default.
         # (default: false)
-        safe: true
+        # safe: true
 
         # Change the default consistency model to :eventual or :strong.
         # :eventual will send reads to secondaries, :strong sends everything
         # to master. (default: :eventual)
-        consistency: :strong
+        # consistency: :strong
 
         # How many times Moped should attempt to retry an operation after
         # failure. (default: 30)
@@ -129,12 +129,12 @@ enterprise:
       options:
         # Change whether the session persists in safe mode by default.
         # (default: false)
-        safe: true
+        # safe: true
 
         # Change the default consistency model to :eventual or :strong.
         # :eventual will send reads to secondaries, :strong sends everything
         # to master. (default: :eventual)
-        consistency: :strong
+        # consistency: :strong
 
         # How many times Moped should attempt to retry an operation after
         # failure. (default: 30)
