@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'rest_client'
 
-describe V2::ProjectsApiV2 do
+describe V2::ProjectsApiV2, :type => :request do
 
   let( :root_uri    ) { "/api/v2" }
   let( :project_uri ) { "/api/v2/projects" }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe V2::UsersApiV2 do
+describe V2::UsersApiV2, :type => :request do
 
   before(:each) do
     @root_uri = "/api/v2"
@@ -86,6 +86,9 @@ describe V2::UsersApiV2 do
 
     it "should return correct notifications when we add them" do
       new_notification = NotificationFactory.create_new @test_user
+      new_notification.save 
+      Notification.count.should eq(1)
+      
       get @me_uri + "/notifications", :api_key => @user_api.api_key
       response.status.should == 200
       response_data = JSON.parse(response.body)

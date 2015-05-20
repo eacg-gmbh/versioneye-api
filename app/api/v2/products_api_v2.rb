@@ -53,12 +53,12 @@ module V2
         start_time     = Time.now
         search_results = ProductService.search(query, group_id, languages, page_nr)
 
-        save_search_log(query, search_results, start_time)
-        query_data     = Api.new query: query, group_id: group_id, languages: languages
-        paging         = make_paging_object(search_results)
-        search_results = Api.new query: query_data, paging: paging, entries: search_results.entries
+        # save_search_log(query, search_results, start_time)
+        query_data = SearchResults.new({query: query, group_id: group_id, languages: languages})
+        paging     = make_paging_object(search_results)
+        data       = SearchResults.new({query: query_data, paging: paging, entries: search_results.entries})
 
-        present search_results, with: EntitiesV2::ProductSearchEntity
+        present data, with: EntitiesV2::ProductSearchEntity
       end
 
 
@@ -277,9 +277,9 @@ module V2
 
         total_count = reference.ref_count
 
-        query_data = Api.new lang: product.language, prod_key: product.prod_key
+        query_data = SearchResults.new lang: product.language, prod_key: product.prod_key
         paging     = make_paging_for_references( page, total_count )
-        results    = Api.new query: query_data, paging: paging, entries: products
+        results    = SearchResults.new query: query_data, paging: paging, entries: products
 
         present results, with: EntitiesV2::ProductReferenceEntity
       end
