@@ -1,11 +1,12 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 95ec6f9c21a9e867e787174a40b1164fa32fc535
-  tag: v7.10.13
+  revision: 648565839c52ed80cb94e806b1facda918c8a3f6
+  tag: v7.10.14
   specs:
-    versioneye-core (7.10.13)
+    versioneye-core (7.10.14)
       actionmailer (~> 4.2.1)
       aws-sdk (~> 2.0.31)
+      bson (~> 2.3.0)
       bundler (~> 1.9.1)
       bunny (~> 1.7.0)
       cocoapods-core (~> 0.37.1)
@@ -15,6 +16,7 @@ GIT
       kgio (~> 2.9.0)
       log4r (~> 1.1.0)
       mongoid (~> 4.0.2)
+      moped (~> 2.0.0)
       naturalsorter (~> 3.0.6)
       nokogiri (~> 1.6.0)
       oauth (~> 0.4.7)
@@ -76,14 +78,14 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.5.0)
     arel (6.0.0)
-    aws-sdk (2.0.44)
-      aws-sdk-resources (= 2.0.44)
-    aws-sdk-core (2.0.44)
+    aws-sdk (2.0.45)
+      aws-sdk-resources (= 2.0.45)
+    aws-sdk-core (2.0.45)
       builder (~> 3.0)
       jmespath (~> 1.0)
       multi_json (~> 1.0)
-    aws-sdk-resources (2.0.44)
-      aws-sdk-core (= 2.0.44)
+    aws-sdk-resources (2.0.45)
+      aws-sdk-core (= 2.0.45)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
