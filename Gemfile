@@ -11,7 +11,7 @@ gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 gem 'htmlentities'       , '~> 4.3.2'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.10.14'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.10.15'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :assets do
@@ -21,7 +21,6 @@ group :assets do
   gem 'coffee-rails'          , '~> 4.1.0'
   gem 'uglifier'              , '~> 2.7.0'
   gem 'yui-compressor'        , '~> 0.12.0'
-  # gem 'turbo-sprockets-rails3', '~> 0.3.0'
 end
 
 group :development do
