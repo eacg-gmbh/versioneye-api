@@ -33,23 +33,4 @@ module ProjectHelpers
     return e.message
   end
 
-  def add_dependency_licences(project)
-    return nil if project.nil?
-    return project if project.dependencies.empty?
-
-    project.dependencies.each do |dep|
-      prod = dep.product
-      if !prod.nil? and !dep.unknown?
-        dep[:license] = prod.license_info
-      else
-        dep[:license] = 'unknown'
-      end
-    end
-    project
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join "\n"
-    project
-  end
-
 end

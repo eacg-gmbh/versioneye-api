@@ -54,7 +54,6 @@ module V2
         if project.nil?
           error! "Project `#{params[:project_key]}` don't exists", 400
         end
-        project = add_dependency_licences(project)
         present project, with: EntitiesV2::ProjectEntity, type: :full
       end
 
@@ -91,7 +90,6 @@ module V2
           error! project, 500
         end
 
-        project = add_dependency_licences(project)
         present project, with: EntitiesV2::ProjectEntity, :type => :full
       end
 
@@ -136,8 +134,6 @@ module V2
 
         Rails.cache.delete( project.id.to_s )
         project = Project.find project.id.to_s # Reload from DB!
-
-        project = add_dependency_licences(project)
 
         present project, with: EntitiesV2::ProjectEntity, :type => :full
       end
