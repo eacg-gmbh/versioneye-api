@@ -47,6 +47,9 @@ describe V2::UsersApiV2, :type => :request do
     before(:each) do
       @test_user = UserFactory.create_new
       @user_api =  ApiFactory.create_new(@test_user)
+      @user_api.enterprise_projects = 398
+      @user_api.active = true 
+      @user_api.save 
 
       #set up active session
       post @root_uri +'/sessions', :api_key => @user_api.api_key
@@ -60,6 +63,17 @@ describe V2::UsersApiV2, :type => :request do
     it "returns user's miniprofile" do
       get @me_uri
       response.status.should == 200
+      response_data = JSON.parse(response.body)
+      expect(response_data["fullname"]).to eq(@test_user.fullname)
+      expect(response_data["username"]).to eq(@test_user.username)
+      expect(response_data["email"]).to eq(@test_user.email)
+      expect(response_data["admin"]).to eq(@test_user.admin)
+      expect(response_data["deleted_user"]).to eq(@test_user.deleted_user)
+      expect(response_data["enterprise_projects"]).to eq(@user_api.enterprise_projects)
+      expect(response_data["active"]).to eq(@user_api.active)
+      expect(response_data["notifications"]).to_not be_nil
+      expect(response_data["notifications"]["new"]).to_not be_nil
+      expect(response_data["notifications"]["total"]).to_not be_nil
     end
   end
 

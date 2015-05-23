@@ -23,14 +23,18 @@ module V2
       }
       get do
         authorized?
-        @current_user[:notifications] = {
+        
+        api = Api.by_user( @current_user )
+
+        me = Me.new(@current_user)
+        me.enterprise_projects = api.enterprise_projects
+        me.active = api.active
+        me.notifications = {
           :new => Notification.by_user_id(@current_user.id).all_not_sent.count,
           :total => Notification.by_user_id(@current_user.id).count
         }
-        api = Api.by_user( @current_user )
-        @current_user[:enterprise_projects] = @current_user.api.enterprise_projects
-        @current_user[:active] = @current_user.api.active
-        present @current_user, with: EntitiesV2::UserDetailedEntity
+        
+        present me, with: EntitiesV2::UserDetailedEntity
       end
 
 
