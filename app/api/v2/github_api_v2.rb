@@ -29,16 +29,16 @@ module V2
           is still valid. If that is not the case please visit **https://www.versioneye.com/settings/connect**.
           to update your GitHub credentials.
 
-          If it's shows no or old data, then you can use the `github/sync` endpoint
+          If it shows no or old data, then you can use the `github/sync` endpoint
           to update your account with the current meta data from GitHub.
         ]
       }
       params do
-        optional :lang         , type: String, desc: "Filter by language"
+        optional :lang         , type: String,  desc: "Filter by language"
         optional :private      , type: Boolean, desc: "Filter by visibility"
-        optional :org_name     , type: String, desc: "Filter by name of organization"
-        optional :org_type     , type: String, desc: "Filter by type of organization"
-        optional :page         , type: String, default: '1', desc: "Number of page"
+        optional :org_name     , type: String,  desc: "Filter by name of organization"
+        optional :org_type     , type: String,  desc: "Filter by type of organization"
+        optional :page         , type: String,  default: '1', desc: "Number of page"
         optional :only_imported, type: Boolean, default: false, desc: "Show only imported repositories"
       end
       get '/' do
@@ -203,7 +203,6 @@ module V2
       params do
         requires :repo_key, type: String, desc: "encoded repo-key"
         optional :branch, type: String, default: "master", desc: "the name of the branch"
-        optional :file, type: String, default: "Gemfile", desc: "the project file (default is Gemfile)"
       end
       delete '/:repo_key' do
         authorized?
@@ -212,15 +211,12 @@ module V2
 
         repo_name = decode_prod_key(params[:repo_key])
         branch    = params[:branch]
-        project_file = params[:file]
-        project_file = 'Gemfile' if project_file.to_s.empty?
 
-        projects = Project.by_user(user).by_github(repo_name).where(scm_branch: branch)
+        projects = Project.by_user( user ).by_github( repo_name ).where( scm_branch: branch )
         error!("Project doesnt exists", 400) if projects.nil? || projects.empty?
 
         projects.each do |project|
-          next if !project.filename.eql?( project_file )
-          ProjectService.destroy project[:_id].to_s
+          ProjectService.destroy project
         end
 
         present :success, true

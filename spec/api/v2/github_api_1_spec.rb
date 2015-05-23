@@ -4,7 +4,7 @@ require 'webmock'
 
 describe "GithubApiV2", :type => :request do
 
-  describe "when user is properly authorized" do
+  describe "show github repository" do
 
     before :each do
       Project.delete_all 
@@ -59,7 +59,7 @@ describe "GithubApiV2", :type => :request do
   end
 
 
-  describe "when auth is true" do 
+  describe "removes an existing github repo from VersionEye" do 
     
     before :each do
       Project.delete_all 
@@ -79,9 +79,6 @@ describe "GithubApiV2", :type => :request do
       user_api = ApiFactory.create_new(user)
       user_api.save.should be_truthy
 
-      p "user_id: #{user.id.to_s}"
-      p "api kye: #{user_api.api_key} - user_id: #{user_api.user_id}"
-
       repo1 = GithubRepo.new({user_id: user.id.to_s, github_id: 1,
                       fullname: "spec/repo1", user_login: "a",
                       owner_login: "versioneye", owner_type: "user"})
@@ -93,9 +90,7 @@ describe "GithubApiV2", :type => :request do
       project.scm_fullname = repo1[:fullname]
       project.scm_branch = 'master'
       project.save.should be_truthy
-      # p "project messages: "
-      # p project.errors.messages 
-      # Project.count.should eq(1)
+      Project.count.should eq(1)
 
       delete "/api/v2/github/spec:repo1", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
       response.status.should eq(200)
@@ -105,7 +100,7 @@ describe "GithubApiV2", :type => :request do
       msg.has_key?('success').should be_truthy
       msg['success'].should be_truthy
 
-      # Project.count.should eq(0)
+      Project.count.should eq(0)
     end
   end
 
