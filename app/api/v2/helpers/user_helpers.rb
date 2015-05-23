@@ -13,9 +13,10 @@ module UserHelpers
 
   def make_favorite_response(user, page_nr, page_size)
     favorites = user.products.paginate(page: page_nr, per_page: page_size)
-    user_favorites = Api.new user: user,
+    user_favorites = UserFavs.new user: user,
                               favorites: favorites,
                               paging: make_paging_object(favorites)
     present user_favorites, with: EntitiesV2::UserFollowEntities
   end
+
 end

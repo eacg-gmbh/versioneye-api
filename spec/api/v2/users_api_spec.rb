@@ -60,7 +60,7 @@ describe V2::UsersApiV2, :type => :request do
       delete @root_uri + '/sessions'
     end
 
-    it "returns user's miniprofile" do
+    it "returns user's miniprofile for /me" do
       get @me_uri
       response.status.should == 200
       response_data = JSON.parse(response.body)
@@ -74,6 +74,30 @@ describe V2::UsersApiV2, :type => :request do
       expect(response_data["notifications"]).to_not be_nil
       expect(response_data["notifications"]["new"]).to_not be_nil
       expect(response_data["notifications"]["total"]).to_not be_nil
+    end
+
+    it 'returns the packages which the user follows' do 
+      product = ProductFactory.create_new 1 
+      ProductService.follow product.language, product.prod_key, @test_user
+
+      get @me_uri + '/favorites'
+      response.status.should == 200
+      response_data = JSON.parse(response.body)
+      
+      expect( response_data["user"] ).to_not be_nil
+      expect( response_data["user"]["fullname"] ).to eq(@test_user.fullname)
+      expect( response_data["user"]["username"] ).to eq(@test_user.username)
+
+      expect( response_data["favorites"] ).to_not be_nil
+      expect( response_data["favorites"].count ).to eq(1)
+      expect( response_data["favorites"].first['name'] ).to eq(product.name)
+      expect( response_data["favorites"].first['language'] ).to eq(product.language)
+      expect( response_data["favorites"].first['prod_key'] ).to eq(product.prod_key)
+
+      expect( response_data["paging"] ).to_not be_nil
+      expect( response_data["paging"]['current_page'] ).to_not be_nil
+      expect( response_data["paging"]['total_pages']  ).to_not be_nil
+      expect( response_data["paging"]['total_entries']).to_not be_nil
     end
   end
 

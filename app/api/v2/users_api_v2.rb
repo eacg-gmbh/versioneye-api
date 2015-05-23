@@ -38,7 +38,7 @@ module V2
       end
 
 
-      desc "shows favorite packages for authorized user"
+      desc "shows the packages you are following"
       params do
         optional :page, type: Integer, desc: "page number for pagination"
       end
