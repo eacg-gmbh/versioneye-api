@@ -165,6 +165,14 @@ describe V2::UsersApiV2, :type => :request do
       response_data["notifications"].length.should == 1
       msg = response_data["notifications"].shift
       msg["version"].should eql(new_notification.version_id)
+      expect( msg["created_at"] ).to_not be_nil 
+      expect( msg["sent_email"] ).to be_falsey
+      expect( msg["read"] ).to be_falsey
+      expect( msg["product"] ).to_not be_nil
+      expect( msg["product"]['name'] ).to_not be_nil
+      expect( msg["product"]['language'] ).to_not be_nil
+      expect( msg["product"]['prod_key'] ).to_not be_nil
+      expect( msg["product"]['version'] ).to_not be_nil
     end
   end
 
