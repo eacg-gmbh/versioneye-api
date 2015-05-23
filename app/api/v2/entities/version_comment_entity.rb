@@ -6,7 +6,7 @@ require_relative 'paging_entity.rb'
 
 module EntitiesV2
   class VersionCommentEntity < Grape::Entity
-    expose :_id, :as => :id
+    expose :ids, :as => :id
     expose :comment
     expose :created_at
     expose :user, using: UserEntity

@@ -99,6 +99,37 @@ describe V2::UsersApiV2, :type => :request do
       expect( response_data["paging"]['total_pages']  ).to_not be_nil
       expect( response_data["paging"]['total_entries']).to_not be_nil
     end
+
+    it 'returns the comments' do 
+      product = ProductFactory.create_new 1 
+      
+      comment = Versioncomment.new({
+        :user_id => @test_user.ids, 
+        :language => product.language, 
+        :product_key => product.prod_key,
+        :version => product.version, 
+        :prod_name => product.name, 
+        :comment => 'This is awesome' })
+      comment.save 
+
+      get @me_uri + '/comments'
+      response.status.should == 200
+      response_data = JSON.parse(response.body)
+      
+      expect( response_data["comments"] ).to_not be_nil
+      expect( response_data["comments"].count ).to eq(1)
+      expect( response_data["comments"].first['id'] ).to eq( comment.ids )
+      expect( response_data["comments"].first['comment'] ).to eq(comment.comment)
+      expect( response_data["comments"].first['product']['language'] ).to eq(product.language)
+      expect( response_data["comments"].first['product']['prod_key'] ).to eq(product.prod_key)
+      expect( response_data["comments"].first['product']['version'] ).to eq(product.version)
+      expect( response_data["comments"].first['product']['name'] ).to eq(product.name)
+
+      expect( response_data["paging"] ).to_not be_nil
+      expect( response_data["paging"]['current_page'] ).to_not be_nil
+      expect( response_data["paging"]['total_pages']  ).to_not be_nil
+      expect( response_data["paging"]['total_entries']).to_not be_nil
+    end
   end
 
 

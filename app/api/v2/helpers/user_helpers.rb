@@ -7,7 +7,7 @@ module UserHelpers
       comments[index][:product] = Product.fetch_product( comment.language, comment.product_key )
     end
     paging = make_paging_object(comments)
-    user_comments = Api.new comments: comments, paging: paging
+    user_comments = CommentsDto.new comments: comments, paging: paging
     present user_comments, with: EntitiesV2::VersionCommentEntities
   end
 
