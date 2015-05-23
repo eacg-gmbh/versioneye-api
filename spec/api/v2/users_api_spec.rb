@@ -130,19 +130,6 @@ describe V2::UsersApiV2, :type => :request do
       expect( response_data["paging"]['total_pages']  ).to_not be_nil
       expect( response_data["paging"]['total_entries']).to_not be_nil
     end
-  end
-
-
-  describe "authorized user access notifications" do
-    before(:each) do
-      @test_user = UserFactory.create_new
-      @user_api = ApiFactory.create_new @test_user
-    end
-
-    after(:each) do
-      @test_user.remove
-      @user_api.remove
-    end
 
     it "should return empty dataset when there's no notifications" do
       get @me_uri + "/notifications", :api_key => @user_api.api_key
@@ -174,6 +161,83 @@ describe V2::UsersApiV2, :type => :request do
       expect( msg["product"]['prod_key'] ).to_not be_nil
       expect( msg["product"]['version'] ).to_not be_nil
     end
+  end
+
+
+  describe "authorized user access notifications" do
+    before(:each) do
+      @test_user = UserFactory.create_new
+      @user_api  = ApiFactory.create_new @test_user
+    end
+
+    after(:each) do
+      @test_user.remove
+      @user_api.remove
+    end
+
+    it "should return the user object" do
+      get @users_uri + "/#{@test_user.username}", :api_key => @user_api.api_key
+      response.status.should == 200
+      response_data = JSON.parse(response.body)
+      expect( response_data["username"] ).to eq(@test_user.username)
+      expect( response_data["fullname"] ).to eq(@test_user.fullname)
+    end
+
+    it 'returns the packages which the user follows' do 
+      product = ProductFactory.create_new 1 
+      ProductService.follow product.language, product.prod_key, @test_user
+
+      get @users_uri + "/#{@test_user.username}/favorites", :api_key => @user_api.api_key
+      response.status.should == 200
+      response_data = JSON.parse(response.body)
+      
+      expect( response_data["user"] ).to_not be_nil
+      expect( response_data["user"]["fullname"] ).to eq(@test_user.fullname)
+      expect( response_data["user"]["username"] ).to eq(@test_user.username)
+
+      expect( response_data["favorites"] ).to_not be_nil
+      expect( response_data["favorites"].count ).to eq(1)
+      expect( response_data["favorites"].first['name'] ).to eq(product.name)
+      expect( response_data["favorites"].first['language'] ).to eq(product.language)
+      expect( response_data["favorites"].first['prod_key'] ).to eq(product.prod_key)
+
+      expect( response_data["paging"] ).to_not be_nil
+      expect( response_data["paging"]['current_page'] ).to_not be_nil
+      expect( response_data["paging"]['total_pages']  ).to_not be_nil
+      expect( response_data["paging"]['total_entries']).to_not be_nil
+    end
+
+    it 'returns the comments' do 
+      product = ProductFactory.create_new 1 
+      
+      comment = Versioncomment.new({
+        :user_id => @test_user.ids, 
+        :language => product.language, 
+        :product_key => product.prod_key,
+        :version => product.version, 
+        :prod_name => product.name, 
+        :comment => 'This is awesome' })
+      comment.save 
+
+      get @users_uri + "/#{@test_user.username}/comments", :api_key => @user_api.api_key
+      response.status.should == 200
+      response_data = JSON.parse(response.body)
+      
+      expect( response_data["comments"] ).to_not be_nil
+      expect( response_data["comments"].count ).to eq(1)
+      expect( response_data["comments"].first['id'] ).to eq( comment.ids )
+      expect( response_data["comments"].first['comment'] ).to eq(comment.comment)
+      expect( response_data["comments"].first['product']['language'] ).to eq(product.language)
+      expect( response_data["comments"].first['product']['prod_key'] ).to eq(product.prod_key)
+      expect( response_data["comments"].first['product']['version'] ).to eq(product.version)
+      expect( response_data["comments"].first['product']['name'] ).to eq(product.name)
+
+      expect( response_data["paging"] ).to_not be_nil
+      expect( response_data["paging"]['current_page'] ).to_not be_nil
+      expect( response_data["paging"]['total_pages']  ).to_not be_nil
+      expect( response_data["paging"]['total_entries']).to_not be_nil
+    end
+
   end
 
 end
