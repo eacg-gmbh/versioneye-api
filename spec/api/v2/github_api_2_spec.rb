@@ -88,7 +88,7 @@ describe "GithubApiV2", :type => :request do
         resp['status'].should eq("running")
 
         p "sleep for a while"
-        sleep 7
+        sleep 4
 
         get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
         response.status.should eq(200)
@@ -204,7 +204,7 @@ describe "GithubApiV2", :type => :request do
         cache.delete user_task_key
 
         get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-        sleep 5
+        sleep 4
         
         post "#{api_path}/veye1test:docker_web_ui", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
         response.status.should eq(201)
@@ -219,7 +219,6 @@ describe "GithubApiV2", :type => :request do
         project["name"].should eq("veye1test/docker_web_ui")  
 
         project_id = project['id']
-        p "project_id: #{project_id}" 
 
         post "#{api_path}/hook/#{project_id}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
         response.status.should eq(201)
