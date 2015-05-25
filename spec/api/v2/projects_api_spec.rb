@@ -12,13 +12,6 @@ describe V2::ProjectsApiV2, :type => :request do
 
   let(:project_key) {"rubygem_gemfile_lock_1"}
   let(:project_name) {"Gemfile.lock"}
-  let(:product1) {create(:product_with_versions, versions_count: 4, name: "daemons",         prod_key: "daemons",         version: "1.1.4", license: "MIT")}
-  let(:product2) {create(:product_with_versions, versions_count: 7, name: "eventmachine",    prod_key: "eventmachine",    version: "1.1.4", license: "MIT")}
-  let(:product3) {create(:product_with_versions, versions_count: 3, name: "rack",            prod_key: "rack",            version: "1.3.4", license: "MIT")}
-  let(:product4) {create(:product_with_versions, versions_count: 2, name: "rack-protection", prod_key: "rack-protection", version: "1.3.4", license: "MIT")}
-  let(:product5) {create(:product_with_versions, versions_count: 5, name: "sinatra",         prod_key: "sinatra",         version: "1.3.3", license: "MIT")}
-  let(:product6) {create(:product_with_versions, versions_count: 4, name: "thin",            prod_key: "thin",            version: "1.3.1", license: "MIT")}
-  let(:product7) {create(:product_with_versions, versions_count: 4, name: "tilt",            prod_key: "tilt",            version: "1.3.3", license: "MIT")}
 
   before :all do
     WebMock.allow_net_connect!
@@ -29,7 +22,6 @@ describe V2::ProjectsApiV2, :type => :request do
   end
 
   describe "Unauthorized user shouldnt have access, " do
-
     it "returns 401, when user tries to fetch list of project" do
       get "#{project_uri}.json"
       response.status.should eq(401)
@@ -50,6 +42,30 @@ describe V2::ProjectsApiV2, :type => :request do
     it "returns 401, when user tries to delete file" do
       delete project_uri + '/1223335454545324.json', :upload => "123456", "HTTPS" => "on"
       response.status.should eq(401)
+    end
+  end
+
+
+  describe "list user projects" do 
+    include Rack::Test::Methods
+    it 'lists 0 because user has no projects' do 
+      response = get "#{project_uri}", {api_key: user_api.api_key}, "HTTPS" => "on"
+      response.status.should eq(200)
+      project_info2 = JSON.parse response.body
+
+      response = get project_uri, {:api_key => user_api.api_key}, "HTTPS" => "on"
+      response.status.should eq(200)
+    end
+    it 'lists 1 because user has no projects' do 
+      project = ProjectFactory.create_new test_user
+      expect( project.save ).to be_truthy
+      response = get project_uri, {:api_key => user_api.api_key}, "HTTPS" => "on"
+      response.status.should eq(200)
+      resp = JSON.parse response.body
+      expect( resp.count ).to eq(1)
+      expect( resp.first['id'] ).to_not be_nil 
+      expect( resp.first['name'] ).to_not be_nil 
+      expect( resp.first['updated_at'] ).to_not be_nil 
     end
   end
 
@@ -221,16 +237,46 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "return correct licence info for existing project" do
-      response = get "#{project_uri}/#{project_key}/licenses.json"
+      prod1 = ProductFactory.create_for_gemfile 'sinatra', '1.0.0'
+      prod1.save 
+      prod2 = ProductFactory.create_for_gemfile 'rails',   '2.0.0'
+      prod2.save 
+      prod3 = ProductFactory.create_for_gemfile 'log4r',   '2.0.0'
+      prod3.save 
+
+      license = License.new(:language => prod1.language, :prod_key => prod1.prod_key, :version => prod1.version, :name => "MIT" )
+      expect( license.save ).to be_truthy
+
+      license = License.new(:language => prod2.language, :prod_key => prod2.prod_key, :version => prod2.version, :name => "Apache-2.0" )
+      expect( license.save ).to be_truthy
+
+      project = ProjectFactory.create_new test_user
+      project.save 
+      ProjectdependencyFactory.create_new project, prod1 
+      ProjectdependencyFactory.create_new project, prod2
+      ProjectdependencyFactory.create_new project, prod3 
+
+      response = get "#{project_uri}/#{project.ids}/licenses.json"
       response.status.should eql(200)
 
       data = JSON.parse response.body
-
       data["success"].should be_truthy
+      
       unknown_licences = data["licenses"]["unknown"].map {|x| x['name']}
       unknown_licences = unknown_licences.to_set
-      unknown_licences.include?("rack-protection").should be_truthy
-      unknown_licences.include?("sinatra").should be_truthy
+      unknown_licences.include?("log4r").should be_truthy
+      unknown_licences.include?("sinatra").should be_falsey
+      unknown_licences.include?("rails").should be_falsey
+
+      mit_licences = data["licenses"]["MIT"].map {|x| x['name']}
+      mit_licences = mit_licences.to_set
+      mit_licences.include?("sinatra").should be_truthy
+      mit_licences.include?("rails").should be_falsey
+      
+      apache_licences = data["licenses"]["Apache-2.0"].map {|x| x['name']}
+      apache_licences = apache_licences.to_set
+      apache_licences.include?("rails").should be_truthy
+      apache_licences.include?("sinatra").should be_falsey
     end
 
     it "deletes existing project successfully" do

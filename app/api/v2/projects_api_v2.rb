@@ -36,8 +36,14 @@ module V2
       }
       get do
         authorized?
-        @user_projects = Project.by_user(@current_user)
-        present @user_projects, with: EntitiesV2::ProjectEntity
+        projects = []
+        user_projects = ProjectService.index @current_user, false 
+        user_projects.each do |project| 
+          project_dto = ProjectListitemDto.new 
+          project_dto.update_from project
+          projects << project_dto
+        end
+        present projects, with: EntitiesV2::ProjectListItemEntity
       end
 
 
