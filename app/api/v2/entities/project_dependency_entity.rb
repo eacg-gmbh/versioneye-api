@@ -12,7 +12,7 @@ module EntitiesV2
 
     expose :comperator, :as => :comparator
     expose :unknown?  , :as => :unknown
-    expose :outdated , :as => :outdated
+    expose :outdated  , :as => :outdated
     expose :release   , :as => :stable
   end
 end
