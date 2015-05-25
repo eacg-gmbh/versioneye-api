@@ -4,7 +4,7 @@ require 'webmock'
 
 describe "GithubApiV2", :type => :request do
 
-  let(:user) {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com", terms: true, datenerhebung: true)}
+  let(:user) {create(:user, username: "pupujuku" , fullname: "Pupu Juku", email: "juku@pupu.com", terms: true, datenerhebung: true)}
   let(:user2) {create(:user, username: "dontshow", fullname: "Don TShow", email: "dont@show.com", terms: true, datenerhebung: true)}
 
   let(:user_api) { ApiFactory.create_new(user) }
@@ -98,6 +98,89 @@ describe "GithubApiV2", :type => :request do
         user.github_repos.count.should eq(4)
       end
       worker.exit
+    end
+  end
+
+
+  describe "list github repos" do
+    before :each do
+      WebMock.allow_net_connect!
+    end
+    it "does list GitHub repos" do
+      user.github_id = '10449954'
+      user.github_token = '07d9d399f1a8ff7880b'
+      user.save.should be_truthy
+
+      user_task_key = "#{user[:username]}-#{user[:github_id]}"
+      cache = Versioneye::Cache.instance.mc
+      cache.delete user_task_key
+
+      worker = Thread.new{ GitReposImportWorker.new.work }
+      VCR.use_cassette('github_sync_hans', allow_playback_repeats: true) do
+        get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        response.status.should eq(200)
+        
+        sleep 3
+
+        get "#{api_path}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        response.status.should eq(200)
+        resp = JSON.parse response.body
+        resp['repos'].should_not be_nil 
+        expect( resp['repos'].count ).to eq(4)
+      end
+      worker.exit
+    end
+    it "does list GitHub repos" do
+      user.github_id = '10449954'
+      user.github_token = '07d9d399f1a8ff7880b'
+      user.save.should be_truthy
+
+      user_task_key = "#{user[:username]}-#{user[:github_id]}"
+      cache = Versioneye::Cache.instance.mc
+      cache.delete user_task_key
+
+      worker = Thread.new{ GitReposImportWorker.new.work }
+      VCR.use_cassette('github_sync_hans', allow_playback_repeats: true) do
+        get "#{api_path}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        response.status.should eq(200)
+        resp = JSON.parse response.body
+        resp['repos'].should_not be_nil 
+        expect( resp['repos'].count ).to eq(0)
+        sleep 2 
+        get "#{api_path}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        response.status.should eq(200)
+        resp = JSON.parse response.body
+        resp['repos'].should_not be_nil 
+        expect( resp['repos'].count ).to eq(4)
+      end
+      worker.exit
+    end
+    it "list imported GitHub repos" do
+      user.github_id = '10449954'
+      user.github_token = '07d9d399f1a8ff7880b'
+      user.save.should be_truthy
+
+      repo1.save 
+      repo2.save 
+
+      project = ProjectFactory.create_new user 
+      project.source = Project::A_SOURCE_GITHUB
+      project.scm_fullname = repo1.fullname
+      project.save 
+      expect( project.save ).to be_truthy
+      expect( Project.count ).to eq(1)
+      expect( user.github_repos.count ).to eq(2)
+
+      get "#{api_path}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+      response.status.should eq(200)
+      resp = JSON.parse response.body
+      expect( resp['repos'].count ).to eq(2)
+
+      get "#{api_path}", {:only_imported => true, :api_key => user_api[:api_key]}, "HTTPS" => "on"
+      response.status.should eq(200)
+      resp = JSON.parse response.body
+      expect( resp['repos'].count ).to eq(1)
+      expect( resp['repos'].first['fullname'] ).to eq(repo1.fullname)
     end
   end
 
