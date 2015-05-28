@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 9fa525fb89965269bde008ca202751925ce1a373
-  tag: v7.12.0
+  revision: aacd8cabb97f27a87a30ebd5e93253be8cb59a39
+  tag: v7.13.2
   specs:
-    versioneye-core (7.12.0)
+    versioneye-core (7.13.2)
       actionmailer (~> 4.2.1)
       aws-sdk (~> 2.0.45)
       bundler (~> 1.9.1)
@@ -76,14 +76,14 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.5.0)
     arel (6.0.0)
-    aws-sdk (2.0.45)
-      aws-sdk-resources (= 2.0.45)
-    aws-sdk-core (2.0.45)
+    aws-sdk (2.0.46)
+      aws-sdk-resources (= 2.0.46)
+    aws-sdk-core (2.0.46)
       builder (~> 3.0)
       jmespath (~> 1.0)
       multi_json (~> 1.0)
-    aws-sdk-resources (2.0.45)
-      aws-sdk-core (= 2.0.45)
+    aws-sdk-resources (2.0.46)
+      aws-sdk-core (= 2.0.46)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -103,7 +103,7 @@ GEM
       selenium-webdriver
     childprocess (0.5.6)
       ffi (~> 1.0, >= 1.0.11)
-    cocoapods-core (0.37.1)
+    cocoapods-core (0.37.2)
       activesupport (>= 3.2.15)
       fuzzy_match (~> 2.0.4)
       nap (~> 0.8.0)
@@ -180,9 +180,9 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    mime-types (2.5)
+    mime-types (2.6.1)
     mini_portile (0.6.2)
-    minitest (5.6.1)
+    minitest (5.7.0)
     mongoid (4.0.2)
       activemodel (~> 4.0)
       moped (~> 2.0.0)
