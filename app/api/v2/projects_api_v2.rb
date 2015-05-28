@@ -37,7 +37,7 @@ module V2
       get do
         authorized?
         projects = []
-        user_projects = ProjectService.index @current_user, false 
+        user_projects = ProjectService.index @current_user
         user_projects.each do |project| 
           project_dto = ProjectListitemDto.new 
           project_dto.update_from project
