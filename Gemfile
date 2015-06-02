@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'bundler'            , '~> 1.9.1'
+gem 'bundler'            , '~> 1.10.0'
 gem 'rails'              , '~> 4.2.1'
 gem 'puma'               , '~> 2.11.3'
 gem 'grape'              , '~> 0.7.0'
@@ -11,7 +11,7 @@ gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 gem 'htmlentities'       , '~> 4.3.2'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.13.2'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.13.4'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :assets do
@@ -27,8 +27,6 @@ group :development do
   gem 'psych'             , '~> 2.0.5'
   gem 'terminal-notifier' , '~> 1.6.0'
   gem 'fakes3'            , '~> 0.2.0'
-  # gem 'debugger'          , '~> 1.6.8'
-  # gem 'irbtools'          , '1.6.1'
 end
 
 group :test do

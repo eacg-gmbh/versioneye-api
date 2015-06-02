@@ -1,12 +1,12 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: aacd8cabb97f27a87a30ebd5e93253be8cb59a39
-  tag: v7.13.2
+  revision: a9e68d01a5786004f7bc38586315f472cf215a43
+  tag: v7.13.4
   specs:
-    versioneye-core (7.13.2)
+    versioneye-core (7.13.4)
       actionmailer (~> 4.2.1)
       aws-sdk (~> 2.0.45)
-      bundler (~> 1.9.1)
+      bundler (~> 1.10.2)
       bunny (~> 1.7.0)
       cocoapods-core (~> 0.37.1)
       dalli (~> 2.7.0)
@@ -76,14 +76,14 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.5.0)
     arel (6.0.0)
-    aws-sdk (2.0.46)
-      aws-sdk-resources (= 2.0.46)
-    aws-sdk-core (2.0.46)
+    aws-sdk (2.0.47)
+      aws-sdk-resources (= 2.0.47)
+    aws-sdk-core (2.0.47)
       builder (~> 3.0)
       jmespath (~> 1.0)
       multi_json (~> 1.0)
-    aws-sdk-resources (2.0.46)
-      aws-sdk-core (= 2.0.46)
+    aws-sdk-resources (2.0.47)
+      aws-sdk-core (= 2.0.47)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -171,7 +171,7 @@ GEM
     ice_nine (0.11.1)
     jmespath (1.0.2)
       multi_json (~> 1.0)
-    json (1.8.2)
+    json (1.8.3)
     kgio (2.9.3)
     kramdown (1.7.0)
     libv8 (3.16.14.7)
@@ -354,7 +354,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.9.1)
+  bundler (~> 1.10.0)
   capybara (~> 2.4.4)
   capybara-firebug (~> 2.1.0)
   coffee-rails (~> 4.1.0)
@@ -385,3 +385,6 @@ DEPENDENCIES
   webmock (~> 1.21.0)
   will_paginate_mongoid (= 2.0.1)
   yui-compressor (~> 0.12.0)
+
+BUNDLED WITH
+   1.10.2
