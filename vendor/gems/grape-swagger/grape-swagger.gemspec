@@ -17,11 +17,6 @@ Gem::Specification.new do |s|
     "README.markdown"
   ]
   s.files = [
-    ".document",
-    ".rspec",
-    ".rvmrc",
-    ".travis.yml",
-    "CHANGELOG.markdown",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
