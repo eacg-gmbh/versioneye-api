@@ -232,7 +232,7 @@ describe V2::ProjectsApiV2, :type => :request do
       project_info2 = JSON.parse response.body
       project_info2["project_key"].should eq(project_key)
       project_info2["name"].should eq(project_name)
-      project_info2["source"].should eq("upload")
+      project_info2["source"].should eq("API")
       project_info2["dependencies"].count.should eql(7)
     end
 
