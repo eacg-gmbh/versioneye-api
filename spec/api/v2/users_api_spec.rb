@@ -91,7 +91,7 @@ describe V2::UsersApiV2, :type => :request do
       expect( response_data["favorites"] ).to_not be_nil
       expect( response_data["favorites"].count ).to eq(1)
       expect( response_data["favorites"].first['name'] ).to eq(product.name)
-      expect( response_data["favorites"].first['language'] ).to eq(product.language)
+      expect( response_data["favorites"].first['language'] ).to eq(product.language.downcase)
       expect( response_data["favorites"].first['prod_key'] ).to eq(product.prod_key)
 
       expect( response_data["paging"] ).to_not be_nil
@@ -120,7 +120,7 @@ describe V2::UsersApiV2, :type => :request do
       expect( response_data["comments"].count ).to eq(1)
       expect( response_data["comments"].first['id'] ).to eq( comment.ids )
       expect( response_data["comments"].first['comment'] ).to eq(comment.comment)
-      expect( response_data["comments"].first['product']['language'] ).to eq(product.language)
+      expect( response_data["comments"].first['product']['language'] ).to eq(product.language.downcase)
       expect( response_data["comments"].first['product']['prod_key'] ).to eq(product.prod_key)
       expect( response_data["comments"].first['product']['version'] ).to eq(product.version)
       expect( response_data["comments"].first['product']['name'] ).to eq(product.name)
@@ -198,7 +198,7 @@ describe V2::UsersApiV2, :type => :request do
       expect( response_data["favorites"] ).to_not be_nil
       expect( response_data["favorites"].count ).to eq(1)
       expect( response_data["favorites"].first['name'] ).to eq(product.name)
-      expect( response_data["favorites"].first['language'] ).to eq(product.language)
+      expect( response_data["favorites"].first['language'] ).to eq(product.language.downcase )
       expect( response_data["favorites"].first['prod_key'] ).to eq(product.prod_key)
 
       expect( response_data["paging"] ).to_not be_nil
@@ -227,7 +227,7 @@ describe V2::UsersApiV2, :type => :request do
       expect( response_data["comments"].count ).to eq(1)
       expect( response_data["comments"].first['id'] ).to eq( comment.ids )
       expect( response_data["comments"].first['comment'] ).to eq(comment.comment)
-      expect( response_data["comments"].first['product']['language'] ).to eq(product.language)
+      expect( response_data["comments"].first['product']['language'] ).to eq(product.language.downcase)
       expect( response_data["comments"].first['product']['prod_key'] ).to eq(product.prod_key)
       expect( response_data["comments"].first['product']['version'] ).to eq(product.version)
       expect( response_data["comments"].first['product']['name'] ).to eq(product.name)

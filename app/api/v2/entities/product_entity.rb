@@ -9,7 +9,7 @@ module EntitiesV2
 
   class ProductEntity < Grape::Entity
     expose :name     , :documentation => {:type => 'string', :desc => 'name of package'}
-    expose :language , :documentation => {:desc => 'Programming language'}
+    expose :language_esc, :as => 'language', :documentation => {:desc => 'Programming language'}
     expose :prod_key , :documentation => {:type => 'string', :desc => 'product key for given package'}
     expose :version  , :documentation => {:desc => 'Latest version'}
     expose :prod_type, :documentation => {:type => 'string', :desc => 'product type of package'}
