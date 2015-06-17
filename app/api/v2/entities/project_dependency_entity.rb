@@ -6,7 +6,7 @@ module EntitiesV2
     expose :prod_key
     expose :group_id
     expose :artifact_id
-    expose :language_es, :as => 'language'
+    expose :language_esc, :as => 'language'
 
     expose :version_current
     expose :version_requested
