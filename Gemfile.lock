@@ -1,12 +1,12 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: dea2dddf3273dd43957b16ec1fba46d1cba7bd11
-  tag: v7.16.11
+  revision: eae5a8e90f57af4fc5ee858fe46a0c60dea5f395
+  tag: v7.17.0
   specs:
-    versioneye-core (7.16.11)
-      actionmailer (~> 4.2.1)
-      aws-sdk (~> 2.0.45)
-      bundler (~> 1.10.2)
+    versioneye-core (7.17.0)
+      actionmailer (~> 4.2.2)
+      aws-sdk (~> 2.1.0)
+      bundler (~> 1.10.4)
       bunny (~> 1.7.0)
       cocoapods-core (~> 0.37.1)
       dalli (~> 2.7.0)
@@ -76,14 +76,12 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.5.0)
     arel (6.0.0)
-    aws-sdk (2.0.48)
-      aws-sdk-resources (= 2.0.48)
-    aws-sdk-core (2.0.48)
-      builder (~> 3.0)
+    aws-sdk (2.1.1)
+      aws-sdk-resources (= 2.1.1)
+    aws-sdk-core (2.1.1)
       jmespath (~> 1.0)
-      multi_json (~> 1.0)
-    aws-sdk-resources (2.0.48)
-      aws-sdk-core (= 2.0.48)
+    aws-sdk-resources (2.1.1)
+      aws-sdk-core (= 2.1.1)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -214,7 +212,7 @@ GEM
     psych (2.0.13)
     puma (2.11.3)
       rack (>= 1.1, < 2.0)
-    rack (1.6.2)
+    rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-mount (0.8.3)
@@ -255,15 +253,15 @@ GEM
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
       rspec-mocks (~> 3.3.0)
-    rspec-core (3.3.0)
+    rspec-core (3.3.1)
       rspec-support (~> 3.3.0)
     rspec-expectations (3.3.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.3.0)
-    rspec-mocks (3.3.0)
+    rspec-mocks (3.3.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.3.0)
-    rspec-rails (3.3.1)
+    rspec-rails (3.3.2)
       actionpack (>= 3.0, < 4.3)
       activesupport (>= 3.0, < 4.3)
       railties (>= 3.0, < 4.3)
@@ -387,4 +385,4 @@ DEPENDENCIES
   yui-compressor (~> 0.12.0)
 
 BUNDLED WITH
-   1.10.2
+   1.10.4
