@@ -352,7 +352,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.10.0)
+  bundler (~> 1.10.5)
   capybara (~> 2.4.4)
   capybara-firebug (~> 2.1.0)
   coffee-rails (~> 4.1.0)
@@ -385,4 +385,4 @@ DEPENDENCIES
   yui-compressor (~> 0.12.0)
 
 BUNDLED WITH
-   1.10.4
+   1.10.5

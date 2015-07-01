@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'bundler'            , '~> 1.10.0'
+gem 'bundler'            , '~> 1.10.5'
 gem 'rails'              , '~> 4.2.1'
 gem 'puma'               , '~> 2.11.3'
 gem 'grape'              , '~> 0.7.0'
