@@ -18,6 +18,17 @@ module V2
       project = Project.by_user(user).where(project_key: proj_key).shift
       project = Project.by_user(user).where(_id: proj_key).shift if project.nil?
       project
+    rescue => e 
+      p e.message
+      nil 
+    end
+
+    def self.fetch_product(dep)
+      if !dep.group_id.to_s.empty? && !dep.artifact_id.to_s.empty?
+        return Product.find_by_group_and_artifact dep.group_id, dep.artifact_id
+      else 
+        return Product.fetch_product( dep.language, dep.prod_key )
+      end
     end
 
     resource :projects do
@@ -182,7 +193,7 @@ module V2
             ]
       }
       params do
-        requires :project_key, :type => String, :desc => "Project specific identifier"
+        requires :project_key, :type => String, :desc => "Project ID or project_key"
       end
       get '/:project_key/licenses' do
         authorized?
@@ -195,8 +206,8 @@ module V2
         project.dependencies.each do |dep|
           license = "unknown"
           unless dep[:prod_key].nil?
-            product = Product.fetch_product( dep.language, dep.prod_key )
-            license = product.license_info
+            product = ProjectsApiV2.fetch_product dep 
+            license = product.license_info if product
           end
 
           licenses[license] ||= []
