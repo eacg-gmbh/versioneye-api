@@ -19,8 +19,13 @@ module ProjectHelpers
   end
 
   
-  def upload_and_store file
-    ProjectImportService.import_from_upload file, current_user, true
+  def upload_and_store file, public_project = 'public'
+    project = ProjectImportService.import_from_upload file, current_user, true
+    if public_project.to_s.eql?('private')
+      project.public = false 
+      project.save 
+    end
+    project 
   rescue => e 
     return e.message
   end
