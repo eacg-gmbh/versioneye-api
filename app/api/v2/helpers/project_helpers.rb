@@ -19,12 +19,14 @@ module ProjectHelpers
   end
 
   
-  def upload_and_store file, public_project = 'public'
+  def upload_and_store file, visibility = 'private', name = nil
     project = ProjectImportService.import_from_upload file, current_user, true
-    if public_project.to_s.eql?('private')
-      project.public = false 
-      project.save 
-    end
+    
+    project.public = true  if visibility.to_s.eql?('public')
+    project.public = false if visibility.to_s.eql?('private')
+    project.name   = name  if !name.to_s.empty?
+
+    project.save 
     project 
   rescue => e 
     return e.message

@@ -85,7 +85,8 @@ module V2
       }
       params do
         requires :upload, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
-        optional :visibility, :type => String, :desc => "By default 'public'. If 'private' only the owner can see the project.", :regexp => /^[\d]+$/
+        optional :visibility, :type => String, :desc => "By default 'private'. If 'public' everybody can see the project."
+        optional :name, :type => String, :desc => "The name of the VersionEye project. By default it is the filename."
       end
       post do
         authorized?
@@ -101,7 +102,7 @@ module V2
         datafile = ActionDispatch::Http::UploadedFile.new( params[:upload] )
         project_file = {'datafile' => datafile}
 
-        project = upload_and_store( project_file, params[:visibility] )
+        project = upload_and_store( project_file, params[:visibility], params[:name] )
         if project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
         elsif project.is_a? String 
