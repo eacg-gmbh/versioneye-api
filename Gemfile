@@ -43,3 +43,4 @@ group :test do
   gem 'factory_girl'      , '~> 4.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
 end
+
