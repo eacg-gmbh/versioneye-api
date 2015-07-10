@@ -231,19 +231,40 @@ module V2
         requires :project_id, type: String, desc: "Project ID"
       end
       post '/hook/:project_id' do
-        Rails.logger.info "hook params: #{params}"
+        Rails.logger.info "GitHub Hook for project ID #{params[:project_id]}"
         authorized?
-        project = Project.find_by_id( params[:project_id] )
-
-        if project && project.collaborator?( current_user )
-          Thread.new{ ProjectService.update( project, project.notify_after_api_update ) }
-          present :success, true
-        else
-          present :success, "No! You do not have access to this project!"
+        
+        project_file_changed = false 
+        commits = params[:commits] # Returns an Array of Hash 
+        commits.each do |commit| 
+          commit.deep_symbolize_keys!
+          modified_files = commit[:modified] # Array of modifield files 
+          modified_files.each do |file_path|
+            next if ProjectService.type_by_filename( file_path ).nil?
+            project_file_changed = true 
+            break 
+          end
         end
+
+        if project_file_changed == false 
+          error! "Dependencies did not change.", 400
+        end
+
+        project = Project.find_by_id( params[:project_id] )
+        if project.nil? 
+          error! "Project with ID #{params[:project_id]} not found.", 400
+        end
+        
+        if !project.collaborator?( current_user )
+          error! "You do not have access to this project!", 400
+        end
+
+        ProjectUpdateService.update_async project, project.notify_after_api_update
+
+        message = 'A background was triggered to update the project.'
+        Rails.logger.info message
+        present :success, message
       end
-
-
 
     end #end of resource block
   end
