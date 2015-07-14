@@ -231,11 +231,11 @@ module V2
         requires :project_id, type: String, desc: "Project ID"
       end
       post '/hook/:project_id' do
-        Rails.logger.info "GitHub Hook for project ID #{params[:project_id]}"
         authorized?
         
         project_file_changed = false 
         commits = params[:commits] # Returns an Array of Hash 
+        commits = [] if commits.nil? 
         commits.each do |commit| 
           commit.deep_symbolize_keys!
           modified_files = commit[:modified] # Array of modifield files 

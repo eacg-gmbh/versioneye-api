@@ -205,8 +205,8 @@ describe "GithubApiV2", :type => :request do
 
         get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
         
-        sleep 7
-        
+        sleep 4
+
         post "#{api_path}/veye1test:docker_web_ui", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
         response.status.should eq(201)
 
@@ -221,7 +221,10 @@ describe "GithubApiV2", :type => :request do
 
         project_id = project['id']
 
-        post "#{api_path}/hook/#{project_id}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        commit = {:modified => ['Gemfile']}
+        commits = [commit]
+
+        post "#{api_path}/hook/#{project_id}", {:api_key => user_api[:api_key], :commits => commits}, "HTTPS" => "on"
         response.status.should eq(201)
 
         worker3.exit
