@@ -179,6 +179,7 @@ module V2
           error! "We couldn't find the repository `#{repo_name}` in your account.", 400
         end
 
+
         ProjectImportService.import_from_github(user, repo_name, project_file, branch)
         projects = Project.by_user(current_user).by_github(repo_name).to_a
 
@@ -232,29 +233,29 @@ module V2
       end
       post '/hook/:project_id' do
         authorized?
-        
-        project_file_changed = false 
-        commits = params[:commits] # Returns an Array of Hash 
-        commits = [] if commits.nil? 
-        commits.each do |commit| 
+
+        project_file_changed = false
+        commits = params[:commits] # Returns an Array of Hash
+        commits = [] if commits.nil?
+        commits.each do |commit|
           commit.deep_symbolize_keys!
-          modified_files = commit[:modified] # Array of modifield files 
+          modified_files = commit[:modified] # Array of modifield files
           modified_files.each do |file_path|
             next if ProjectService.type_by_filename( file_path ).nil?
-            project_file_changed = true 
-            break 
+            project_file_changed = true
+            break
           end
         end
 
-        if project_file_changed == false 
+        if project_file_changed == false
           error! "Dependencies did not change.", 400
         end
 
         project = Project.find_by_id( params[:project_id] )
-        if project.nil? 
+        if project.nil?
           error! "Project with ID #{params[:project_id]} not found.", 400
         end
-        
+
         if !project.collaborator?( current_user )
           error! "You do not have access to this project!", 400
         end
