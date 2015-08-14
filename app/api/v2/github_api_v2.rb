@@ -169,8 +169,8 @@ module V2
         user = current_user
         github_connected?(user)
 
-        repo_name = decode_prod_key(params[:repo_key])
-        branch = params[:branch]
+        repo_name    = decode_prod_key(params[:repo_key])
+        branch       = params[:branch]
         project_file = params[:file]
         project_file = 'Gemfile' if project_file.to_s.empty?
 
