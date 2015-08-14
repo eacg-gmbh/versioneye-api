@@ -179,7 +179,7 @@ module V2
           error! "We couldn't find the repository `#{repo_name}` in your account.", 400
         end
 
-
+        Rails.logger.info "Going to import #{repo_name}:#{branch}:#{project_file} for #{user.username}"
         ProjectImportService.import_from_github(user, repo_name, project_file, branch)
         projects = Project.by_user(current_user).by_github(repo_name).to_a
 
