@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'bundler'            , '~> 1.10.6'
 gem 'rails'              , '~> 4.2.1'
-gem 'puma'               , '~> 2.13.0'
+gem 'puma'               , '~> 2.13.4'
 gem 'grape'              , '~> 0.7.0'
 gem 'grape-entity'       , '0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
