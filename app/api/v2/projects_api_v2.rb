@@ -152,6 +152,8 @@ module V2
         end
 
         Rails.cache.delete( project.id.to_s )
+        badge = BadgeService.badge_for id
+        badge.delete if badge
         project = Project.find project.id.to_s # Reload from DB!
 
         present project, with: EntitiesV2::ProjectEntity, :type => :full
