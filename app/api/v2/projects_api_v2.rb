@@ -18,15 +18,15 @@ module V2
       project = Project.by_user(user).where(project_key: proj_key).shift
       project = Project.by_user(user).where(_id: proj_key).shift if project.nil?
       project
-    rescue => e 
+    rescue => e
       p e.message
-      nil 
+      nil
     end
 
     def self.fetch_product(dep)
       if !dep.group_id.to_s.empty? && !dep.artifact_id.to_s.empty?
         return Product.find_by_group_and_artifact dep.group_id, dep.artifact_id
-      else 
+      else
         return Product.fetch_product( dep.language, dep.prod_key )
       end
     end
@@ -49,8 +49,8 @@ module V2
         authorized?
         projects = []
         user_projects = ProjectService.index @current_user
-        user_projects.each do |project| 
-          project_dto = ProjectListitemDto.new 
+        user_projects.each do |project|
+          project_dto = ProjectListitemDto.new
           project_dto.update_from project
           projects << project_dto
         end
@@ -105,7 +105,7 @@ module V2
         project = upload_and_store( project_file, params[:visibility], params[:name] )
         if project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
-        elsif project.is_a? String 
+        elsif project.is_a? String
           error! project, 500
         end
 
@@ -147,7 +147,7 @@ module V2
         project = ProjectUpdateService.update_from_upload project, project_file, current_user, true
         if project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
-        elsif project.is_a? String 
+        elsif project.is_a? String
           error! project, 500
         end
 
@@ -174,11 +174,11 @@ module V2
         proj_key = params[:project_key]
         error!("Project key can't be empty", 400) if proj_key.nil? or proj_key.empty?
 
-        project = Project.by_user(@current_user).where(_id: proj_key).shift 
-        project = Project.by_user(@current_user).where(project_key: proj_key).shift if project.nil? 
-        if project.nil? 
+        project = Project.by_user(@current_user).where(_id: proj_key).shift
+        project = Project.by_user(@current_user).where(project_key: proj_key).shift if project.nil?
+        if project.nil?
           error! "Deletion failed because you don't have such project: #{proj_key}", 500
-        else 
+        else
           destroy_project(project.id)
         end
 
@@ -208,7 +208,7 @@ module V2
         project.dependencies.each do |dep|
           license = "unknown"
           unless dep[:prod_key].nil?
-            product = ProjectsApiV2.fetch_product dep 
+            product = ProjectsApiV2.fetch_product dep
             license = product.license_info if product
           end
 
@@ -228,8 +228,8 @@ module V2
       desc "merge a project into another one", {
         notes: %q[
 
-              This endpoint merges a project (child_id) into another project (group_id/artifact_id). 
-              This endpoint is specially for Maven based projects! 
+              This endpoint merges a project (child_id) into another project (group_id/artifact_id).
+              This endpoint is specially for Maven based projects!
               To use this resource you need either an active session or you have to append
               your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
 
@@ -248,16 +248,16 @@ module V2
         child_id    = params[:child_id]
 
         parent = Project.find_by_ga group_id, artifact_id
-        if parent.nil? 
+        if parent.nil?
           error! "Project `#{group_id}/#{artifact_id}` doesn't exists", 400
         end
 
         child = Project.find child_id
-        if child.nil? 
+        if child.nil?
           error! "Project `#{child_id}` doesn't exists", 400
         end
 
-        ProjectService.merge_by_ga group_id, artifact_id, child_id, current_user.id 
+        ProjectService.merge_by_ga group_id, artifact_id, child_id, current_user.id
 
         {success: true}
       end
@@ -266,7 +266,7 @@ module V2
       desc "merge a project into another one", {
         notes: %q[
 
-              This endpoint merges a project (child_id) into another project (parent_id). 
+              This endpoint merges a project (child_id) into another project (parent_id).
               To use this resource you need either an active session or you have to append
               your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
 
@@ -283,16 +283,16 @@ module V2
         child_id  = params[:child_id]
 
         parent = Project.find parent_id
-        if parent.nil? 
+        if parent.nil?
           error! "Project `#{parent_id}` doesn't exists", 400
         end
 
         child = Project.find child_id
-        if child.nil? 
+        if child.nil?
           error! "Project `#{child_id}` doesn't exists", 400
         end
 
-        ProjectService.merge parent_id, child_id, current_user.id 
+        ProjectService.merge parent_id, child_id, current_user.id
 
         {success: true}
       end
@@ -301,8 +301,8 @@ module V2
       desc "unmerge a project", {
         notes: %q[
 
-              This endpoint unmerges a project (child_id) from another project (parent_id). It makes the 
-              chilld again a separate project! 
+              This endpoint unmerges a project (child_id) from another project (parent_id). It makes the
+              chilld again a separate project!
               To use this resource you need either an active session or you have to append
               your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
 
@@ -319,16 +319,16 @@ module V2
         child_id  = params[:child_id]
 
         parent = Project.find parent_id
-        if parent.nil? 
+        if parent.nil?
           error! "Project `#{parent_id}` doesn't exists", 400
         end
 
         child = Project.find child_id
-        if child.nil? 
+        if child.nil?
           error! "Project `#{child_id}` doesn't exists", 400
         end
 
-        ProjectService.unmerge parent_id, child_id, current_user.id 
+        ProjectService.unmerge parent_id, child_id, current_user.id
 
         {success: true}
       end
