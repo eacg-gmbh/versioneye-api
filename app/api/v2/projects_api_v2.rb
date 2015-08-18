@@ -151,10 +151,10 @@ module V2
           error! project, 500
         end
 
-        Rails.cache.delete( project.id.to_s )
-        badge = BadgeService.badge_for id
+        Rails.cache.delete( project.ids )
+        badge = BadgeService.badge_for project.ids
         badge.delete if badge
-        project = Project.find project.id.to_s # Reload from DB!
+        project = Project.find project.ids # Reload from DB!
 
         present project, with: EntitiesV2::ProjectEntity, :type => :full
       end
