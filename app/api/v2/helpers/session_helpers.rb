@@ -54,18 +54,21 @@ module SessionHelpers
     protocol = "http://"
     protocol = "https://" if request.ssl?
 
+    ip = env['REMOTE_ADDR']
+    ip = env['HTTP_X_REAL_IP'] if !env['HTTP_X_REAL_IP'].to_s.empty?
+
     call_data = {
       fullpath: "#{protocol}#{request.host_with_port}#{request.fullpath}",
       http_method: method,
-      ip:       env['REMOTE_ADDR'],
+      ip:       ip,
       api_key:  api_key,
       user_id:  (user.nil?) ? nil : user.id
     }
     new_api_call =  ApiCall.new call_data
     new_api_call.save
-  rescue => e 
+  rescue => e
     p "ERROR in track_apikey - #{e.message}"
-    e.backtrace.each do |message| 
+    e.backtrace.each do |message|
       p " - #{message}"
     end
   end
