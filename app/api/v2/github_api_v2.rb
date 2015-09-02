@@ -137,7 +137,7 @@ module V2
         repo = user.github_repos.by_fullname(repo_fullname).first
 
         unless repo
-          error! "We couldn't finde the repository `#{repo_fullname}` in your account.", 400
+          error! "We couldn't find the repository `#{repo_fullname}` in your account.", 400
         end
         repo_projects = Project.by_user(user).by_github(repo_fullname).to_a
 
