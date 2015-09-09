@@ -360,26 +360,6 @@ form.fullwidth ol li.string input, form.fullwidth ol li.url input, form.fullwidt
     width: 220px;
 }
 
-#header form#api_selector .input a#explore {
-    display: block;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 4px 8px;
-    font-size: 0.9em;
-    color: white;
-    background-color: #547f00;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -o-border-radius: 4px;
-    -ms-border-radius: 4px;
-    -khtml-border-radius: 4px;
-    border-radius: 4px;
-}
-
-#header form#api_selector .input a#explore:hover {
-    background-color: #547f00;
-}
-
 p#colophon {
     margin: 0 15px 40px 15px;
     padding: 10px 0;

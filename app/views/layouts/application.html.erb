@@ -1,35 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 
-<head >
+  <head >
 
-  <meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>VersionEye</title>
+    <title>VersionEye API</title>
 
-  <%= csrf_meta_tag %>
-  <%= stylesheet_link_tag 'application' %>
-  <%= javascript_include_tag "application"  %>
+    <meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author"      content="VersionEye GmbH" />
+    <meta name="keywords"    content="Java, Ruby, Python, Node.JS, JavaScript, PHP, Software Packages" />
+    <meta name="description" content="Notification System for Software Packages. Follow your Packages and get notified about new versions." />
 
-  <link href='/api/swagger_css/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
-  <link href='/api/swagger_css/screen.css'             media='screen' rel='stylesheet' type='text/css'/>
+    <%= csrf_meta_tag %>
+    <%= stylesheet_link_tag 'application' %>
+    <%= javascript_include_tag "application"  %>
 
-</head>
+    <link href='/api/swagger_css/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='/api/swagger_css/screen.css'             media='screen' rel='stylesheet' type='text/css'/>
 
-<body>
+  </head>
 
-  <%= render 'layouts/header' %>
+  <body >
 
-  <section class="container l_margin_top_50" >
+    <%= yield %>
 
-    <div class="well-white row">
-      <%= yield %>
-    </div>
-  </section>
+    <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
 
-  <%= render 'layouts/footer' %>
-  <%= debug(params) if Rails.env.development? %>
-
-</body>
+  </body>
 
 </html>
