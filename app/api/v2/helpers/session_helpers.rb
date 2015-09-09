@@ -83,6 +83,8 @@ module SessionHelpers
 
 
   def rate_limit
+    return if Rails.env.enterprise?
+
     api   = fetch_api
     ip    = remote_ip_address
 
