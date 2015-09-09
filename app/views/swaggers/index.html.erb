@@ -21,9 +21,11 @@
         <li>
             <a href="/faq">FAQs</a>
         </li>
-        <li>
-          <a href="/pricing">Pricing</a>
-        </li>
+        <% if !Rails.env.enterprise? %>
+          <li>
+            <a href="/pricing">Pricing</a>
+          </li>
+        <% end %>
         <li style="font-weight: bold; font-size: 16px;">
           <form style="margin: 7px;" action="/signup" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
             <button type="submit" class="btn btn-success" >Sign up</button>
