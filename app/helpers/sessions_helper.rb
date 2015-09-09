@@ -1,16 +1,5 @@
 module SessionsHelper
 
-  def sign_in(user)
-    reset_session
-    cookies.permanent.signed[:remember_token] = [user.id, user.salt]
-    self.current_user = user
-  end
-
-  def sign_out
-    cookies.delete(:remember_token)
-    self.current_user = nil
-  end
-
   def current_user=(user)
     @current_user = user
   end
@@ -33,22 +22,8 @@ module SessionsHelper
     false
   end
 
-  def signed_in_admin?
-    signed_in? && current_user.admin?
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
-    false
-  end
-
   def authenticate
     return true if signed_in?
-    deny_access
-    false
-  end
-
-  def authenticate_admin
-    return true if signed_in_admin?
     deny_access
     false
   end
@@ -61,19 +36,6 @@ module SessionsHelper
   def redirect_back_or(default)
     redirect_to(session[:return_to] || default, :status => 302)
     clear_return_to
-  end
-
-  def set_locale
-    locale = 'en'
-    if locale && !locale.empty?
-      I18n.locale = locale
-    elsif I18n.locale.nil?
-      I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
-    end
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join('\n')
-    nil
   end
 
   private
