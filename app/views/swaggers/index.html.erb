@@ -1,50 +1,42 @@
 
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
-    <div class="container topnav">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="/" class="navbar-brand topnav" >
-              <%= image_tag "verisoneye-logo-small.png", :style => 'margin-top: -12px;' %>
-            </a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-
-                    <li>
-                        <a href="http://blog.versioneye.com/" target="versioneye_blog">Blog</a>
-                    </li>
-                    <li>
-                        <a href="/faq">FAQs</a>
-                    </li>
-
-                    <li>
-                      <a href="/pricing">Pricing</a>
-                    </li>
-
-                    <li style="font-weight: bold; font-size: 16px;">
-                      <form style="margin: 7px;" action="/signup" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
-                        <button type="submit" class="btn btn-success" >Sign up</button>
-                      </form>
-                    </li>
-
-                    <li>
-                      <form style="margin: 7px 0 0 7px;" action="/signin" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
-                        <button type="submit" class="btn btn-primary" >Sign in</button>
-                      </form>
-                    </li>
-
-                </ul>
-            </div>
+  <div class="container topnav">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+      <a href="/" class="navbar-brand topnav" >
+        <%= image_tag "verisoneye-logo-small.png", :style => 'margin-top: -12px;' %>
+      </a>
     </div>
-    <!-- /.container -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right" style="font-weight: bold">
+        <li>
+            <a href="http://blog.versioneye.com/" target="versioneye_blog">Blog</a>
+        </li>
+        <li>
+            <a href="/faq">FAQs</a>
+        </li>
+        <li>
+          <a href="/pricing">Pricing</a>
+        </li>
+        <li style="font-weight: bold; font-size: 16px;">
+          <form style="margin: 7px;" action="/signup" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+            <button type="submit" class="btn btn-success" >Sign up</button>
+          </form>
+        </li>
+        <li>
+          <form style="margin: 7px 0 0 7px;" action="/signin" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+            <button type="submit" class="btn btn-primary" >Sign in</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
 <section class="container" >
