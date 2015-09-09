@@ -13,6 +13,7 @@ module V2
 
     resource :me do
       before do
+        rate_limit
         track_apikey
       end
 
@@ -23,7 +24,7 @@ module V2
       }
       get do
         authorized?
-        
+
         api = Api.by_user( @current_user )
 
         me = Me.new(@current_user)
@@ -33,7 +34,7 @@ module V2
           :new => Notification.by_user_id(@current_user.id).all_not_sent.count,
           :total => Notification.by_user_id(@current_user.id).count
         }
-        
+
         present me, with: EntitiesV2::UserDetailedEntity
       end
 

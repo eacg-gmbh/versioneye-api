@@ -11,13 +11,8 @@ module V2
     helpers SessionHelpers
     helpers PagingHelpers
     helpers ProductHelpers
-    helpers SearchHelpers
 
     resource :github do
-
-      before do
-        track_apikey
-      end
 
 
       #-- GET '/' -------------------------------------------------------------
@@ -42,7 +37,10 @@ module V2
         optional :only_imported, type: Boolean, default: false, desc: "Show only imported repositories"
       end
       get '/' do
+        rate_limit
         authorized?
+        track_apikey
+
         user = current_user
         github_connected?(user)
 
@@ -96,7 +94,10 @@ module V2
         ]
       }
       get '/sync' do
+        rate_limit
         authorized?
+        track_apikey
+
         user = current_user
         github_connected?(user)
 
@@ -129,7 +130,10 @@ module V2
         requires :repo_key, type: String, desc: "encoded repo name with optional branch info."
       end
       get '/:repo_key' do
+        rate_limit
         authorized?
+        track_apikey
+
         user = current_user
         github_connected?(user)
 
@@ -165,7 +169,10 @@ module V2
         optional :file, type: String, default: "Gemfile", desc: "the project file (default is Gemfile)"
       end
       post '/:repo_key' do
+        rate_limit
         authorized?
+        track_apikey
+
         user = current_user
         github_connected?(user)
 
@@ -206,7 +213,10 @@ module V2
         optional :branch, type: String, default: "master", desc: "the name of the branch"
       end
       delete '/:repo_key' do
+        rate_limit
         authorized?
+        track_apikey
+
         user = current_user
         github_connected?(user)
 
@@ -233,6 +243,7 @@ module V2
       end
       post '/hook/:project_id' do
         authorized?
+        track_apikey
 
         project_file_changed = false
         commits = params[:commits] # Returns an Array of Hash

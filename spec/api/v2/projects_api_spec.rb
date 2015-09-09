@@ -46,9 +46,9 @@ describe V2::ProjectsApiV2, :type => :request do
   end
 
 
-  describe "list user projects" do 
+  describe "list user projects" do
     include Rack::Test::Methods
-    it 'lists 0 because user has no projects' do 
+    it 'lists 0 because user has no projects' do
       response = get "#{project_uri}", {api_key: user_api.api_key}, "HTTPS" => "on"
       response.status.should eq(200)
       project_info2 = JSON.parse response.body
@@ -56,16 +56,29 @@ describe V2::ProjectsApiV2, :type => :request do
       response = get project_uri, {:api_key => user_api.api_key}, "HTTPS" => "on"
       response.status.should eq(200)
     end
-    it 'lists 1 because user has no projects' do 
+    it 'lists 1 because user has 1 project, but 2 are in the db.' do
+      user = UserFactory.create_new 124
+      proj = ProjectFactory.create_new user
+      expect( proj.save ).to be_truthy
+
       project = ProjectFactory.create_new test_user
       expect( project.save ).to be_truthy
+
       response = get project_uri, {:api_key => user_api.api_key}, "HTTPS" => "on"
       response.status.should eq(200)
       resp = JSON.parse response.body
       expect( resp.count ).to eq(1)
-      expect( resp.first['id'] ).to_not be_nil 
-      expect( resp.first['name'] ).to_not be_nil 
-      expect( resp.first['updated_at'] ).to_not be_nil 
+      expect( resp.first['id'] ).to_not be_nil
+      expect( resp.first['name'] ).to_not be_nil
+      expect( resp.first['updated_at'] ).to_not be_nil
+    end
+    it 'lists 0 because user is not authorized' do
+      user = UserFactory.create_new 124
+      proj = ProjectFactory.create_new user
+      expect( proj.save ).to be_truthy
+
+      response = get project_uri, {:api_key => ''}, "HTTPS" => "on"
+      expect( response.status).to eq(401)
     end
   end
 
@@ -97,7 +110,7 @@ describe V2::ProjectsApiV2, :type => :request do
       file = test_file
       response = post project_uri, {
         upload:    file,
-        name:      'my_new_project', 
+        name:      'my_new_project',
         visibility: 'public',
         api_key:   user_api.api_key,
         send_file: true,
@@ -155,9 +168,9 @@ describe V2::ProjectsApiV2, :type => :request do
       parent = ProjectFactory.create_new test_user
       parent.group_id = "com.spring"
       parent.artifact_id = 'tx.core'
-      parent.save 
+      parent.save
 
-      child = ProjectFactory.create_new test_user, {:name => "child"}, true 
+      child = ProjectFactory.create_new test_user, {:name => "child"}, true
       Project.count.should eq(2)
       Project.where(:parent_id.ne => nil).count.should eq(0)
 
@@ -167,7 +180,7 @@ describe V2::ProjectsApiV2, :type => :request do
       response = get merge_uri
       response.status.should eq(200)
       Project.where(:parent_id.ne => nil).count.should eq(1)
-      child = Project.find child.id 
+      child = Project.find child.id
       child.parent_id.to_s.should eq(parent.id.to_s)
     end
   end
@@ -180,7 +193,7 @@ describe V2::ProjectsApiV2, :type => :request do
       parent = ProjectFactory.create_new test_user
       Project.count.should eq(1)
 
-      child = ProjectFactory.create_new test_user, {:name => "child"}, true 
+      child = ProjectFactory.create_new test_user, {:name => "child"}, true
       Project.count.should eq(2)
       Project.where(:parent_id.ne => nil).count.should eq(0)
 
@@ -188,7 +201,7 @@ describe V2::ProjectsApiV2, :type => :request do
       response = get merge_uri
       response.status.should eq(200)
       Project.where(:parent_id.ne => nil).count.should eq(1)
-      child = Project.find child.id 
+      child = Project.find child.id
       child.parent_id.to_s.should eq(parent.id.to_s)
     end
   end
@@ -201,17 +214,17 @@ describe V2::ProjectsApiV2, :type => :request do
       parent = ProjectFactory.create_new test_user
       Project.count.should eq(1)
 
-      child = ProjectFactory.create_new test_user, {:name => "child"}, true 
+      child = ProjectFactory.create_new test_user, {:name => "child"}, true
       Project.count.should eq(2)
-      child.parent_id = parent.id.to_s 
-      child.save 
+      child.parent_id = parent.id.to_s
+      child.save
       Project.where(:parent_id.ne => nil).count.should eq(1)
 
       merge_uri = "#{project_uri}/#{parent.id.to_s}/unmerge/#{child.id.to_s}?api_key=#{user_api.api_key}"
       response = get merge_uri
       response.status.should eq(200)
       Project.where(:parent_id.ne => nil).count.should eq(0)
-      child = Project.find child.id 
+      child = Project.find child.id
       child.parent_id.to_s.should eq("")
     end
   end
@@ -258,11 +271,11 @@ describe V2::ProjectsApiV2, :type => :request do
 
     it "return correct licence info for existing project" do
       prod1 = ProductFactory.create_for_gemfile 'sinatra', '1.0.0'
-      prod1.save 
+      prod1.save
       prod2 = ProductFactory.create_for_gemfile 'rails',   '2.0.0'
-      prod2.save 
+      prod2.save
       prod3 = ProductFactory.create_for_gemfile 'log4r',   '2.0.0'
-      prod3.save 
+      prod3.save
 
       license = License.new(:language => prod1.language, :prod_key => prod1.prod_key, :version => prod1.version, :name => "MIT" )
       expect( license.save ).to be_truthy
@@ -271,17 +284,17 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( license.save ).to be_truthy
 
       project = ProjectFactory.create_new test_user
-      project.save 
-      ProjectdependencyFactory.create_new project, prod1 
+      project.save
+      ProjectdependencyFactory.create_new project, prod1
       ProjectdependencyFactory.create_new project, prod2
-      ProjectdependencyFactory.create_new project, prod3 
+      ProjectdependencyFactory.create_new project, prod3
 
       response = get "#{project_uri}/#{project.ids}/licenses.json"
       response.status.should eql(200)
 
       data = JSON.parse response.body
       data["success"].should be_truthy
-      
+
       unknown_licences = data["licenses"]["unknown"].map {|x| x['name']}
       unknown_licences = unknown_licences.to_set
       unknown_licences.include?("log4r").should be_truthy
@@ -292,7 +305,7 @@ describe V2::ProjectsApiV2, :type => :request do
       mit_licences = mit_licences.to_set
       mit_licences.include?("sinatra").should be_truthy
       mit_licences.include?("rails").should be_falsey
-      
+
       apache_licences = data["licenses"]["Apache-2.0"].map {|x| x['name']}
       apache_licences = apache_licences.to_set
       apache_licences.include?("rails").should be_truthy

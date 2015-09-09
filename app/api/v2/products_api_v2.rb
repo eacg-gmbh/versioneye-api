@@ -16,6 +16,7 @@ module V2
     resource :products do
 
       before do
+        rate_limit
         track_apikey
       end
 
@@ -53,7 +54,6 @@ module V2
         start_time     = Time.now
         search_results = ProductService.search(query, group_id, languages, page_nr)
 
-        # save_search_log(query, search_results, start_time)
         query_data = SearchResults.new({query: query, group_id: group_id, languages: languages})
         paging     = make_paging_object(search_results)
         data       = SearchResults.new({query: query_data, paging: paging, entries: search_results.entries})

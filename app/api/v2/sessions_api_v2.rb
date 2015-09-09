@@ -9,6 +9,7 @@ module V2
     resource :sessions do
 
       before do
+        rate_limit
         track_apikey
       end
 

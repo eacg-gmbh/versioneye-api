@@ -10,10 +10,6 @@ module V2
     helpers ProjectHelpers
     helpers SessionHelpers
 
-    # rescue_from :all do |e|
-    #   rack_response({ :message => "rescued from #{e.class.name} - message: #{e.message} - backtrace: #{e.backtrace}" })
-    # end
-
     def self.fetch_project(user, proj_key)
       project = Project.by_user(user).where(project_key: proj_key).shift
       project = Project.by_user(user).where(_id: proj_key).shift if project.nil?
@@ -34,7 +30,7 @@ module V2
     resource :projects do
 
       before do
-        track_apikey
+        authorized?
       end
 
       desc "shows user`s projects", {
@@ -46,7 +42,9 @@ module V2
             ]
       }
       get do
-        authorized?
+        rate_limit
+        track_apikey
+
         projects = []
         user_projects = ProjectService.index @current_user
         user_projects.each do |project|
@@ -65,7 +63,9 @@ module V2
         requires :project_key, :type => String, :desc => "Project ID"
       end
       get '/:project_key' do
-        authorized?
+        rate_limit
+        track_apikey
+
         project_key = params[:project_key]
         project     = fetch_project_by_key_and_user(project_key, current_user)
         if project.nil?
@@ -89,8 +89,6 @@ module V2
         optional :name, :type => String, :desc => "The name of the VersionEye project. By default it is the filename."
       end
       post do
-        authorized?
-
         if params[:upload].nil?
           error! "Didnt submit file or used wrong parameter.", 400
         end
@@ -126,8 +124,6 @@ module V2
         requires :project_file, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
       end
       post '/:project_key' do
-        authorized?
-
         project = fetch_project_by_key_and_user( params[:project_key], current_user )
         if project.nil?
           error! "Project `#{params[:project_key]}` don't exists", 400
@@ -172,7 +168,9 @@ module V2
         requires :project_key, :type => String, :desc => "Delete project file"
       end
       delete '/:project_key' do
-        authorized?
+        rate_limit
+        track_apikey
+
         proj_key = params[:project_key]
         error!("Project key can't be empty", 400) if proj_key.nil? or proj_key.empty?
 
@@ -200,7 +198,8 @@ module V2
         requires :project_key, :type => String, :desc => "Project ID or project_key"
       end
       get '/:project_key/licenses' do
-        authorized?
+        rate_limit
+        track_apikey
 
         project = ProjectsApiV2.fetch_project @current_user, params[:project_key]
         error!("Project `#{params[:project_key]}` don't exists", 400) if project.nil?
@@ -243,7 +242,8 @@ module V2
         requires :child_id,    :type => String, :desc => "Project ID of the child"
       end
       get '/:group_id/:artifact_id/merge_ga/:child_id' do
-        authorized?
+        rate_limit
+        track_apikey
 
         group_id    = params[:group_id].to_s.gsub('~', '.').gsub(':', '/')
         artifact_id = params[:artifact_id].to_s.gsub('~', '.').gsub(':', '/')
@@ -279,7 +279,8 @@ module V2
         requires :child_id, :type => String, :desc => "Project ID of the child"
       end
       get '/:parent_id/merge/:child_id' do
-        authorized?
+        rate_limit
+        track_apikey
 
         parent_id = params[:parent_id]
         child_id  = params[:child_id]
@@ -315,7 +316,8 @@ module V2
         requires :child_id, :type => String, :desc => "Project ID of the child"
       end
       get '/:parent_id/unmerge/:child_id' do
-        authorized?
+        rate_limit
+        track_apikey
 
         parent_id = params[:parent_id]
         child_id  = params[:child_id]
@@ -334,7 +336,6 @@ module V2
 
         {success: true}
       end
-
 
 
     end

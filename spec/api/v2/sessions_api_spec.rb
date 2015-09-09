@@ -23,7 +23,7 @@ describe V2::SessionsApiV2, :type => :request do
 
     it "returns error when user submitted wrong token" do
       post @sessions_url, api_key: "123-abc-nil"
-      response.status.should == 531
+      response.status.should == 401
     end
 
     it "returns success when user gave correct API token" do
@@ -37,7 +37,6 @@ describe V2::SessionsApiV2, :type => :request do
     end
 
     it "returns error when user tries to access profile page after signout" do
-      
       delete @sessions_url
 
       get @sessions_url

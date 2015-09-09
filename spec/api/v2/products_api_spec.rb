@@ -102,6 +102,19 @@ describe V2::ProductsApiV2, :type => :request do
       response_data  = JSON.parse(response.body)
       response_data['paging']["current_page"].should == 1
     end
+
+    it "Return 403 after rate limit exceeded for unauth. user" do
+      search_term = fill_db_with_products
+      ApiCall.delete_all
+      5.times do |x|
+        get "#{product_uri}/search/#{search_term}", :page => 0
+        response.status.should == 200
+        response_data  = JSON.parse(response.body)
+        response_data['paging']["current_page"].should == 1
+      end
+      get "#{product_uri}/search/#{search_term}", :page => 0
+      response.status.should == 403
+    end
   end
 
 

@@ -1,6 +1,7 @@
 
 module SessionHelpers
 
+
   def authorized?
     @api_key = header['api_key']
     @api_key = params[:api_key] if @api_key.to_s.empty?
@@ -12,14 +13,16 @@ module SessionHelpers
     @current_user
   end
 
+
   def authorize( token )
     @current_user = User.authenticate_with_apikey( token )
     if @current_user.nil?
-      error! "API token not valid.", 531
+      error! "API token not valid.", 401
     end
     cookies[:api_key] = token
     @current_user
   end
+
 
   def current_user
     cookie_token  = cookies[:api_key]
@@ -27,11 +30,13 @@ module SessionHelpers
     @current_user
   end
 
+
   def github_connected?( user )
     return true if user.github_account_connected?
     error! "Github account is not connected. Check your settings on https://www.versioneye.com/settings/connect", 401
     false
   end
+
 
   def clear_session
     cookies[:api_key] = nil
@@ -39,23 +44,72 @@ module SessionHelpers
     @current_user = nil
   end
 
-  def track_apikey
-    api_key = request[:api_key]
+
+  def fetch_api_key
+    api_key = header['api_key']
+    api_key = params[:api_key]  if api_key.to_s.empty?
+    api_key = request[:api_key] if api_key.to_s.empty?
     api_key = request.cookies["api_key"] if api_key.to_s.empty?
+    api_key = cookies[:api_key] if api_key.to_s.empty?
+    api_key
+  end
 
-    user_api = Api.where(api_key: api_key).shift
-    if user_api
-      user = User.find_by_id user_api.user_id
-    end
 
-    method = "GET"
-    method = "POST" if request.post?
+  def fetch_api
+    api_key = fetch_api_key
+    Api.where(:api_key => api_key).first
+  end
 
-    protocol = "http://"
-    protocol = "https://" if request.ssl?
 
+  def remote_ip_address
     ip = env['REMOTE_ADDR']
     ip = env['HTTP_X_REAL_IP'] if !env['HTTP_X_REAL_IP'].to_s.empty?
+    ip
+  end
+
+
+  def http_method_type
+    method = "GET"
+    method = "POST" if request.post?
+    method
+  end
+
+
+  def fetch_protocol
+    protocol = "http://"
+    protocol = "https://" if request.ssl?
+    protocol
+  end
+
+
+  def rate_limit
+    api   = fetch_api
+    ip    = remote_ip_address
+
+    tunit = Time.now - 1.hour
+    calls_last_hour = ApiCall.where(:created_at.gt => tunit, :ip => ip).count
+
+    if api.nil? && calls_last_hour >= 5
+      error! "API rate limit exceeded. With an API key you can extend your rate limit. Sign up for free and get an API key!", 403
+      return
+    end
+
+    rate_limit = 50
+    rate_limit = api.rate_limit if api && api.respond_to?(:rate_limit)
+    if calls_last_hour >= rate_limit
+      error! "API rate limit exceeded. Write an email to support@versioneye.com if you need a higher rate limit.", 403
+      return
+    end
+  end
+
+
+  def track_apikey
+    api_key  = fetch_api_key
+    user_api = fetch_api
+    user     = user_api.user if user_api
+    method   = http_method_type
+    protocol = fetch_protocol
+    ip       = remote_ip_address
 
     call_data = {
       fullpath: "#{protocol}#{request.host_with_port}#{request.fullpath}",
@@ -72,5 +126,6 @@ module SessionHelpers
       p " - #{message}"
     end
   end
+
 
 end
