@@ -142,10 +142,6 @@ module V2
       get '/:lang/:prod_key/follow' do
         authorized?
         current_product = fetch_product(params[:lang], params[:prod_key])
-        if current_product.nil?
-          error! "Wrong product_key", 400
-        end
-
         user_follow = UserFollow.new
         user_follow.username = @current_user.username
         user_follow.prod_key = current_product.prod_key
@@ -179,10 +175,6 @@ module V2
       post '/:lang/:prod_key/follow' do
         authorized?
         current_product = fetch_product(params[:lang], params[:prod_key])
-        if current_product.nil?
-          error! "Wrong product_key", 400
-        end
-
         current_product.users = Array.new if current_product.users.nil?
         unless current_product.users.include? @current_user
           current_product.users.push @current_user
@@ -261,9 +253,6 @@ module V2
         page     = params[:page]
         page     = 1 if page.to_i < 1
         product = fetch_product(params[:lang], params[:prod_key])
-        if product.nil?
-          error! "No package for `#{params[:lang]}`/`#{params[:prod_key]}`", 404
-        end
 
         reference = ReferenceService.find_by product.language, product.prod_key
         if reference.nil?
@@ -307,19 +296,13 @@ module V2
       end
       post '/:lang/:prod_key/:prod_version/scm_changes' do
         authorized?
-        # TODO Has user permission to submit changelogs for the artifact?
-
-        if params[:scm_changes_file].nil?
-          error! "Didnt submit file or used wrong parameter.", 400
-        end
-
-        if params[:scm_changes_file].is_a? String
-          error! "File field is plain text! It should be a multipart submition.", 400
-        end
 
         product = fetch_product(params[:lang], params[:prod_key])
-        if product.nil?
-          error! "Package not found", 404
+
+        # User needs to be admin or maintainer of the artifact!
+        key = "#{product.language}::#{product.prod_key}".downcase
+        if current_user.admin == false && !current_user.maintainer.to_a.include?(key)
+          error! "You have no permission to submit changelogs for this artifact!", 403
         end
 
         datafile  = ActionDispatch::Http::UploadedFile.new( params[:scm_changes_file] )

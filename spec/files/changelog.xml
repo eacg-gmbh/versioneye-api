@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<changelog>
+
+<changeset datePattern="yyyyMMdd HH:mm:ss z" startVersion="3.5.0" endVersion="3.5.1">
+	<changelog-entry>
+		<date pattern="yyyy-MM-dd">2015-06-30</date>
+		<time pattern="HH:mm:ss">15:33:16</time>
+		<author><![CDATA[Robert Reiz <robert.reiz.81@gmail.com>]]></author>
+		<file>
+			<action>modified</action>
+			<name>README.md</name>
+			<revision>79a283d53fe1bf219fce029ac44f40c4ef61d093</revision>
+		</file>
+		<msg><![CDATA[Update version numbers for the current release.]]></msg>
+	</changelog-entry>
+	<changelog-entry>
+		<date pattern="yyyy-MM-dd">2015-06-30</date>
+		<time pattern="HH:mm:ss">14:15:00</time>
+		<author><![CDATA[reiz <robert.reiz.81@gmail.com>]]></author>
+		<file>
+			<action>modified</action>
+			<name>pom.xml</name>
+			<revision>01b29f4fe2a7b4db48a7047ab52f4de9f0f33c16</revision>
+		</file>
+		<msg><![CDATA[Prepare pom.xml for patch version. #43]]></msg>
+	</changelog-entry>
+	<changelog-entry>
+		<date pattern="yyyy-MM-dd">2015-06-30</date>
+		<time pattern="HH:mm:ss">14:11:33</time>
+		<author><![CDATA[reiz <robert.reiz.81@gmail.com>]]></author>
+		<file>
+			<action>modified</action>
+			<name>src/main/java/com/versioneye/ProjectMojo.java</name>
+			<revision>49d3eafbdb9f9c27562dce0ce5d7ab0c44d4e496</revision>
+		</file>
+		<msg><![CDATA[BugFix for Nullpointer Exception. #43]]></msg>
+	</changelog-entry>
+	<changelog-entry>
+		<date pattern="yyyy-MM-dd">2015-06-24</date>
+		<time pattern="HH:mm:ss">09:09:06</time>
+		<author><![CDATA[veye <reiz@versioneye.com>]]></author>
+		<file>
+			<action>modified</action>
+			<name>README.md</name>
+			<revision>d19d4e3589957da1e6513aabcedc9b18f1ff191d</revision>
+		</file>
+		<msg><![CDATA[Update README.md]]></msg>
+	</changelog-entry>
+</changeset>
+
+</changelog>

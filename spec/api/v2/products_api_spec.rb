@@ -4,6 +4,10 @@ require 'spec_helper'
 describe V2::ProductsApiV2, :type => :request do
 
   let( :product_uri ) { "/api/v2/products" }
+  let( :test_user   ) { UserFactory.create_new(90) }
+  let( :user_api    ) { ApiFactory.create_new test_user }
+  let( :file_path   ) { "#{Rails.root}/spec/files/changelog.xml" }
+  let( :test_file   ) { Rack::Test::UploadedFile.new(file_path, "text/xml") }
 
   def encode_prod_key(prod_key)
     prod_key.gsub("/", ":")
@@ -233,5 +237,115 @@ describe V2::ProductsApiV2, :type => :request do
       results.count.should eq(3)
     end
   end
+
+
+  describe "Uploading scm changes" do
+    include Rack::Test::Methods
+
+    it "fails, when scm_changes_file is missing" do
+      url = "#{product_uri}/ruby/rails/4/scm_changes"
+      response = post url, {:api_key => user_api.api_key}, "HTTPS" => "on"
+      expect( response.status ).to eq(400)
+      response_data = JSON.parse(response.body)
+      expect( response_data['error'] ).to eq('scm_changes_file is missing')
+    end
+
+    it "fails, when scm_changes_file is a string" do
+      url = "#{product_uri}/ruby/rails/4/scm_changes"
+      response = post url, {:api_key => user_api.api_key, :scm_changes_file => 'test'}, "HTTPS" => "on"
+      expect( response.status ).to eq(400)
+      response_data = JSON.parse(response.body)
+      expect( response_data['error'] ).to eq('scm_changes_file is invalid')
+    end
+
+    it "fails, when there is no product in db for lang/prod_key" do
+      url = "#{product_uri}/rubygo/ralingo/4/scm_changes"
+      file = test_file
+      response = post url, {
+        scm_changes_file: file,
+        api_key:   user_api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+
+      expect( response.status ).to eq(404)
+      response_data = JSON.parse(response.body)
+      expect( response_data['error'] ).to eq('Zero results for prod_key `ralingo`')
+    end
+
+    it "fails, because user is no admin and no maintainer" do
+      expect( ScmChangelogEntry.count ).to eq(0)
+      rails = ProductFactory.create_for_gemfile 'rails', '4'
+      expect( rails.save ).to be_truthy
+      url = "#{product_uri}/ruby/rails/4/scm_changes"
+      file = test_file
+      response = post url, {
+        scm_changes_file: file,
+        api_key:   user_api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+
+      expect( response.status ).to eq(403)
+      response_data = JSON.parse(response.body)
+      expect( response_data['error'] ).to eq('You have no permission to submit changelogs for this artifact!')
+      expect( ScmChangelogEntry.count ).to eq(0)
+    end
+
+    it "succeeds because user is admin" do
+      expect( ScmChangelogEntry.count ).to eq(0)
+      rails = ProductFactory.create_for_gemfile 'rails', '4'
+      expect( rails.save ).to be_truthy
+
+      test_user.admin = true
+      expect( test_user.save ).to be_truthy
+
+      url = "#{product_uri}/ruby/rails/4/scm_changes"
+      file = test_file
+      response = post url, {
+        scm_changes_file: file,
+        api_key:   user_api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+
+      expect( response.status ).to eq(201)
+
+      response_data = JSON.parse(response.body)
+      expect( response_data['message'] ).to eq('Changes parsed and saved successfully.')
+      expect( ScmChangelogEntry.count ).to eq(4)
+    end
+
+    it "succeeds because user is maintainer" do
+      expect( ScmChangelogEntry.count ).to eq(0)
+      rails = ProductFactory.create_for_gemfile 'rails', '4'
+      expect( rails.save ).to be_truthy
+
+      test_user.add_maintainer "#{rails.language}::#{rails.prod_key}".downcase
+      test_user.admin = false
+      expect( test_user.save ).to be_truthy
+
+      url = "#{product_uri}/ruby/rails/4/scm_changes"
+      file = test_file
+      response = post url, {
+        scm_changes_file: file,
+        api_key:   user_api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+
+      expect( response.status ).to eq(201)
+
+      response_data = JSON.parse(response.body)
+      expect( response_data['message'] ).to eq('Changes parsed and saved successfully.')
+      expect( ScmChangelogEntry.count ).to eq(4)
+    end
+
+  end
+
 
 end
