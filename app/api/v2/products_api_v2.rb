@@ -284,6 +284,60 @@ module V2
         present results, with: EntitiesV2::ProductReferenceEntity
       end
 
+
+      desc "upload scm changelogs to an artifact", {
+        notes: %q[
+                  This resource can parse a changelog.xml from the maven-changelog-plugin, assign
+                  it to a specific artifact and display the changelog infos on the product page.
+
+                  Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
+
+                  Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+
+                  #### Notes about status codes
+
+                  It will respond 404, when you are using wrong product key or encode it uncorrectly.
+              ]
+        }
+      params do
+        requires :lang, :type => String, :desc => %Q[ programming language ]
+        requires :prod_key, :type => String, :desc => %Q{ product key }
+        requires :prod_version, :type => String, :desc => %Q[ product version ]
+        requires :scm_changes_file, type: Hash, desc: "changelog.xml"
+      end
+      post '/:lang/:prod_key/:prod_version/scm_changes' do
+        authorized?
+        # TODO Has user permission to submit changelogs for the artifact?
+
+        if params[:scm_changes_file].nil?
+          error! "Didnt submit file or used wrong parameter.", 400
+        end
+
+        if params[:scm_changes_file].is_a? String
+          error! "File field is plain text! It should be a multipart submition.", 400
+        end
+
+        product = fetch_product(params[:lang], params[:prod_key])
+        if product.nil?
+          error! "Package not found", 404
+        end
+
+        datafile  = ActionDispatch::Http::UploadedFile.new( params[:scm_changes_file] )
+        file_name = datafile.original_filename
+        content   = datafile.read
+        parser    = ScmChangelogParser.new
+        changes   = parser.parse content
+        changes.each do |change|
+          change.language = product.language
+          change.prod_key = product.prod_key
+          change.version  = params[:version]
+          change.save
+        end
+
+        {success: true, message: 'Changes parsed and saved successfully.'}
+      end
+
+
     end # resource products
 
   end # class
