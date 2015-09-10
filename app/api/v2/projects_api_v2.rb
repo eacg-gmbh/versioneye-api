@@ -94,7 +94,7 @@ module V2
         end
 
         if params[:upload].is_a? String
-          error! "File field is plain text. It should be multipart submition.", 400
+          error! "File field is plain text! It should be a multipart submition.", 400
         end
 
         datafile = ActionDispatch::Http::UploadedFile.new( params[:upload] )
