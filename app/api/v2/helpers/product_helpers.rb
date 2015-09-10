@@ -2,7 +2,7 @@ require 'htmlentities'
 
 module ProductHelpers
 
-  
+
   def parse_query(query)
       query = query.to_s
       query = query.strip().downcase
@@ -10,14 +10,14 @@ module ProductHelpers
       query
   end
 
-  
+
   def get_language_param(lang)
     lang = lang.to_s
     lang = "," if lang.empty?
     lang
   end
 
-  
+
   def get_language_array(lang)
     languages = []
     special_languages = {
@@ -41,7 +41,7 @@ module ProductHelpers
     end
   end
 
-  
+
   def parse_language(lang)
     special_languages = {
       "php" => "PHP",
@@ -65,26 +65,26 @@ module ProductHelpers
     parsed_lang
   end
 
-  
+
   def encode_prod_key(prod_key)
     encoded_key = prod_key.to_s.gsub("/", ":").gsub(".", "~")
     HTMLEntities.new.encode(encoded_key, :named)
   end
 
-  
+
   def decode_prod_key(prod_key)
     parsed_key = HTMLEntities.new.decode prod_key
     parsed_key = parsed_key.to_s.gsub(":", "/")
     parsed_key.gsub("~", ".")
   end
 
-  
+
   def parse_product_key(prod_key)
     #TODO: it's now logacy function- refactor dependent modules
     decode_prod_key(prod_key)
   end
 
-  
+
   def fetch_product(lang, prod_key)
     lang = parse_language(lang)
     prod_key = decode_prod_key(prod_key)
@@ -92,6 +92,7 @@ module ProductHelpers
     current_product = Product.fetch_bower( prod_key ) if current_product.nil?
     if current_product.nil?
       error! "Zero results for prod_key `#{params[:prod_key]}`", 404
+      return
     else
       current_product.version = VersionService.newest_version_from( current_product.versions )
     end
