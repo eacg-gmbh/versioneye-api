@@ -115,6 +115,27 @@ describe V2::ProductsApiV2, :type => :request do
       get "#{product_uri}/search/#{search_term}", :page => 0
       response.status.should == 403
     end
+
+    it "Return 403 after rate limit exceeded for auth. user" do
+      search_term = fill_db_with_products
+      ApiCall.delete_all
+
+      test_user = UserFactory.create_new
+      user_api  = ApiFactory.create_new test_user
+      user_api.rate_limit = 6
+      expect( user_api.save ).to be_truthy
+      expect( Api.count ).to eq(1)
+      expect( Api.first.rate_limit ).to eq(6)
+
+      6.times do |x|
+        get "#{product_uri}/search/#{search_term}", :api_key => user_api.api_key
+        response.status.should == 200
+      end
+      get "#{product_uri}/search/#{search_term}", :page => 0
+      response.status.should == 403
+      response_data  = JSON.parse(response.body)
+      expect( response_data['error'] ).to eq('API rate limit exceeded. With an API key you can extend your rate limit. Sign up for free and get an API key!')
+    end
   end
 
 
