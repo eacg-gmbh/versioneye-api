@@ -313,7 +313,7 @@ module V2
         changes.each do |change|
           change.language = product.language
           change.prod_key = product.prod_key
-          change.version  = params[:version]
+          change.version  = decode_prod_key params[:prod_version]
           change.save
         end
 
