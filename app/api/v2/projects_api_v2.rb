@@ -89,14 +89,6 @@ module V2
         optional :name, :type => String, :desc => "The name of the VersionEye project. By default it is the filename."
       end
       post do
-        if params[:upload].nil?
-          error! "Didnt submit file or used wrong parameter.", 400
-        end
-
-        if params[:upload].is_a? String
-          error! "File field is plain text! It should be a multipart submition.", 400
-        end
-
         datafile = ActionDispatch::Http::UploadedFile.new( params[:upload] )
         project_file = {'datafile' => datafile}
 

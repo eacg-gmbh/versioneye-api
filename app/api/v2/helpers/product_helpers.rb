@@ -79,12 +79,6 @@ module ProductHelpers
   end
 
 
-  def parse_product_key(prod_key)
-    #TODO: it's now logacy function- refactor dependent modules
-    decode_prod_key(prod_key)
-  end
-
-
   def fetch_product(lang, prod_key)
     lang = parse_language(lang)
     prod_key = decode_prod_key(prod_key)
@@ -92,7 +86,6 @@ module ProductHelpers
     current_product = Product.fetch_bower( prod_key ) if current_product.nil?
     if current_product.nil?
       error! "Zero results for prod_key `#{params[:prod_key]}`", 404
-      return
     else
       current_product.version = VersionService.newest_version_from( current_product.versions )
     end

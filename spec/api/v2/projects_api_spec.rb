@@ -88,7 +88,16 @@ describe V2::ProjectsApiV2, :type => :request do
 
     it "fails, when upload-file is missing" do
       response = post project_uri, {:api_key => user_api.api_key}, "HTTPS" => "on"
-      response.status.should eq(400)
+      expect( response.status ).to eq(400)
+      response_data = JSON.parse(response.body)
+      expect( response_data['error'] ).to eq('upload is missing')
+    end
+
+    it "fails, when upload-file is a string" do
+      response = post project_uri, {:upload => '', :api_key => user_api.api_key}, "HTTPS" => "on"
+      expect( response.status ).to eq(400)
+      response_data = JSON.parse(response.body)
+      expect( response_data['error'] ).to eq('upload is invalid')
     end
 
     it "returns 201 and project info, when upload was successfully" do
