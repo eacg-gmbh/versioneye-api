@@ -119,13 +119,13 @@ describe "GithubApiV2", :type => :request do
       VCR.use_cassette('github_sync_hans', allow_playback_repeats: true) do
         get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
         response.status.should eq(200)
-        
+
         sleep 7
 
         get "#{api_path}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
         response.status.should eq(200)
         resp = JSON.parse response.body
-        resp['repos'].should_not be_nil 
+        resp['repos'].should_not be_nil
         expect( resp['repos'].count ).to eq(4)
       end
       worker.exit
@@ -144,13 +144,13 @@ describe "GithubApiV2", :type => :request do
         get "#{api_path}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
         response.status.should eq(200)
         resp = JSON.parse response.body
-        resp['repos'].should_not be_nil 
+        resp['repos'].should_not be_nil
         expect( resp['repos'].count ).to eq(0)
-        sleep 2 
+        sleep 2
         get "#{api_path}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
         response.status.should eq(200)
         resp = JSON.parse response.body
-        resp['repos'].should_not be_nil 
+        resp['repos'].should_not be_nil
         expect( resp['repos'].count ).to eq(4)
       end
       worker.exit
@@ -160,13 +160,13 @@ describe "GithubApiV2", :type => :request do
       user.github_token = '07d9d399f1a8ff7880b'
       user.save.should be_truthy
 
-      repo1.save 
-      repo2.save 
+      repo1.save
+      repo2.save
 
-      project = ProjectFactory.create_new user 
+      project = ProjectFactory.create_new user
       project.source = Project::A_SOURCE_GITHUB
       project.scm_fullname = repo1.fullname
-      project.save 
+      project.save
       expect( project.save ).to be_truthy
       expect( Project.count ).to eq(1)
       expect( user.github_repos.count ).to eq(2)
@@ -185,7 +185,7 @@ describe "GithubApiV2", :type => :request do
   end
 
 
-  describe 'import user repos' do 
+  describe 'import user repos' do
     before :each do
       WebMock.allow_net_connect!
     end
@@ -197,14 +197,14 @@ describe "GithubApiV2", :type => :request do
 
         user.github_id = '10449954'
         user.github_token = 'hasghha88as7f7277181'
-        user.save 
+        user.save
 
         user_task_key = "#{user[:username]}-#{user[:github_id]}"
         cache = Versioneye::Cache.instance.mc
         cache.delete user_task_key
 
         get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-        
+
         sleep 4
 
         post "#{api_path}/veye1test:docker_web_ui", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
@@ -217,7 +217,7 @@ describe "GithubApiV2", :type => :request do
         repo.has_key?('imported_projects').should be_truthy
 
         project = repo['imported_projects'].first
-        project["name"].should eq("veye1test/docker_web_ui")  
+        project["name"].should eq("veye1test/docker_web_ui")
 
         project_id = project['id']
 

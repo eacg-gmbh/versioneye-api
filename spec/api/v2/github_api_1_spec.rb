@@ -7,7 +7,7 @@ describe "GithubApiV2", :type => :request do
   describe "show github repository" do
 
     before :each do
-      Project.delete_all 
+      Project.delete_all
       User.delete_all
       WebMock.allow_net_connect!
     end
@@ -19,11 +19,11 @@ describe "GithubApiV2", :type => :request do
       user.email = 'juku_1@pupu.com'
       user.github_id = 'asgasgs'
       user.github_token = 'github_otken'
-      user.save 
-      
+      user.save
+
       user_api = ApiFactory.create_new(user)
-      user_api.save 
-    
+      user_api.save
+
       get "/api/v2/github/pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
       response.status.should eq(400)
       user.delete
@@ -36,10 +36,10 @@ describe "GithubApiV2", :type => :request do
       user.email = 'juku_2@pupu.com'
       user.github_id = 'asgasgs'
       user.github_token = 'github_otken'
-      user.save 
+      user.save
 
       user_api = ApiFactory.create_new(user)
-      user_api.save 
+      user_api.save
 
       github_repo = GithubRepo.new({user_id: user.id.to_s, github_id: 1,
                       fullname: "spec/repo1", user_login: "a",
@@ -59,10 +59,10 @@ describe "GithubApiV2", :type => :request do
   end
 
 
-  describe "removes an existing github repo from VersionEye" do 
-    
+  describe "removes an existing github repo from VersionEye" do
+
     before :each do
-      Project.delete_all 
+      Project.delete_all
       User.delete_all
       WebMock.allow_net_connect!
     end
@@ -86,7 +86,7 @@ describe "GithubApiV2", :type => :request do
 
       project = ProjectFactory.create_new user
       project.name = 'Gemfile'
-      project.source = Project::A_SOURCE_GITHUB 
+      project.source = Project::A_SOURCE_GITHUB
       project.scm_fullname = repo1[:fullname]
       project.scm_branch = 'master'
       project.save.should be_truthy
