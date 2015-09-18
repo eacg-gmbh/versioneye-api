@@ -187,7 +187,11 @@ module V2
         end
 
         Rails.logger.info "Going to import #{repo_name}:#{branch}:#{project_file} for #{user.username}"
-        ProjectImportService.import_from_github(user, repo_name, project_file, branch)
+        begin
+          ProjectImportService.import_from_github(user, repo_name, project_file, branch)
+        rescue => e
+          error! e.message, 500
+        end
         projects = Project.by_user(current_user).by_github(repo_name).to_a
 
         present :repo, repo, with: EntitiesV2::RepoEntityDetailed

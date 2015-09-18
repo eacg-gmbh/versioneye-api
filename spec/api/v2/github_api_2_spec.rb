@@ -232,6 +232,37 @@ describe "GithubApiV2", :type => :request do
         worker1.exit
       end
     end
+
+    it "returns an erro because Gemfile is empty." do
+      VCR.use_cassette('github_import_empty_file', allow_playback_repeats: true) do
+        worker1 = Thread.new{ GitReposImportWorker.new.work }
+        worker2 = Thread.new{ GitRepoImportWorker.new.work }
+        worker3 = Thread.new{ ProjectUpdateWorker.new.work }
+
+        user.github_id = '1880498'
+        user.github_token = 'de5da86828d0049bc293c'
+        user.save
+
+        user_task_key = "#{user[:username]}-#{user[:github_id]}"
+        cache = Versioneye::Cache.instance.mc
+        cache.delete user_task_key
+
+        get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+
+        sleep 2
+
+        post "#{api_path}/versioneye:test_repo", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        expect( response.status ).to eq(500)
+
+        repo = JSON.parse response.body
+        expect( repo ).to_not be_nil
+        expect( repo['error'] ).to eq("Could not find a single dependency in the project.")
+
+        worker3.exit
+        worker2.exit
+        worker1.exit
+      end
+    end
   end
 
 end
