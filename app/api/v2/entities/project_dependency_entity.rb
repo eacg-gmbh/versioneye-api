@@ -1,4 +1,5 @@
 require 'grape'
+require_relative 'license_cach_entity.rb'
 
 module EntitiesV2
   class ProjectDependencyEntity < Grape::Entity
@@ -15,5 +16,6 @@ module EntitiesV2
     expose :unknown?  , :as => :unknown
     expose :outdated  , :as => :outdated
     expose :release   , :as => :stable
+    expose :license_caches, :as => :licenses, :using => LicenseCachEntity, :if => { :type => :full}
   end
 end

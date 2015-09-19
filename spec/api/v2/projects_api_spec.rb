@@ -10,7 +10,6 @@ describe V2::ProjectsApiV2, :type => :request do
   let( :file_path   ) { "#{Rails.root}/spec/files/Gemfile.lock" }
   let( :test_file   ) { Rack::Test::UploadedFile.new(file_path, "text/xml") }
 
-  let(:project_key) {"rubygem_gemfile_lock_1"}
   let(:project_name) {"Gemfile.lock"}
 
   before :all do
@@ -266,13 +265,13 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "returns correct project info for existing project" do
-      response = get "#{project_uri}/#{project_key}.json", {
+      ids = Project.first.ids
+      response = get "#{project_uri}/#{ids}.json", {
         api_key: user_api.api_key
       }
 
       response.status.should eq(200)
       project_info2 = JSON.parse response.body
-      project_info2["project_key"].should eq(project_key)
       project_info2["name"].should eq(project_name)
       project_info2["source"].should eq("API")
       project_info2["dependencies"].count.should eql(7)
@@ -280,11 +279,66 @@ describe V2::ProjectsApiV2, :type => :request do
 
     it "return correct licence info for existing project" do
       prod1 = ProductFactory.create_for_gemfile 'sinatra', '1.0.0'
-      prod1.save
-      prod2 = ProductFactory.create_for_gemfile 'rails',   '2.0.0'
-      prod2.save
+      expect( prod1.save ).to be_truthy
+
+      prod2 = ProductFactory.create_for_gemfile 'daemons',   '1.1.4'
+      expect( prod2.save ).to be_truthy
+
       prod3 = ProductFactory.create_for_gemfile 'log4r',   '2.0.0'
-      prod3.save
+      expect( prod3.save ).to be_truthy
+
+      license = License.new(:language => prod1.language, :prod_key => prod1.prod_key, :version => prod1.version, :name => "MIT" )
+      expect( license.save ).to be_truthy
+      license = License.new(:language => prod1.language, :prod_key => prod1.prod_key, :version => "1.3.3", :name => "MIT" )
+      expect( license.save ).to be_truthy
+
+      license = License.new(:language => prod2.language, :prod_key => prod2.prod_key, :version => prod2.version, :name => "Apache-2.0" )
+      expect( license.save ).to be_truthy
+
+      lwl = LicenseWhitelist.new(:name => 'my_lwl')
+      lwl.add_license_element "MIT"
+      expect( lwl.save ).to be_truthy
+
+      project = Project.first # ProjectFactory.create_new test_user
+      project.license_whitelist_id = lwl.ids
+      project.save
+      # ProjectdependencyFactory.create_new project, prod1
+      # ProjectdependencyFactory.create_new project, prod2
+      # ProjectdependencyFactory.create_new project, prod3
+
+      ProjectdependencyService.update_licenses project
+      project.save
+
+      expect( Project.count ).to eq(1)
+
+      response = get "#{project_uri}/#{project.ids}.json", {
+        api_key: user_api.api_key
+      }
+      expect( response.status ).to eq(200)
+      data = JSON.parse response.body
+      expect( data['dependencies'] ).to_not be_nil
+      data['dependencies'].each do |dep|
+        if dep['name'].eql?('sinatra')
+          expect( dep['licenses'] ).to_not be_nil
+          expect( dep['licenses'].first['name'] ).to eq('MIT')
+          expect( dep['licenses'].first['on_whitelist'] ).to be_truthy
+        elsif dep['name'].eql?('rails')
+          expect( dep['licenses'] ).to_not be_nil
+          expect( dep['licenses'].first['name'] ).to eq('Apache-2.0')
+          expect( dep['licenses'].first['on_whitelist'] ).to be_falsey
+        end
+      end
+    end
+
+    it "return correct licence info for existing project" do
+      prod1 = ProductFactory.create_for_gemfile 'sinatra', '1.0.0'
+      expect( prod1.save ).to be_truthy
+
+      prod2 = ProductFactory.create_for_gemfile 'rails',   '2.0.0'
+      expect( prod2.save ).to be_truthy
+
+      prod3 = ProductFactory.create_for_gemfile 'log4r',   '2.0.0'
+      expect( prod3.save ).to be_truthy
 
       license = License.new(:language => prod1.language, :prod_key => prod1.prod_key, :version => prod1.version, :name => "MIT" )
       expect( license.save ).to be_truthy
@@ -298,8 +352,18 @@ describe V2::ProjectsApiV2, :type => :request do
       ProjectdependencyFactory.create_new project, prod2
       ProjectdependencyFactory.create_new project, prod3
 
+      ProjectdependencyService.update_licenses project
+      project.save
+
+      response = get "#{project_uri}/#{project.ids}.json", {
+        api_key: user_api.api_key
+      }
+      expect( response.status ).to eq(200)
+      data = JSON.parse response.body
+      expect( data['dependencies'] ).to_not be_nil
+
       response = get "#{project_uri}/#{project.ids}/licenses.json"
-      response.status.should eql(200)
+      expect( response.status ).to eql(200)
 
       data = JSON.parse response.body
       data["success"].should be_truthy
@@ -322,7 +386,8 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "deletes existing project successfully" do
-      response = delete "#{project_uri}/#{project_key}.json"
+      ids = Project.first.ids
+      response = delete "#{project_uri}/#{ids}.json"
       response.status.should eql(200)
       msg = JSON.parse response.body
       msg["success"].should be_truthy
