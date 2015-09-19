@@ -212,7 +212,7 @@ GEM
       httparty (~> 0.9)
       persistent_http (< 2)
     psych (2.0.15)
-    puma (2.13.4)
+    puma (2.14.0)
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -370,7 +370,7 @@ DEPENDENCIES
   grape-swagger!
   htmlentities (~> 4.3.2)
   psych (~> 2.0.5)
-  puma (~> 2.13.4)
+  puma (~> 2.14.0)
   rails (~> 4.2.4)
   rails-assets-bootstrap (= 3.3.5)!
   rails-assets-font-awesome (= 4.3.0)!
