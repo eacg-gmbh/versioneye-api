@@ -28,8 +28,6 @@ module ProjectHelpers
 
     project.save
     project
-  rescue => e
-    return e.message
   end
 
 

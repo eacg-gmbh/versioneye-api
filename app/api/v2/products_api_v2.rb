@@ -145,11 +145,7 @@ module V2
         user_follow = UserFollow.new
         user_follow.username = @current_user.username
         user_follow.prod_key = current_product.prod_key
-        if @current_user.products
-          user_follow.follows  = @current_user.products.include? current_product
-        else
-          user_follow.follows = false
-        end
+        user_follow.follows  = @current_user.products.to_a.include? current_product
 
         present user_follow, with: EntitiesV2::UserFollowEntity
       end
@@ -175,17 +171,16 @@ module V2
       post '/:lang/:prod_key/follow' do
         authorized?
         current_product = fetch_product(params[:lang], params[:prod_key])
-        current_product.users = Array.new if current_product.users.nil?
-        unless current_product.users.include? @current_user
-          current_product.users.push @current_user
-          current_product.followers += 1
-          current_product.save
+
+        result = ProductService.follow current_product.language, current_product.prod_key, current_user
+        if result == false
+          error!("Something went wrong", 400)
         end
 
         user_follow = UserFollow.new
         user_follow.username = @current_user.username
         user_follow.prod_key = current_product.prod_key
-        user_follow.follows  = current_product.users.include? @current_user
+        user_follow.follows  = result
 
         present user_follow, with: EntitiesV2::UserFollowEntity
       end
@@ -212,19 +207,16 @@ module V2
         authorized?
         @current_user = current_user
         current_product = fetch_product(params[:lang], params[:prod_key])
-        error!("Wrong product key", 400) if current_product.nil?
 
-        current_product.users = Array.new if current_product.users.nil?
-        if current_product.users.include? @current_user
-          current_product.users.delete @current_user
-          current_product.followers -= 1
-          current_product.save
+        result = ProductService.unfollow current_product.language, current_product.prod_key, current_user
+        if result == false
+          error!("Something went wrong", 400)
         end
 
         user_follow = UserFollow.new
         user_follow.username = @current_user.username
         user_follow.prod_key = current_product.prod_key
-        user_follow.follows  = @current_user.products.include? current_product
+        user_follow.follows  = !result
 
         present user_follow, with: EntitiesV2::UserFollowEntity
       end

@@ -14,9 +14,6 @@ module V2
       project = Project.by_user(user).where(project_key: proj_key).shift
       project = Project.by_user(user).where(_id: proj_key).shift if project.nil?
       project
-    rescue => e
-      p e.message
-      nil
     end
 
     def self.fetch_product(dep)
@@ -92,11 +89,11 @@ module V2
         datafile = ActionDispatch::Http::UploadedFile.new( params[:upload] )
         project_file = {'datafile' => datafile}
 
-        project = upload_and_store( project_file, params[:visibility], params[:name] )
-        if project.nil?
-          error! "Can't save uploaded file. Probably our fileserver got cold.", 500
-        elsif project.is_a? String
-          error! project, 500
+        project = nil
+        begin
+          project = upload_and_store( project_file, params[:visibility], params[:name] )
+        rescue => e
+          error! e.message, 500
         end
 
         present project, with: EntitiesV2::ProjectEntity, :type => :full
@@ -184,7 +181,6 @@ module V2
         track_apikey
 
         project = ProjectsApiV2.fetch_project @current_user, params[:project_key]
-        error!("Project `#{params[:project_key]}` don't exists", 400) if project.nil?
 
         licenses = {}
 

@@ -194,13 +194,38 @@ describe V2::ProductsApiV2, :type => :request do
       response_data["follows"].should be_truthy
     end
 
-    it "returns proper response if authorized unfollows specific package" do
+    it "returns 404 because package does not exist" do
+      delete "#{product_uri}/#{@test_product.language}/nan/follow"
+      response.status.should == 404
+      response_data = JSON.parse(response.body)
+      response_data["error"].should eq("Zero results for prod_key `nan`")
+    end
+
+    it "returns 400 because user does not follow yet" do
+      delete "#{product_uri}/#{@test_product.language}/#{@safe_prod_key}/follow"
+      expect( response.status ).to eq(400)
+      response_data = JSON.parse(response.body)
+      expect( response_data["error"] ).to eq("Something went wrong")
+    end
+
+    it "unfollows" do
+      expect( Product.count ).to eq(1)
+      expect( Product.first.users.count ).to eq(0)
+      expect( User.count ).to eq(1)
+      expect( User.first.products.count ).to eq(0)
+      post "#{product_uri}/#{@test_product.language}/#{@safe_prod_key}/follow"
+      response.status.should == 201
+      expect( User.first.products.count ).to eq(1)
+      expect( Product.first.users.count ).to eq(1)
+
       delete "#{product_uri}/#{@test_product.language}/#{@safe_prod_key}/follow"
       response.status.should == 200
-
-      get "#{product_uri}/#{@test_product.language}/#{@safe_prod_key}/follow"
-      response_data = JSON.parse(response.body)
+      response_data =  JSON.parse(response.body)
+      response_data["prod_key"].should eql(@test_product.prod_key)
       response_data["follows"].should be_falsey
+      expect( User.count ).to eq(1)
+      expect( User.first.products.count ).to eq(0)
+      expect( Product.first.users.count ).to eq(0)
     end
   end
 
@@ -235,6 +260,23 @@ describe V2::ProductsApiV2, :type => :request do
 
       results = response_data["results"]
       results.count.should eq(3)
+    end
+
+    it "returns 400 because requested page does not exist" do
+      Product.count.should eq(5)
+      Dependency.count.should eq(4)
+
+      get "#{product_uri}/#{@product.language}/#{@safe_prod_key}/references?page=100"
+      expect( response.status ).to eq(404)
+    end
+
+    it "returns 400 because there are no references" do
+      Product.count.should eq(5)
+      Dependency.count.should eq(4)
+      safe_prod_key = encode_prod_key(@product_4.prod_key)
+
+      get "#{product_uri}/#{@product_4.language}/#{safe_prod_key}/references"
+      expect( response.status ).to eq(404)
     end
   end
 

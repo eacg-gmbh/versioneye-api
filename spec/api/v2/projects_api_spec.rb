@@ -101,6 +101,20 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( response_data['error'] ).to eq('upload is invalid')
     end
 
+    it "returns 500 because project is empty" do
+      file = empty_file
+      response = post project_uri, {
+        upload:    file,
+        api_key:   user_api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      response.status.should eq(500)
+      resp = JSON.parse response.body
+      expect( resp['error'] ).to eq('project file could not be parsed. Maybe the file is empty? Or not valid?')
+    end
+
     it "returns 201 and project info, when upload was successfully" do
       file = test_file
       response = post project_uri, {
