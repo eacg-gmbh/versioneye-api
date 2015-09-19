@@ -121,22 +121,13 @@ module V2
           error! "Project `#{params[:project_key]}` don't exists", 400
         end
 
-        if params[:project_file].nil?
-          error! "No file submitted or used wrong parameter name.", 400
-        end
-
-        if params[:project_file].is_a? String
-          error! "File field is plain text. It should be multipart submition.", 400
-        end
-
         datafile = ActionDispatch::Http::UploadedFile.new( params[:project_file] )
         project_file = {'datafile' => datafile}
 
-        project = ProjectUpdateService.update_from_upload project, project_file, current_user, true
-        if project.nil?
-          error! "Can't save uploaded file. Probably our fileserver got cold.", 500
-        elsif project.is_a? String
-          error! project, 500
+        begin
+          project = ProjectUpdateService.update_from_upload project, project_file, current_user, true
+        rescue => e
+          error! e.message, 500
         end
 
         Rails.cache.delete( project.ids )
@@ -170,10 +161,9 @@ module V2
         project = Project.by_user(@current_user).where(project_key: proj_key).shift if project.nil?
         if project.nil?
           error! "Deletion failed because you don't have such project: #{proj_key}", 500
-        else
-          destroy_project(project.id)
         end
 
+        destroy_project(project.id)
         {success: true, message: "Project deleted successfully."}
       end
 

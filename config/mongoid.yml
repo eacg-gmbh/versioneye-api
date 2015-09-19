@@ -3,14 +3,18 @@ development:
     default:
       database: veye_dev
       hosts:
-        - 172.16.172.128:27017
+        - 172.16.148.134:27017
+  options:
+    raise_not_found_error: false
 
 test:
   sessions:
     default:
       database: veye_test
       hosts:
-        - 172.16.172.128:27017
+        - 172.16.148.134:27017
+  options:
+    raise_not_found_error: false
 
 production:
   sessions:
@@ -22,6 +26,8 @@ production:
         - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
       options:
         read: :secondary
+  options:
+    raise_not_found_error: false
 
 enterprise:
   sessions:
@@ -29,3 +35,5 @@ enterprise:
       database: veye_enterprise
       hosts:
         - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
+  options:
+    raise_not_found_error: false

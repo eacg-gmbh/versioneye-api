@@ -8,7 +8,9 @@ describe V2::ProjectsApiV2, :type => :request do
   let( :test_user   ) { UserFactory.create_new(90) }
   let( :user_api    ) { ApiFactory.create_new test_user }
   let( :file_path   ) { "#{Rails.root}/spec/files/Gemfile.lock" }
+  let( :empty_file_path) { "#{Rails.root}/spec/files/Gemfile" }
   let( :test_file   ) { Rack::Test::UploadedFile.new(file_path, "text/xml") }
+  let( :empty_file  ) { Rack::Test::UploadedFile.new(empty_file_path, "text/xml") }
 
   let(:project_name) {"Gemfile.lock"}
 
@@ -139,6 +141,15 @@ describe V2::ProjectsApiV2, :type => :request do
     it "fails, when upload-file is missing" do
       response = post "#{project_uri}/test_key", {:api_key => user_api.api_key}, "HTTPS" => "on"
       response.status.should eq(400)
+      resp = JSON.parse response.body
+      expect( resp['error'] ).to eq('project_file is missing')
+    end
+
+    it "fails, when upload-file is a string" do
+      response = post "#{project_uri}/test_key", {:api_key => user_api.api_key, :project_file => ''}, "HTTPS" => "on"
+      response.status.should eq(400)
+      resp = JSON.parse response.body
+      expect( resp['error'] ).to eq('project_file is invalid')
     end
 
     it "returns 400 if project not found" do
@@ -151,6 +162,22 @@ describe V2::ProjectsApiV2, :type => :request do
       }, "HTTPS" => "on"
       file.close
       response.status.should eq(400)
+    end
+
+    it "returns 500 because uploaded file is empty." do
+      project = ProjectFactory.create_new test_user
+      Project.count.should eq(1)
+      update_uri = "#{project_uri}/#{project.id.to_s}?api_key=#{user_api.api_key}"
+      file = empty_file
+      response = post update_uri, {
+        project_file: file,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      response.status.should eq(500)
+      resp = JSON.parse response.body
+      expect( resp['error'] ).to eq('project file could not be parsed. Maybe the file is empty? Or not valid?')
     end
 
     it "returns 200 after successfully project update" do
@@ -171,6 +198,29 @@ describe V2::ProjectsApiV2, :type => :request do
 
   describe "Merge existing projects as authorized user" do
     include Rack::Test::Methods
+
+    it "returns 400 because project does not exist" do
+      merge_uri = "#{project_uri}/testng/testng/merge_ga/888?api_key=#{user_api.api_key}"
+      response = get merge_uri
+      response.status.should eq(400)
+      resp = JSON.parse response.body
+      expect( resp['error'] ).to eq("Project `testng/testng` doesn't exists")
+    end
+
+    it "returns 400 because child does not exist" do
+      parent = ProjectFactory.create_new test_user
+      parent.group_id = "com.spring"
+      parent.artifact_id = 'tx.core'
+      parent.save
+
+      group    = parent.group_id.gsub(".", "~")
+      artifact = parent.artifact_id.gsub(".", "~")
+      merge_uri = "#{project_uri}/#{group}/#{artifact}/merge_ga/NaN?api_key=#{user_api.api_key}"
+      response = get merge_uri
+      response.status.should eq(400)
+      resp = JSON.parse response.body
+      expect( resp['error'] ).to eq("Project `NaN` doesn't exists")
+    end
 
     it "returns 200 after successfully merged" do
       parent = ProjectFactory.create_new test_user
@@ -197,6 +247,25 @@ describe V2::ProjectsApiV2, :type => :request do
   describe "Merge existing projects as authorized user" do
     include Rack::Test::Methods
 
+    it "returns 400 because project does not exist" do
+      merge_uri = "#{project_uri}/111111/merge/2222?api_key=#{user_api.api_key}"
+      response = get merge_uri
+      response.status.should eq(400)
+      resp = JSON.parse response.body
+      expect( resp['error'] ).to eq("Project `111111` doesn't exists")
+    end
+
+    it "returns 400 because child does not exist" do
+      parent = ProjectFactory.create_new test_user
+      Project.count.should eq(1)
+
+      merge_uri = "#{project_uri}/#{parent.id.to_s}/merge/2222?api_key=#{user_api.api_key}"
+      response = get merge_uri
+      response.status.should eq(400)
+      resp = JSON.parse response.body
+      expect( resp['error'] ).to eq("Project `2222` doesn't exists")
+    end
+
     it "returns 200 after successfully merged" do
       parent = ProjectFactory.create_new test_user
       Project.count.should eq(1)
@@ -217,6 +286,25 @@ describe V2::ProjectsApiV2, :type => :request do
 
   describe "UnMerge existing projects as authorized user" do
     include Rack::Test::Methods
+
+    it "returns 400 because project does not exist" do
+      merge_uri = "#{project_uri}/11/unmerge/22?api_key=#{user_api.api_key}"
+      response = get merge_uri
+      response.status.should eq(400)
+      resp = JSON.parse response.body
+      expect( resp['error'] ).to eq("Project `11` doesn't exists")
+    end
+
+    it "returns 400 because child does not exist" do
+      parent = ProjectFactory.create_new test_user
+      Project.count.should eq(1)
+
+      merge_uri = "#{project_uri}/#{parent.id.to_s}/unmerge/22?api_key=#{user_api.api_key}"
+      response = get merge_uri
+      response.status.should eq(400)
+      resp = JSON.parse response.body
+      expect( resp['error'] ).to eq("Project `22` doesn't exists")
+    end
 
     it "returns 200 after successfully unmerged" do
       parent = ProjectFactory.create_new test_user
@@ -277,7 +365,7 @@ describe V2::ProjectsApiV2, :type => :request do
       project_info2["dependencies"].count.should eql(7)
     end
 
-    it "return correct licence info for existing project" do
+    it "return correct licences in project dependencies for existing project" do
       prod1 = ProductFactory.create_for_gemfile 'sinatra', '1.0.0'
       expect( prod1.save ).to be_truthy
 
@@ -299,12 +387,9 @@ describe V2::ProjectsApiV2, :type => :request do
       lwl.add_license_element "MIT"
       expect( lwl.save ).to be_truthy
 
-      project = Project.first # ProjectFactory.create_new test_user
+      project = Project.first
       project.license_whitelist_id = lwl.ids
       project.save
-      # ProjectdependencyFactory.create_new project, prod1
-      # ProjectdependencyFactory.create_new project, prod2
-      # ProjectdependencyFactory.create_new project, prod3
 
       ProjectdependencyService.update_licenses project
       project.save
@@ -385,6 +470,66 @@ describe V2::ProjectsApiV2, :type => :request do
       apache_licences.include?("sinatra").should be_falsey
     end
 
+
+    it "return correct licence info for existing project" do
+      prod1 = ProductFactory.create_for_maven 'junit', 'junit', '1.0.0'
+      expect( prod1.save ).to be_truthy
+
+      prod2 = ProductFactory.create_for_maven 'log4j', 'log4j', '2.0.0'
+      expect( prod2.save ).to be_truthy
+
+      license = License.new(:language => prod1.language, :prod_key => prod1.prod_key, :version => prod1.version, :name => "MIT" )
+      expect( license.save ).to be_truthy
+
+      license = License.new(:language => prod2.language, :prod_key => prod2.prod_key, :version => prod2.version, :name => "Apache-2.0" )
+      expect( license.save ).to be_truthy
+
+      project = ProjectFactory.create_new test_user
+      project.save
+      ProjectdependencyFactory.create_new project, prod1
+      ProjectdependencyFactory.create_new project, prod2
+
+      response = get "#{project_uri}/#{project.ids}/licenses.json"
+      expect( response.status ).to eql(200)
+
+      data = JSON.parse response.body
+      expect(data["licenses"]["unknown"]).to be_nil
+
+      mit_licences = data["licenses"]["MIT"].map {|x| x['name']}
+      mit_licences = mit_licences.to_set
+      mit_licences.include?("junit").should be_truthy
+      mit_licences.include?("log4j").should be_falsey
+
+      apache_licences = data["licenses"]["Apache-2.0"].map {|x| x['name']}
+      apache_licences = apache_licences.to_set
+      apache_licences.include?("log4j").should be_truthy
+      apache_licences.include?("junit").should be_falsey
+    end
+  end
+
+  describe "Accessing existing project as authorized user" do
+    include Rack::Test::Methods
+
+    before :each do
+      file = test_file
+      response = post project_uri, {
+        upload:    file,
+        api_key:   user_api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      response.status.should eq(201)
+    end
+
+    it "deletes fails because project does not exist" do
+      ids = Project.first.ids
+      response = delete "#{project_uri}/NaN.json"
+      response.status.should eql(500)
+      msg = JSON.parse response.body
+      expect( msg["error"] ).to eq("Deletion failed because you don't have such project: NaN")
+    end
+
     it "deletes existing project successfully" do
       ids = Project.first.ids
       response = delete "#{project_uri}/#{ids}.json"
@@ -392,6 +537,7 @@ describe V2::ProjectsApiV2, :type => :request do
       msg = JSON.parse response.body
       msg["success"].should be_truthy
     end
+
   end
 
 end
