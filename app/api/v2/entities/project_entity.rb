@@ -3,7 +3,7 @@ require_relative 'project_dependency_entity.rb'
 
 module EntitiesV2
   class ProjectEntity < Grape::Entity
-    expose :ids, :as => :id 
+    expose :ids, :as => :id
     expose :project_key
     expose :name
     expose :project_type
