@@ -233,7 +233,7 @@ describe "GithubApiV2", :type => :request do
       end
     end
 
-    it "returns an erro because Gemfile is empty." do
+    it "runs through even if Gemfile is empty." do
       VCR.use_cassette('github_import_empty_file', allow_playback_repeats: true) do
         worker1 = Thread.new{ GitReposImportWorker.new.work }
         worker2 = Thread.new{ GitRepoImportWorker.new.work }
@@ -252,11 +252,10 @@ describe "GithubApiV2", :type => :request do
         sleep 2
 
         post "#{api_path}/versioneye:test_repo", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-        expect( response.status ).to eq(500)
+        expect( response.status ).to eq(201)
 
         repo = JSON.parse response.body
         expect( repo ).to_not be_nil
-        expect( repo['error'] ).to eq("Could not find a single dependency in the project.")
 
         worker3.exit
         worker2.exit
