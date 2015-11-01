@@ -1,4 +1,4 @@
-class SearchResults 
+class SearchResults
 
   attr_accessor :lang, :prod_key
   attr_accessor :query, :group_id, :languages, :paging, :entries
