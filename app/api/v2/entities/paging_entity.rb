@@ -8,4 +8,3 @@ module EntitiesV2
     expose :total_entries
   end
 end
-

@@ -48,8 +48,8 @@ describe V2::UsersApiV2, :type => :request do
       @test_user = UserFactory.create_new
       @user_api =  ApiFactory.create_new(@test_user)
       @user_api.enterprise_projects = 398
-      @user_api.active = true 
-      @user_api.save 
+      @user_api.active = true
+      @user_api.save
 
       #set up active session
       post @root_uri +'/sessions', :api_key => @user_api.api_key
@@ -76,14 +76,14 @@ describe V2::UsersApiV2, :type => :request do
       expect(response_data["notifications"]["total"]).to_not be_nil
     end
 
-    it 'returns the packages which the user follows' do 
-      product = ProductFactory.create_new 1 
+    it 'returns the packages which the user follows' do
+      product = ProductFactory.create_new 1
       ProductService.follow product.language, product.prod_key, @test_user
 
       get @me_uri + '/favorites'
       response.status.should == 200
       response_data = JSON.parse(response.body)
-      
+
       expect( response_data["user"] ).to_not be_nil
       expect( response_data["user"]["fullname"] ).to eq(@test_user.fullname)
       expect( response_data["user"]["username"] ).to eq(@test_user.username)
@@ -100,22 +100,22 @@ describe V2::UsersApiV2, :type => :request do
       expect( response_data["paging"]['total_entries']).to_not be_nil
     end
 
-    it 'returns the comments' do 
-      product = ProductFactory.create_new 1 
-      
+    it 'returns the comments' do
+      product = ProductFactory.create_new 1
+
       comment = Versioncomment.new({
-        :user_id => @test_user.ids, 
-        :language => product.language, 
+        :user_id => @test_user.ids,
+        :language => product.language,
         :product_key => product.prod_key,
-        :version => product.version, 
-        :prod_name => product.name, 
+        :version => product.version,
+        :prod_name => product.name,
         :comment => 'This is awesome' })
-      comment.save 
+      comment.save
 
       get @me_uri + '/comments'
       response.status.should == 200
       response_data = JSON.parse(response.body)
-      
+
       expect( response_data["comments"] ).to_not be_nil
       expect( response_data["comments"].count ).to eq(1)
       expect( response_data["comments"].first['id'] ).to eq( comment.ids )
@@ -142,9 +142,9 @@ describe V2::UsersApiV2, :type => :request do
 
     it "should return correct notifications when we add them" do
       new_notification = NotificationFactory.create_new @test_user
-      new_notification.save 
+      new_notification.save
       Notification.count.should eq(1)
-      
+
       get @me_uri + "/notifications", :api_key => @user_api.api_key
       response.status.should == 200
       response_data = JSON.parse(response.body)
@@ -152,7 +152,7 @@ describe V2::UsersApiV2, :type => :request do
       response_data["notifications"].length.should == 1
       msg = response_data["notifications"].shift
       msg["version"].should eql(new_notification.version_id)
-      expect( msg["created_at"] ).to_not be_nil 
+      expect( msg["created_at"] ).to_not be_nil
       expect( msg["sent_email"] ).to be_falsey
       expect( msg["read"] ).to be_falsey
       expect( msg["product"] ).to_not be_nil
@@ -183,14 +183,14 @@ describe V2::UsersApiV2, :type => :request do
       expect( response_data["fullname"] ).to eq(@test_user.fullname)
     end
 
-    it 'returns the packages which the user follows' do 
-      product = ProductFactory.create_new 1 
+    it 'returns the packages which the user follows' do
+      product = ProductFactory.create_new 1
       ProductService.follow product.language, product.prod_key, @test_user
 
       get @users_uri + "/#{@test_user.username}/favorites", :api_key => @user_api.api_key
       response.status.should == 200
       response_data = JSON.parse(response.body)
-      
+
       expect( response_data["user"] ).to_not be_nil
       expect( response_data["user"]["fullname"] ).to eq(@test_user.fullname)
       expect( response_data["user"]["username"] ).to eq(@test_user.username)
@@ -207,22 +207,22 @@ describe V2::UsersApiV2, :type => :request do
       expect( response_data["paging"]['total_entries']).to_not be_nil
     end
 
-    it 'returns the comments' do 
-      product = ProductFactory.create_new 1 
-      
+    it 'returns the comments' do
+      product = ProductFactory.create_new 1
+
       comment = Versioncomment.new({
-        :user_id => @test_user.ids, 
-        :language => product.language, 
+        :user_id => @test_user.ids,
+        :language => product.language,
         :product_key => product.prod_key,
-        :version => product.version, 
-        :prod_name => product.name, 
+        :version => product.version,
+        :prod_name => product.name,
         :comment => 'This is awesome' })
-      comment.save 
+      comment.save
 
       get @users_uri + "/#{@test_user.username}/comments", :api_key => @user_api.api_key
       response.status.should == 200
       response_data = JSON.parse(response.body)
-      
+
       expect( response_data["comments"] ).to_not be_nil
       expect( response_data["comments"].count ).to eq(1)
       expect( response_data["comments"].first['id'] ).to eq( comment.ids )
