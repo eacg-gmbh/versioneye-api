@@ -7,6 +7,7 @@ require_relative 'projects_api_v2'
 require_relative 'sessions_api_v2'
 require_relative 'users_api_v2'
 require_relative 'github_api_v2'
+require_relative 'security_api_v2'
 
 module V2
   class ApiV2 < Grape::API
@@ -23,6 +24,7 @@ module V2
     mount SessionsApiV2
     mount UsersApiV2
     mount GithubApiV2
+    mount SecurityApiV2
 
     add_swagger_documentation :base_path => ENV['API_BASE_PATH'],
                               :class_name => "swagger_doc2",
