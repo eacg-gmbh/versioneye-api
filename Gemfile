@@ -39,7 +39,7 @@ group :test do
   gem 'capybara'          , '~> 2.5.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'vcr'               , '~> 2.9.2',  :require => false
-  gem 'webmock'           , '~> 1.21.0', :require => false
+  gem 'webmock'           , '~> 1.22.0', :require => false
   gem 'database_cleaner'  , '~> 1.5.1'
   gem 'factory_girl'      , '~> 4.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
