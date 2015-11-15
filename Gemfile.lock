@@ -101,7 +101,7 @@ GEM
     capybara-firebug (2.1.0)
       capybara (>= 1.0, < 3.0)
       selenium-webdriver
-    childprocess (0.5.7)
+    childprocess (0.5.8)
       ffi (~> 1.0, >= 1.0.11)
     cocoapods-core (0.39.0)
       activesupport (>= 4.0.2)
@@ -328,6 +328,8 @@ GEM
       ansi
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2015.7)
+      tzinfo (>= 1.0.0)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -384,6 +386,7 @@ DEPENDENCIES
   terminal-notifier (~> 1.6.0)
   therubyracer (~> 0.12.0)
   turn
+  tzinfo-data
   uglifier (~> 2.7.0)
   vcr (~> 2.9.2)
   versioneye-core!

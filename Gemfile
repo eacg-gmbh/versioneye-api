@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'tzinfo-data'
 gem 'bundler'            , '~> 1.10.6'
 gem 'rails'              , '~> 4.2.4'
 gem 'puma'               , '~> 2.14.0'
