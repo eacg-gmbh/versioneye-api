@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: e3fff23c396660c27c6aec00b0ac69caf84eaf0c
-  tag: v7.33.14
+  revision: 53c55e75ed81270ea9ef775b35d5b85741f0b60e
+  tag: v7.34.2
   specs:
-    versioneye-core (7.33.14)
+    versioneye-core (7.34.2)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.10.6)
@@ -78,12 +78,12 @@ GEM
     amq-protocol (2.0.0)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.2.0)
-      aws-sdk-resources (= 2.2.0)
-    aws-sdk-core (2.2.0)
+    aws-sdk (2.2.3)
+      aws-sdk-resources (= 2.2.3)
+    aws-sdk-core (2.2.3)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.0)
-      aws-sdk-core (= 2.2.0)
+    aws-sdk-resources (2.2.3)
+      aws-sdk-core (= 2.2.3)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -180,7 +180,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    mime-types (2.6.2)
+    mime-types (2.99)
     mini_portile (0.6.2)
     minitest (5.8.3)
     mongoid (4.0.2)
@@ -199,7 +199,7 @@ GEM
     naturalsorter (3.0.11)
     net-ldap (0.12.1)
     netrc (0.11.0)
-    nokogiri (1.6.6.3)
+    nokogiri (1.6.6.4)
       mini_portile (~> 0.6.0)
     oauth (0.4.7)
     octokit (4.2.0)
@@ -275,7 +275,7 @@ GEM
       rspec-expectations (~> 3.4.0)
       rspec-mocks (~> 3.4.0)
       rspec-support (~> 3.4.0)
-    rspec-support (3.4.0)
+    rspec-support (3.4.1)
     ruby_regex (0.1.1)
       rake
     rubyzip (1.1.7)
