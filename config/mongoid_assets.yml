@@ -9,7 +9,7 @@ development:
       # Provides the hosts the default session can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
-        - 192.168.118.128:27017
+        - 172.16.148.134:27017
       options:
         # Change whether the session persists in safe mode by default.
         # (default: false)
@@ -72,7 +72,7 @@ test:
     default:
       database: veye_test
       hosts:
-        - 172.16.172.128:27017
+        - 172.16.148.134:27017
       options:
         # options:
         # # Change whether the session persists in safe mode by default.
@@ -95,7 +95,7 @@ production:
       # Provides the hosts the default session can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
-        - 172.16.172.128:27017
+        - 172.16.148.134:27017
       options:
         # Change whether the session persists in safe mode by default.
         # (default: false)
