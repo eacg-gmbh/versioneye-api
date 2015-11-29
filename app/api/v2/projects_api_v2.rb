@@ -84,6 +84,7 @@ module V2
         requires :upload, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
         optional :visibility, :type => String, :desc => "By default 'private'. If 'public' everybody can see the project."
         optional :name, :type => String, :desc => "The name of the VersionEye project. By default it is the filename."
+        optional :orga_name, :type => String, :desc => "The name of the organisation this project should be assigned to."
       end
       post do
         datafile = ActionDispatch::Http::UploadedFile.new( params[:upload] )
@@ -91,7 +92,7 @@ module V2
 
         project = nil
         begin
-          project = upload_and_store( project_file, params[:visibility], params[:name] )
+          project = upload_and_store( project_file, params[:visibility], params[:name], params[:orga_name] )
         rescue => e
           error! e.message, 500
         end
@@ -109,7 +110,7 @@ module V2
             ]
       }
       params do
-        requires :project_key, :type => String, :desc => "Project specific identificator"
+        requires :project_key, :type => String, :desc => "Project ID"
         requires :project_file, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
       end
       post '/:project_key' do
@@ -145,7 +146,7 @@ module V2
             ]
       }
       params do
-        requires :project_key, :type => String, :desc => "Delete project file"
+        requires :project_key, :type => String, :desc => "Delete project with given project ID."
       end
       delete '/:project_key' do
         rate_limit

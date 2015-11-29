@@ -2,11 +2,11 @@ module ProjectHelpers
 
 
   def fetch_project_by_key_and_user(project_key, current_user)
-    project = Project.by_user(current_user).where(project_key: project_key).shift
-    if project.nil?
-      project = Project.by_user(current_user).where(_id: project_key).shift
+    project = Project.find project_key.to_s
+    if project && project.is_collaborator?( current_user )
+      return project
     end
-    project
+    nil
   end
 
 
@@ -19,12 +19,21 @@ module ProjectHelpers
   end
 
 
-  def upload_and_store file, visibility = 'private', name = nil
+  def upload_and_store file, visibility = 'private', name = nil, orga_name = nil
     project = ProjectImportService.import_from_upload file, current_user, true
 
     project.public = true  if visibility.to_s.eql?('public')
     project.public = false if visibility.to_s.eql?('private')
     project.name   = name  if !name.to_s.empty?
+
+    if !orga_name.to_s.empty?
+      OrganisationService.index(current_user).each do |orga|
+        if orga.name.eql?(orga_name) && OrganisationService.owner?( orga, current_user )
+          project.organisation_id = orga.ids
+          project.teams.push( orga.owner_team )
+        end
+      end
+    end
 
     project.save
     project

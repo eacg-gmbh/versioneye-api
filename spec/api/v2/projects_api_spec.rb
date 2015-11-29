@@ -146,6 +146,60 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( Project.first.name ).to eq('my_new_project')
       expect( Project.first.public ).to be_truthy
     end
+
+    it "creates a new project and assignes it to an organisation" do
+      orga = Organisation.new :name => 'orga'
+      expect( orga.save ).to be_truthy
+      team = Team.new :name => Team::A_OWNERS, :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      file = test_file
+      response = post project_uri, {
+        upload:    file,
+        name:      'my_new_project',
+        orga_name: 'orga',
+        visibility: 'public',
+        api_key:   user_api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      response.status.should eq(201)
+      expect( Project.count ).to eq(1)
+      expect( Project.first.name ).to eq('my_new_project')
+      expect( Project.first.public ).to be_truthy
+      expect( Project.first.organisation ).to_not be_nil
+      expect( Project.first.organisation.name ).to eq('orga')
+      expect( Project.first.teams ).to_not be_empty
+      expect( Project.first.teams.first.name ).to eq(Team::A_OWNERS)
+    end
+
+    it "ca not create a new project because user is not member of the owners team" do
+      orga = Organisation.new :name => 'orga'
+      expect( orga.save ).to be_truthy
+      team = Team.new :name => 'members', :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      file = test_file
+      response = post project_uri, {
+        upload:    file,
+        name:      'my_new_project',
+        orga_name: 'orga',
+        visibility: 'public',
+        api_key:   user_api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      response.status.should eq(201)
+      expect( Project.count ).to eq(1)
+      expect( Project.first.name ).to eq('my_new_project')
+      expect( Project.first.public ).to be_truthy
+      expect( Project.first.organisation ).to be_nil
+      expect( Project.first.teams ).to be_empty
+    end
   end
 
 
@@ -206,6 +260,32 @@ describe V2::ProjectsApiV2, :type => :request do
       }, "HTTPS" => "on"
       file.close
       response.status.should eq(201)
+    end
+
+    it "updates an project as team member of the organisation" do
+      member = UserFactory.create_new 23
+      api = ApiFactory.create_new member, true
+      api = Api.where(:user_id => member.ids).first
+      expect( api ).to_not be_nil
+      orga = Organisation.new :name => 'orga'
+      expect( orga.save ).to be_truthy
+      team = Team.new :name => 'updates', :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member(member)).to be_truthy
+      project = ProjectFactory.create_new test_user
+      project.organisation_id = orga.ids
+      project.teams.push team
+      expect( project.save ).to be_truthy
+      Project.count.should eq(1)
+      update_uri = "#{project_uri}/#{project.id.to_s}?api_key=#{api.api_key}"
+      file = test_file
+      response = post update_uri, {
+        project_file: file,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      expect( response.status ).to eq(201)
     end
   end
 

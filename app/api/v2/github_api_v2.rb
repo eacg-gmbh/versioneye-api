@@ -271,7 +271,7 @@ module V2
           error! "Project with ID #{params[:project_id]} not found.", 400
         end
 
-        if !project.collaborator?( current_user )
+        if !project.is_collaborator?( current_user )
           error! "You do not have access to this project!", 400
         end
 
