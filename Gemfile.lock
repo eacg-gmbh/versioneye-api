@@ -1,15 +1,16 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: a73d7b8e94ad99a945dc4d36974dfd3f43285050
-  tag: v8.3.2
+  revision: 8ca2ab62ac44bb90e83eb21e4a638254b3643131
+  tag: v8.4.5
   specs:
-    versioneye-core (8.3.2)
+    versioneye-core (8.4.5)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.11.0)
       bunny (~> 2.2.0)
       cocoapods-core (~> 0.39.0)
       dalli (~> 2.7.0)
+      etcd (~> 0.3.0)
       httparty (~> 0.13.1)
       json (~> 1.8.0)
       kgio (~> 2.10.0)
@@ -77,12 +78,12 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.2.8)
-      aws-sdk-resources (= 2.2.8)
-    aws-sdk-core (2.2.8)
+    aws-sdk (2.2.9)
+      aws-sdk-resources (= 2.2.9)
+    aws-sdk-core (2.2.9)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.8)
-      aws-sdk-core (= 2.2.8)
+    aws-sdk-resources (2.2.9)
+      aws-sdk-core (= 2.2.9)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -100,7 +101,7 @@ GEM
     capybara-firebug (2.1.0)
       capybara (>= 1.0, < 3.0)
       selenium-webdriver
-    childprocess (0.5.8)
+    childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     cocoapods-core (0.39.0)
       activesupport (>= 4.0.2)
@@ -128,6 +129,8 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     equalizer (0.0.11)
     erubis (2.7.0)
+    etcd (0.3.0)
+      mixlib-log
     execjs (2.6.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -181,6 +184,7 @@ GEM
     mime-types (2.99)
     mini_portile2 (2.0.0)
     minitest (5.8.3)
+    mixlib-log (1.6.0)
     mongo (2.2.1)
       bson (~> 4.0)
     mongoid (5.0.2)
@@ -230,7 +234,7 @@ GEM
     rails-assets-bootstrap (3.3.5)
       rails-assets-jquery (>= 1.9.1)
     rails-assets-font-awesome (4.3.0)
-    rails-assets-jquery (2.1.4)
+    rails-assets-jquery (2.2.0)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.7)
@@ -339,8 +343,8 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
-    webmock (1.22.5)
-      addressable (< 2.4.0)
+    webmock (1.22.6)
+      addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
     websocket (1.2.2)
