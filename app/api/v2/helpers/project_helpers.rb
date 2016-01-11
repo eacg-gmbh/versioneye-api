@@ -25,16 +25,15 @@ module ProjectHelpers
     project.public = true  if visibility.to_s.eql?('public')
     project.public = false if visibility.to_s.eql?('private')
     project.name   = name  if !name.to_s.empty?
+    project.save
 
-    if !orga_name.to_s.empty?
-      OrganisationService.index(current_user).each do |orga|
-        if orga.name.eql?(orga_name) && OrganisationService.owner?( orga, current_user )
-          project.organisation_id = orga.ids
-          project.teams.push( orga.owner_team )
-        end
-      end
-    end
+    return project if orga_name.to_s.empty?
 
+    orga = Organisation.where(:name => orga_name).first
+    return project if orga.nil?
+    return project if !OrganisationService.allowed_to_transfer_projects?( orga, current_user )
+
+    project.organisation_id = orga.ids
     project.save
     project
   end
