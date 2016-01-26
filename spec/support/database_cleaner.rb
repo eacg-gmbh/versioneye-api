@@ -1,15 +1,12 @@
-require 'database_cleaner'
 
 RSpec.configure do |config|
 
-  config.before(:suite) do
-    DatabaseCleaner.orm = "mongoid"
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner[:mongoid].strategy = :truncation
-  end
-
   config.before(:each) do
-    DatabaseCleaner.clean
+    Rails.application.eager_load!
+    models = Mongoid.models
+    models.each do |model|
+      model.all.each(&:delete)
+    end
   end
 
 end
