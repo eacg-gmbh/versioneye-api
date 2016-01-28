@@ -17,6 +17,8 @@ gem 'htmlentities'       , '~> 4.3.2'
 gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.6.10'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
+gem 'font-awesome-sass', '~> 4.5.0'
+
 group :assets do
   gem 'sass'                  , :require => 'sass'
   gem 'sass-rails'            , '~> 5.0.3'
@@ -47,6 +49,5 @@ group :test do
 end
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-bootstrap'      , '3.3.5'
-  gem 'rails-assets-font-awesome'   , '4.3.0'
+  gem 'rails-assets-bootstrap'      , '3.3.6'
 end
