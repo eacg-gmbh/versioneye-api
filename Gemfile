@@ -24,7 +24,7 @@ group :assets do
   gem 'sass-rails'            , '~> 5.0.3'
   gem 'coffee-rails'          , '~> 4.1.0'
   gem 'uglifier'              , '~> 2.7.0'
-  gem 'yui-compressor'        , '~> 0.12.0'
+  # gem 'yui-compressor'        , '~> 0.12.0'
 end
 
 group :development do
