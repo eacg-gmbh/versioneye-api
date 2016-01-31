@@ -25,7 +25,7 @@ Versioneye::Application.configure do
   config.assets.compile = true
   config.assets.digest = true
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( application.css application_lp.css *.js )
+  config.assets.precompile += %w( application.css application_lp.css *.js *.scss )
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = false
