@@ -339,7 +339,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    vcr (2.9.3)
+    vcr (3.0.1)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -393,7 +393,7 @@ DEPENDENCIES
   turn
   tzinfo-data
   uglifier (~> 2.7.0)
-  vcr (~> 2.9.2)
+  vcr (~> 3.0.1)
   versioneye-core!
   webmock (~> 1.22.0)
   will_paginate_mongoid (= 2.0.1)

@@ -41,7 +41,7 @@ group :test do
   gem 'rspec-mocks'       , '~> 3.2'
   gem 'capybara'          , '~> 2.6.2'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'vcr'               , '~> 2.9.2',  :require => false
+  gem 'vcr'               , '~> 3.0.1',  :require => false
   gem 'webmock'           , '~> 1.22.0', :require => false
   gem 'database_cleaner'  , '~> 1.5.1'
   gem 'factory_girl'      , '~> 4.5.0'
