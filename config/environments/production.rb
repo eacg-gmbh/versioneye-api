@@ -18,6 +18,8 @@ Versioneye::Application.configure do
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = false
 
+  config.eager_load = true
+
   # Compress JavaScripts and CSS
   config.assets.compress = true
   config.assets.css_compressor = :yui
