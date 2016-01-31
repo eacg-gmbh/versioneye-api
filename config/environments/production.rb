@@ -26,7 +26,7 @@ Versioneye::Application.configure do
   config.assets.js_compressor = :uglifier
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( application.css application_lp.css *.js *.scss )
+  config.assets.precompile += %w( api_application.css *.js *.scss )
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
