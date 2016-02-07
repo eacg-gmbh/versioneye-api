@@ -27,9 +27,12 @@ module ProjectHelpers
     project.name   = name  if !name.to_s.empty?
     project.save
 
+    p "orga: #{orga_name} team: #{team_name}"
+
     if !orga_name.to_s.empty?
       assign_organisation project, orga_name
     end
+    
     if !team_name.to_s.empty?
       assign_team project, team_name
     end
@@ -53,6 +56,8 @@ module ProjectHelpers
 
 
     def assign_team project, team_name
+      return false if project.nil? || project.organisation.nil?
+      
       team = project.organisation.team_by team_name
       return false if team.nil?
 
