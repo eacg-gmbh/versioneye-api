@@ -31,7 +31,7 @@ module ProjectHelpers
       assign_organisation project, orga_name
     end
     if !team_name.to_s.empty?
-      assign_team project, orga_name
+      assign_team project, team_name
     end
 
     project
