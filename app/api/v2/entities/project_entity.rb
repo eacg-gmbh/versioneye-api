@@ -15,6 +15,7 @@ module EntitiesV2
     expose :out_number
     expose :licenses_red
     expose :licenses_unknown
+    expose :sv_count
     expose :created_at
     expose :updated_at
     expose :license_whitelist_name, :as => :license_whitelist
