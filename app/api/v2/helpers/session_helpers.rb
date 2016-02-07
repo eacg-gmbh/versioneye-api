@@ -100,7 +100,7 @@ module SessionHelpers
       rate_limit = 50
       rate_limit = api.rate_limit if api && api.respond_to?(:rate_limit)
       if calls_last_hour.to_i >= rate_limit.to_i
-        error! "API rate limit exceeded. Write an email to support@versioneye.com if you need a higher rate limit.", 403
+        error! "API rate limit exceeded. Write an email to support@versioneye.com if you need a higher rate limit. Used API Key: #{api.api_key}", 403
         return
       end
     end
