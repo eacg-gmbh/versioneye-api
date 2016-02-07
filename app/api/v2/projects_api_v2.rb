@@ -85,6 +85,7 @@ module V2
         optional :visibility, :type => String, :desc => "By default 'private'. If 'public' everybody can see the project."
         optional :name, :type => String, :desc => "The name of the VersionEye project. By default it is the filename."
         optional :orga_name, :type => String, :desc => "The name of the organisation this project should be assigned to."
+        optional :team_name, :type => String, :desc => "The name of the team in the organisation this project should be assigned to."
       end
       post do
         datafile = ActionDispatch::Http::UploadedFile.new( params[:upload] )
@@ -92,7 +93,7 @@ module V2
 
         project = nil
         begin
-          project = upload_and_store( project_file, params[:visibility], params[:name], params[:orga_name] )
+          project = upload_and_store( project_file, params[:visibility], params[:name], params[:orga_name], params[:team_name] )
         rescue => e
           error! e.message, 500
         end

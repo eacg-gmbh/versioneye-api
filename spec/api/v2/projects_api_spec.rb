@@ -171,8 +171,8 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( Project.first.public ).to be_truthy
       expect( Project.first.organisation ).to_not be_nil
       expect( Project.first.organisation.name ).to eq('orga')
-      expect( Project.first.teams ).to be_empty
-      # expect( Project.first.teams.first.name ).to eq(Team::A_OWNERS)
+      expect( Project.first.teams ).to_not be_empty
+      expect( Project.first.teams.first.name ).to eq(Team::A_OWNERS)
     end
 
     it "can not create a new project because user is not member of the owners team" do

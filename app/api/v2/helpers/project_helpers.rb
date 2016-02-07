@@ -19,7 +19,7 @@ module ProjectHelpers
   end
 
 
-  def upload_and_store file, visibility = 'private', name = nil, orga_name = nil
+  def upload_and_store file, visibility = 'private', name = nil, orga_name = nil, team_name = nil
     project = ProjectImportService.import_from_upload file, current_user, true
 
     project.public = true  if visibility.to_s.eql?('public')
@@ -27,16 +27,38 @@ module ProjectHelpers
     project.name   = name  if !name.to_s.empty?
     project.save
 
-    return project if orga_name.to_s.empty?
+    if !orga_name.to_s.empty?
+      assign_organisation project, orga_name
+    end
+    if !team_name.to_s.empty?
+      assign_team project, orga_name
+    end
 
-    orga = Organisation.where(:name => orga_name).first
-    return project if orga.nil?
-    return project if !OrganisationService.allowed_to_transfer_projects?( orga, current_user )
-
-    project.organisation_id = orga.ids
-    project.save
     project
   end
+
+
+  private
+
+
+    def assign_organisation project, orga_name
+      orga = Organisation.where(:name => orga_name).first
+      return false if orga.nil?
+      return false if !OrganisationService.allowed_to_transfer_projects?( orga, current_user )
+
+      project.organisation_id = orga.ids
+      project.teams = [orga.owner_team]
+      project.save
+    end
+
+
+    def assign_team project, team_name
+      team = project.organisation.team_by team_name
+      return false if team.nil?
+
+      project.teams = [team]
+      project.save
+    end
 
 
 end
