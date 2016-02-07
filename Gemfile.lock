@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 43d5c4ddd0a6c35612985cdfdb702af57cedacb0
-  tag: v8.6.13
+  revision: 4e2f3ae3fd516f2b1c86f892f9efb1822366153c
+  tag: v8.7.9
   specs:
-    versioneye-core (8.6.13)
+    versioneye-core (8.7.9)
       actionmailer (= 4.2.5.1)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.11.0)
@@ -15,7 +15,7 @@ GIT
       json (~> 1.8.0)
       kgio (~> 2.10.0)
       mongoid (~> 5.1.0)
-      naturalsorter (~> 3.0.11)
+      naturalsorter (~> 3.0.13)
       net-ldap (~> 0.13.0)
       nokogiri (~> 1.6.7.1)
       oauth (~> 0.4.7)
@@ -138,7 +138,7 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    fakes3 (0.2.3)
+    fakes3 (0.2.4)
       builder
       thor
     faraday (0.9.2)
@@ -199,7 +199,7 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     nap (1.1.0)
-    naturalsorter (3.0.11)
+    naturalsorter (3.0.13)
     net-ldap (0.13.0)
     netrc (0.11.0)
     nokogiri (1.6.7.2)
@@ -268,7 +268,7 @@ GEM
     rspec-mocks (3.4.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
-    rspec-rails (3.4.1)
+    rspec-rails (3.4.2)
       actionpack (>= 3.0, < 4.3)
       activesupport (>= 3.0, < 4.3)
       railties (>= 3.0, < 4.3)
@@ -291,13 +291,13 @@ GEM
     sawyer (0.6.0)
       addressable (~> 2.3.5)
       faraday (~> 0.8, < 0.10)
-    selenium-webdriver (2.50.0)
+    selenium-webdriver (2.51.0)
       childprocess (~> 0.5)
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     semverly (1.0.0)
-    simplecov (0.11.1)
+    simplecov (0.11.2)
       docile (~> 1.1.0)
       json (~> 1.8)
       simplecov-html (~> 0.10.0)
@@ -338,7 +338,7 @@ GEM
       json (>= 1.8.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.1)
+    unf_ext (0.0.7.2)
     vcr (3.0.1)
     virtus (1.0.5)
       axiom-types (~> 0.1)
