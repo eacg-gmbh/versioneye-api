@@ -175,6 +175,40 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( Project.first.teams.first.name ).to eq(Team::A_OWNERS)
     end
 
+    it "creates a new project and assignes it to an organisation and a team" do
+      orga = Organisation.new :name => 'orga'
+      expect( orga.save ).to be_truthy
+      
+      team = Team.new :name => Team::A_OWNERS, :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      team = Team.new :name => "backend_devs", :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      file = test_file
+      response = post project_uri, {
+        upload:    file,
+        name:      'my_new_project',
+        orga_name: 'orga',
+        team_name: 'backend_devs',
+        visibility: 'public',
+        api_key:   user_api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      response.status.should eq(201)
+      expect( Project.count ).to eq(1)
+      expect( Project.first.name ).to eq('my_new_project')
+      expect( Project.first.public ).to be_truthy
+      expect( Project.first.organisation ).to_not be_nil
+      expect( Project.first.organisation.name ).to eq('orga')
+      expect( Project.first.teams ).to_not be_empty
+      expect( Project.first.teams.first.name ).to eq('backend_devs')
+    end
+
     it "can not create a new project because user is not member of the owners team" do
       orga = Organisation.new :name => 'orga'
       expect( orga.save ).to be_truthy
