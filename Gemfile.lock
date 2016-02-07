@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 4e2f3ae3fd516f2b1c86f892f9efb1822366153c
-  tag: v8.7.9
+  revision: bba308389b4f9833d0009daaaa9836fabf68ed59
+  tag: v8.7.10
   specs:
-    versioneye-core (8.7.9)
+    versioneye-core (8.7.10)
       actionmailer (= 4.2.5.1)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.11.0)
@@ -16,14 +16,14 @@ GIT
       kgio (~> 2.10.0)
       mongoid (~> 5.1.0)
       naturalsorter (~> 3.0.13)
-      net-ldap (~> 0.13.0)
+      net-ldap (~> 0.14.0)
       nokogiri (~> 1.6.7.1)
       oauth (~> 0.4.7)
       octokit (~> 4.2.0)
       pdfkit (~> 0.8.0)
       persistent_httparty (~> 0.1.0)
       semverly (~> 1.0.0)
-      stripe (~> 1.34.0)
+      stripe (~> 1.35.1)
       tire (~> 0.6.2)
       will_paginate_mongoid (= 2.0.1)
       wkhtmltopdf-binary (~> 0.9.9.1)
@@ -200,7 +200,7 @@ GEM
     multipart-post (2.0.0)
     nap (1.1.0)
     naturalsorter (3.0.13)
-    net-ldap (0.13.0)
+    net-ldap (0.14.0)
     netrc (0.11.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
@@ -309,7 +309,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stripe (1.34.0)
+    stripe (1.35.1)
       json (~> 1.8.1)
       rest-client (~> 1.4)
     terminal-notifier (1.6.3)
