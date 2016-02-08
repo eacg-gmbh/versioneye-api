@@ -3,7 +3,6 @@ require 'grape'
 module EntitiesV2
   class ProjectListItemEntity < Grape::Entity
     expose :id
-    expose :project_key
     expose :name
     expose :project_type
     expose :public

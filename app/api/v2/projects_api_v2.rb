@@ -11,7 +11,6 @@ module V2
     helpers SessionHelpers
 
     def self.fetch_project(user, proj_key)
-      project = Project.by_user(user).where(project_key: proj_key).shift
       project = Project.by_user(user).where(_id: proj_key).shift if project.nil?
       project
     end
