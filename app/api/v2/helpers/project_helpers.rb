@@ -22,16 +22,18 @@ module ProjectHelpers
   def upload_and_store file, visibility = 'private', name = nil, orga_name = nil, team_name = nil
     project = ProjectImportService.import_from_upload file, current_user, true
 
-    project.public = true  if visibility.to_s.eql?('public')
     project.public = false if visibility.to_s.eql?('private')
+    project.public = true  if visibility.to_s.eql?('public')
+    project.public = true  if visibility.to_s.empty?
     project.name   = name  if !name.to_s.empty?
     project.save
 
     if !orga_name.to_s.empty?
       assign_organisation project, orga_name
     end
+    
     if !team_name.to_s.empty?
-      assign_team project, orga_name
+      assign_team project, team_name
     end
 
     project
@@ -53,6 +55,8 @@ module ProjectHelpers
 
 
     def assign_team project, team_name
+      return false if project.nil? || project.organisation.nil?
+      
       team = project.organisation.team_by team_name
       return false if team.nil?
 
