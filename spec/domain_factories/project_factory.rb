@@ -21,7 +21,6 @@ class ProjectFactory
     end
 
     new_project = Project.new project_data
-    new_project.make_project_key!
 
     if save
       unless new_project.save

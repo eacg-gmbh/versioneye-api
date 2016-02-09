@@ -127,7 +127,7 @@ describe V2::ProjectsApiV2, :type => :request do
       response.status.should eq(201)
       expect( Project.count ).to eq(1)
       expect( Project.first.name ).to eq('Gemfile.lock')
-      expect( Project.first.public ).to be_falsey
+      expect( Project.first.public ).to be_truthy
     end
 
     it "returns 201 and project info, when upload was successfully" do
