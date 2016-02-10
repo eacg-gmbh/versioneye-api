@@ -128,7 +128,12 @@ module V2
           error! e.message, 500
         end
 
-        Rails.cache.delete( project.ids )
+        id = project.ids
+        Rails.cache.delete( id )
+        Rails.cache.delete( "#{id}__flat" )
+        Badge.where( :key => id.to_s ).delete
+        Badge.where( :key => "#{id}__flat" ).delete
+
         badge = BadgeService.badge_for project.ids
         badge.delete if badge
         project = Project.find project.ids # Reload from DB!
