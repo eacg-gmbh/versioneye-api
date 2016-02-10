@@ -134,10 +134,7 @@ module V2
         Badge.where( :key => id.to_s ).delete
         Badge.where( :key => "#{id}__flat" ).delete
 
-        badge = BadgeService.badge_for project.ids
-        badge.delete if badge
         project = Project.find project.ids # Reload from DB!
-
         present project, with: EntitiesV2::ProjectEntity, :type => :full
       end
 
