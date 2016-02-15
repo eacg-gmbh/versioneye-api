@@ -46,11 +46,9 @@ module ProjectHelpers
     def assign_organisation project, orga_name
       orga = Organisation.where(:name => orga_name).first
       return false if orga.nil?
-      return false if !OrganisationService.allowed_to_transfer_projects?( orga, current_user )
+      return false if OrganisationService.allowed_to_transfer_projects?( orga, current_user ) == false
 
-      project.organisation_id = orga.ids
-      project.teams = [orga.owner_team]
-      project.save
+      OrganisationService.transfer project, orga
     end
 
 
