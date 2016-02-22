@@ -20,7 +20,7 @@ module V2
         requires :language, :type => String, :desc => %q[Filter by programming languages]
         optional :prod_key, :type => String, :desc => %q[prod_key of the package]
         optional :page,     :type => Integer, :desc => "Specify page for paging", :regexp => /^[\d]+$/
-        optional :asc_sort, :type => String, :desc => "Asc sort by value", :regexp => /^[\d]+$/
+        optional :asc_sort, :type => String, :desc => "Asc sort by value"
       end
       get '/' do
         prod_key = decode_prod_key(params[:prod_key])
