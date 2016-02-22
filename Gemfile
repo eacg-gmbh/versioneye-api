@@ -14,7 +14,7 @@ gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 gem 'htmlentities'       , '~> 4.3.2'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.8.3'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.9.3'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 gem 'font-awesome-sass', '~> 4.5.0'
@@ -41,7 +41,7 @@ group :test do
   gem 'capybara'          , '~> 2.6.2'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'vcr'               , '~> 3.0.1',  :require => false
-  gem 'webmock'           , '~> 1.22.0', :require => false
+  gem 'webmock'           , '~> 1.24.0', :require => false
   gem 'database_cleaner'  , '~> 1.5.1'
   gem 'factory_girl'      , '~> 4.5.0'
   gem 'factory_girl_rails', '~> 4.6.0'
