@@ -19,7 +19,8 @@ module V2
       params do
         requires :language, :type => String, :desc => %q[Filter by programming languages]
         optional :prod_key, :type => String, :desc => %q[prod_key of the package]
-        optional :page, :type => Integer, :desc => "Specify page for paging", :regexp => /^[\d]+$/
+        optional :page,     :type => Integer, :desc => "Specify page for paging", :regexp => /^[\d]+$/
+        optional :asc_sort, :type => String, :desc => "Asc sort by value", :regexp => /^[\d]+$/
       end
       get '/' do
         prod_key = decode_prod_key(params[:prod_key])
@@ -31,6 +32,9 @@ module V2
         data = SecurityVulnerability.where(:language => lang)
         if !prod_key.to_s.empty?
           data = data.where(:prod_key => prod_key )
+        end
+        if !asc_sort.to_s.empty?
+          data.asc( asc_sort )
         end
         data = data.skip(skip).limit(per_page)
         total_count = data.count
