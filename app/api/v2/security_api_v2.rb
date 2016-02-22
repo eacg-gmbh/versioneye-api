@@ -21,6 +21,7 @@ module V2
         optional :prod_key, :type => String, :desc => %q[prod_key of the package]
         optional :page,     :type => Integer, :desc => "Specify page for paging", :regexp => /^[\d]+$/
         optional :asc_sort, :type => String, :desc => "Asc sort by value"
+        optional :desc_sort, :type => String, :desc => "Desc sort by value"
       end
       get '/' do
         prod_key = decode_prod_key(params[:prod_key])
@@ -35,6 +36,8 @@ module V2
         end
         if !params[:asc_sort].to_s.empty?
           data = data.asc( params[:asc_sort] )
+        elsif !params[:desc_sort].to_s.empty?
+          data = data.desc( params[:desc_sort] )
         end
         data = data.skip(skip).limit(per_page)
         total_count = data.count
