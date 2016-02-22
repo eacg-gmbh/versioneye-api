@@ -33,8 +33,8 @@ module V2
         if !prod_key.to_s.empty?
           data = data.where(:prod_key => prod_key )
         end
-        if !asc_sort.to_s.empty?
-          data.asc( asc_sort )
+        if !params[:asc_sort].to_s.empty?
+          data = data.asc( params[:asc_sort] )
         end
         data = data.skip(skip).limit(per_page)
         total_count = data.count
