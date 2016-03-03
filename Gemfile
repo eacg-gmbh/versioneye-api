@@ -37,6 +37,7 @@ group :test do
   gem 'turn'              , :require => false
   gem 'rspec'             , '~> 3.2'
   gem 'rspec-rails'       , '~> 3.2'
+  gem 'rspec_junit_formatter', '0.2.3'
   gem 'rspec-mocks'       , '~> 3.2'
   gem 'capybara'          , '~> 2.6.2'
   gem 'capybara-firebug'  , '~> 2.1.0'
