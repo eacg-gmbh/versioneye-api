@@ -5,7 +5,7 @@ gem 'bundler'            , '~> 1.11.0'
 gem 'rails'              , '4.2.5.2'
 gem 'execjs'             , '~> 2.6.0'
 gem 'therubyracer'       , '~> 0.12.0'
-gem 'puma'               , '~> 3.0.2'
+gem 'puma'               , '~> 3.1.0'
 gem 'grape'              , '~> 0.7.0'
 gem 'grape-entity'       , '0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
@@ -14,7 +14,7 @@ gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 gem 'htmlentities'       , '~> 4.3.2'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.9.13'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.11.6'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 gem 'font-awesome-sass', '~> 4.5.0'
