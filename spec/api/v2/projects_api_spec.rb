@@ -128,6 +128,7 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( Project.count ).to eq(1)
       expect( Project.first.name ).to eq('Gemfile.lock')
       expect( Project.first.public ).to be_truthy
+      expect( Project.first.temp ).to be_falsey
     end
 
     it "returns 201 and project info, when upload was successfully" do
@@ -145,6 +146,26 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( Project.count ).to eq(1)
       expect( Project.first.name ).to eq('my_new_project')
       expect( Project.first.public ).to be_truthy
+      expect( Project.first.temp ).to be_falsey
+    end
+
+    it "returns 201 and project is temp" do
+      file = test_file
+      response = post project_uri, {
+        upload:    file,
+        name:      'my_new_project',
+        visibility: 'public',
+        temp:       'true',
+        api_key:   user_api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      response.status.should eq(201)
+      expect( Project.count ).to eq(1)
+      expect( Project.first.name ).to eq('my_new_project')
+      expect( Project.first.public ).to be_truthy
+      expect( Project.first.temp ).to be_truthy
     end
 
     it "creates a new project and assignes it to an organisation" do
@@ -178,7 +199,7 @@ describe V2::ProjectsApiV2, :type => :request do
     it "creates a new project and assignes it to an organisation and a team" do
       orga = Organisation.new :name => 'orga'
       expect( orga.save ).to be_truthy
-      
+
       team = Team.new :name => Team::A_OWNERS, :organisation_id => orga.ids
       expect( team.save ).to be_truthy
       expect( team.add_member( test_user )).to be_truthy
