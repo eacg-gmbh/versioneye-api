@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'tzinfo-data'
-gem 'bundler'            , '~> 1.11.0'
+gem 'bundler'            , '~> 1.11.2'
 gem 'rails'              , '4.2.5.2'
 gem 'execjs'             , '~> 2.6.0'
 gem 'therubyracer'       , '~> 0.12.0'
@@ -14,7 +14,7 @@ gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 gem 'htmlentities'       , '~> 4.3.2'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.13.0'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.14.2'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 gem 'font-awesome-sass', '~> 4.5.0'
@@ -39,7 +39,7 @@ group :test do
   gem 'rspec-rails'       , '~> 3.2'
   gem 'rspec_junit_formatter', '0.2.3'
   gem 'rspec-mocks'       , '~> 3.2'
-  gem 'capybara'          , '~> 2.6.2'
+  gem 'capybara'          , '~> 2.7.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'vcr'               , '~> 3.0.1',  :require => false
   gem 'webmock'           , '~> 1.24.0', :require => false
