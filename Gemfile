@@ -44,8 +44,8 @@ group :test do
   gem 'vcr'               , '~> 3.0.1',  :require => false
   gem 'webmock'           , '~> 1.24.0', :require => false
   gem 'database_cleaner'  , '~> 1.5.1'
-  gem 'factory_girl'      , '~> 4.5.0'
-  gem 'factory_girl_rails', '~> 4.6.0'
+  gem 'factory_girl'      , '~> 4.7.0'
+  gem 'factory_girl_rails', '~> 4.7.0'
 end
 
 source 'https://rails-assets.org' do
