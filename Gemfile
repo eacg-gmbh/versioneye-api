@@ -5,7 +5,7 @@ gem 'bundler'            , '~> 1.11.2'
 gem 'rails'              , '4.2.5.2'
 gem 'execjs'             , '~> 2.6.0'
 gem 'therubyracer'       , '~> 0.12.0'
-gem 'puma'               , '~> 3.2.0'
+gem 'puma'               , '~> 3.4.0'
 gem 'grape'              , '~> 0.7.0'
 gem 'grape-entity'       , '0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
