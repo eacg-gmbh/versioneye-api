@@ -28,6 +28,7 @@ module EntitiesV2
     expose :released_at , :documentation => {:desc => 'Release date of this version'}
     expose :dependencies, :using => ProductDependencyEntity, :if => { :type => :full }
     expose :licenses, :as => "licenses", :using => ProductLicenseEntity, :if => { :type => :full }
+    expose :security_vulnerabilities, :documentation => {:desc => 'List of security vulnerabilities which belong to this artifact'}
     expose :http_version_links_combined, :as => "links", :using => ProductLinkEntity, :if => { :type => :full }
     expose :archives, :using => ProductArchiveEntity, :if => { :type => :full }
   end
