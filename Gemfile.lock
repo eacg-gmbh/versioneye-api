@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: ee81adee9d2c8349b548d3c743ec0e024c8316dc
-  tag: v8.14.4
+  revision: 93896cbbbed359df264390fe41751f21a76dd378
+  tag: v8.16.9
   specs:
-    versioneye-core (8.14.4)
+    versioneye-core (8.16.9)
       actionmailer (~> 4.2.5.2)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.11.0)
@@ -78,17 +78,17 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.2.33)
-      aws-sdk-resources (= 2.2.33)
-    aws-sdk-core (2.2.33)
+    aws-sdk (2.2.34)
+      aws-sdk-resources (= 2.2.34)
+    aws-sdk-core (2.2.34)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.33)
-      aws-sdk-core (= 2.2.33)
+    aws-sdk-resources (2.2.34)
+      aws-sdk-core (= 2.2.34)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    bson (4.0.4)
+    bson (4.1.0)
     builder (3.2.2)
     bunny (2.3.1)
       amq-protocol (>= 2.0.1)
@@ -348,7 +348,7 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
-    webmock (1.24.2)
+    webmock (1.24.3)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
