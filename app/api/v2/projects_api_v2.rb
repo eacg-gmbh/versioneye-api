@@ -37,12 +37,19 @@ module V2
 
             ]
       }
-      get do
+      params do
+        optional :orga_name, :type => String, :desc => "The name of the organisation the project is assigned to."
+        optional :team_name, :type => String, :desc => "The name of the team in the organisation this project is assigned to."
+      end
+      get '/' do
         rate_limit
         track_apikey
 
+        filter = {}
+        filter[:organisation] = params[:orga_name] if !params[:orga_name].to_s.empty?
+        filter[:team]         = params[:team_name] if !params[:team_name].to_s.empty?
         projects = []
-        user_projects = ProjectService.index @current_user
+        user_projects = ProjectService.index @current_user, filter
         user_projects.each do |project|
           project_dto = ProjectListitemDto.new
           project_dto.update_from project

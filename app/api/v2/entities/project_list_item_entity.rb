@@ -5,6 +5,8 @@ module EntitiesV2
     expose :id
     expose :name
     expose :project_type
+    expose :organisation
+    expose :team
     expose :public
     expose :private_project, :as => :private_scm
     expose :period

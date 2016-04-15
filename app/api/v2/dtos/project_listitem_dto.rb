@@ -1,6 +1,7 @@
 class ProjectListitemDto
 
   attr_accessor :id, :name, :project_type, :public, :private_scm, :period, :source
+  attr_accessor :organisation, :team
   attr_accessor :dep_number,     :out_number,     :licenses_red,     :licenses_unknown
   attr_accessor :dep_number_sum, :out_number_sum, :licenses_red_sum, :licenses_unknown_sum
   attr_accessor :license_whitelist_name
@@ -26,6 +27,11 @@ class ProjectListitemDto
     self.licenses_unknown_sum = project.licenses_unknown_sum
 
     self.license_whitelist_name = project.license_whitelist_name
+
+    self.organisation = project.organisation.to_s
+    if !project.teams.nil? && !project.teams.empty?
+      self.team = project.teams.first.to_s
+    end
 
     self.created_at      = project.created_at.strftime("%d.%m.%Y-%H:%M")
     self.updated_at      = project.created_at.strftime("%d.%m.%Y-%H:%M")
