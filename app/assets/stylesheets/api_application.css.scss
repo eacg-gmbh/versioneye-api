@@ -4,8 +4,10 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *
  *= require bootstrap
- *= require font-awesome
 */
+
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 $gradient_start: #7F0200;
 $gradient_end: #610003;
