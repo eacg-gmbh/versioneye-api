@@ -82,6 +82,7 @@
     "ldap_active": "false"
   },
   "test": {
+    "references_live_update": true,
     "ga_account": "",
     "mvn_repo_1": "http://192.168.0.19:8081/artifactory",
     "mvn_repo_1_type": "artifactory",
