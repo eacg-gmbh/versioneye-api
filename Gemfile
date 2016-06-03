@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gem 'tzinfo-data'
 gem 'bundler'            , '~> 1.12.0'
 gem 'rails'              , '4.2.6'
-gem 'execjs'             , '~> 2.6.0'
+gem 'execjs'             , '~> 2.7.0'
 gem 'therubyracer'       , '~> 0.12.0'
 gem 'puma'               , '~> 3.4.0'
 gem 'grape'              , '~> 0.7.0'
@@ -18,13 +18,13 @@ gem 'htmlentities'       , '~> 4.3.2'
 gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.20.14'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
-gem 'font-awesome-sass', '~> 4.5.0'
+gem 'font-awesome-sass', '~> 4.6.2'
 
 group :assets do
   gem 'sass'                  , :require => 'sass'
   gem 'sass-rails'            , '~> 5.0.3'
   gem 'coffee-rails'          , '~> 4.1.0'
-  gem 'uglifier'              , '~> 2.7.0'
+  gem 'uglifier'              , '~> 3.0.0'
 end
 
 group :development do
@@ -43,7 +43,7 @@ group :test do
   gem 'capybara'          , '~> 2.7.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'vcr'               , '~> 3.0.1',  :require => false
-  gem 'webmock'           , '~> 1.24.0', :require => false
+  gem 'webmock'           , '~> 2.0.3', :require => false
   gem 'database_cleaner'  , '~> 1.5.1'
   gem 'factory_girl'      , '~> 4.7.0'
   gem 'factory_girl_rails', '~> 4.7.0'
