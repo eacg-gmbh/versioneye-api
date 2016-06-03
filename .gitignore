@@ -29,3 +29,5 @@ app/assets/images/.DS_Store
 webrate.log
 versioneye.sublime-project
 versioneye.sublime-workspace
+
+script/set_vars_for_dev_reiz.sh
