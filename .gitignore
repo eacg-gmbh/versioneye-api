@@ -8,7 +8,6 @@ capybara-*.html
 /.bundle
 /vendor/bundle
 /log/*.log
-/log/*
 /pids
 /pids/*
 /tmp/cache/assets
