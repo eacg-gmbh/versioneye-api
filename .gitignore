@@ -7,11 +7,14 @@ capybara-*.html
 .rspec
 /.bundle
 /vendor/bundle
-/log
+/log/*.log
 /log/*
 /pids
 /pids/*
-/tmp/*
+/tmp/cache/assets
+/tmp/cache/sprockets
+/tmp/sessions
+/tmp/sockets
 /db/*.sqlite3
 /public/system/*
 /coverage/
