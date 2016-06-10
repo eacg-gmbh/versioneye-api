@@ -95,6 +95,9 @@ module V2
         optional :temp, :type => String, :desc => "If 'true' this project will not show up in the UI and gets removed later."
       end
       post do
+        rate_limit
+        track_apikey
+
         datafile = ActionDispatch::Http::UploadedFile.new( params[:upload] )
         project_file = {'datafile' => datafile}
 
@@ -124,6 +127,9 @@ module V2
         requires :project_file, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
       end
       post '/:project_key' do
+        rate_limit
+        track_apikey
+
         project = fetch_project_by_key_and_user( params[:project_key], current_user )
         if project.nil?
           error! "Project `#{params[:project_key]}` don't exists", 400
