@@ -132,7 +132,7 @@ module V2
 
         project = fetch_project_by_key_and_user( params[:project_key], current_user )
         if project.nil?
-          error! "Project `#{params[:project_key]}` don't exists", 400
+          error! "Project `#{params[:project_key]}` dosn't exists or you don't have permission to update it!", 400
         end
 
         datafile = ActionDispatch::Http::UploadedFile.new( params[:project_file] )
