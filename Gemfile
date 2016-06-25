@@ -27,7 +27,7 @@ group :assets do
 end
 
 group :development do
-  gem 'psych'             , '~> 2.0.5'
+  gem 'psych'             , '~> 2.1.0'
   gem 'terminal-notifier' , '~> 1.6.0'
   gem 'fakes3'            , '~> 0.2.0'
 end
