@@ -147,8 +147,12 @@ module V2
         id = project.ids
         Rails.cache.delete( id )
         Rails.cache.delete( "#{id}__flat" )
+        Rails.cache.delete( "#{id}__flat-square" )
+        Rails.cache.delete( "#{id}__plastic" )
         Badge.where( :key => id.to_s ).delete
         Badge.where( :key => "#{id}__flat" ).delete
+        Badge.where( :key => "#{id}__flat-square" ).delete
+        Badge.where( :key => "#{id}__plastic" ).delete
 
         project = Project.find project.ids # Reload from DB!
         present project, with: EntitiesV2::ProjectEntity, :type => :full
