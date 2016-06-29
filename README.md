@@ -2,31 +2,6 @@
 
 This is the source code for the [VersionEye API](https://www.versioneye.com/api).
 
-## Sponsors
-
-This companies are financially supporting VersionEye.
-
-<table>
-  <tr>
-    <td>
-      <a href="https://www.jfrog.com/" target="jrog">
-        <img src="app/assets/images/sponsors/jfrog.png" width="100"/>
-      </a>
-    </td>
-    <td>
-      <a href="https://www.xing.com/" target="xing">
-        <img src="app/assets/images/sponsors/xing.png" width="150"/>
-      </a>
-    </td>
-    <td>
-      <a href="http://www.seeburger.de/" target="seeburger">
-        <img src="app/assets/images/sponsors/seeburger.jpg" width="180"/>
-      </a>
-    </td>
-  </tr>
-</table>
-
-
 ## Start the backend services for VersionEye
 
 This project contains a [docker-compose.yml](docker-compose.yml) file which describes the backend services
