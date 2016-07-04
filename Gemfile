@@ -14,7 +14,7 @@ gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 gem 'htmlentities'       , '~> 4.3.2'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.25.13'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.26.15'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 gem 'font-awesome-sass', '~> 4.6.2'
@@ -33,7 +33,7 @@ group :development do
 end
 
 group :test do
-  gem 'simplecov'         , '~> 0.11.1'
+  gem 'simplecov'         , '~> 0.12.0'
   gem 'turn'              , :require => false
   gem 'rspec'             , '~> 3.2'
   gem 'rspec-rails'       , '~> 3.2'
