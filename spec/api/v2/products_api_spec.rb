@@ -138,7 +138,7 @@ describe V2::ProductsApiV2, :type => :request do
       get "#{product_uri}/search/#{search_term}", :page => 0
       response.status.should == 403
       response_data  = JSON.parse(response.body)
-      expect( response_data['error'] ).to eq('API rate limit exceeded. With an API key you can extend your rate limit. Sign up for free and get an API key!')
+      expect( response_data['error'] ).to eq('API rate limit exceeded. Unauthenticated API cals are limited to 5 calls per hour. With an API key you can extend your rate limit. Sign up for free and get an API key!')
     end
   end
 

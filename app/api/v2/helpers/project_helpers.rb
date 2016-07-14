@@ -29,7 +29,7 @@ module ProjectHelpers
     project.save
 
     if orga_name.to_s.empty?
-      orga = OrganisationService.index(user, true).first
+      orga = OrganisationService.index(current_user, true).first
       orga_name = orga.name if orga
     end
 
