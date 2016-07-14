@@ -28,6 +28,11 @@ module ProjectHelpers
     project.name   = name  if !name.to_s.empty?
     project.save
 
+    if orga_name.to_s.empty?
+      orga = OrganisationService.index(user, true).first
+      orga_name = orga.name if orga
+    end
+
     if !orga_name.to_s.empty?
       assign_organisation project, orga_name
     end
