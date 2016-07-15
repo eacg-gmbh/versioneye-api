@@ -617,6 +617,38 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( bod["error"] ).to eq('You are not a collaborator of the requested project')
     end
 
+    it "returns correct project for orga key" do
+      orga = Organisation.new({ :name => "test_orga" })
+      orga.save
+      project = Project.first
+      project.organisation_id = orga.ids
+      project.save
+      response = get "#{project_uri}/#{project.ids}", {
+        api_key: orga.api.api_key
+      }
+
+      response.status.should eq(200)
+      project_info2 = JSON.parse response.body
+      project_info2["name"].should eq(project_name)
+      project_info2["source"].should eq("API")
+      project_info2["dependencies"].count.should eql(7)
+    end
+
+    it "returns error code because orga key has no access" do
+      orga0 = Organisation.new({ :name => "test_orga" })
+      orga0.save
+      orga = Organisation.new({ :name => "test_orga" })
+      orga.save
+      project = Project.first
+      project.organisation_id = orga.ids
+      project.save
+      response = get "#{project_uri}/#{project.ids}", {
+        api_key: orga0.api.api_key
+      }
+
+      response.status.should eq(403) # no access
+    end
+
     it "return correct licences in project dependencies for existing project" do
       prod1 = ProductFactory.create_for_gemfile 'sinatra', '1.0.0'
       expect( prod1.save ).to be_truthy
