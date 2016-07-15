@@ -550,6 +550,29 @@ describe V2::ProjectsApiV2, :type => :request do
       child = Project.find child.id
       child.parent_id.to_s.should eq(parent.id.to_s)
     end
+
+    it "returns 200 after successfully merged" do
+      orga = OrganisationService.create_new test_user, 'test_orga'
+      expect( orga.save ).to be_truthy
+
+      parent = ProjectFactory.create_new test_user
+      parent.group_id = "com.spring"
+      parent.artifact_id = 'tx.core'
+      parent.save
+
+      child = ProjectFactory.create_new test_user, {:name => "child"}, true
+      Project.count.should eq(2)
+      Project.where(:parent_id.ne => nil).count.should eq(0)
+
+      group    = parent.group_id.gsub(".", "~")
+      artifact = parent.artifact_id.gsub(".", "~")
+      merge_uri = "#{project_uri}/#{group}/#{artifact}/merge_ga/#{child.id.to_s}?api_key=#{orga.api.api_key}"
+      response = get merge_uri
+      response.status.should eq(200)
+      Project.where(:parent_id.ne => nil).count.should eq(1)
+      child = Project.find child.id
+      child.parent_id.to_s.should eq(parent.id.to_s)
+    end
   end
 
 
@@ -575,7 +598,7 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( resp['error'] ).to eq("Project `2222` doesn't exists")
     end
 
-    it "returns 200 after successfully merged" do
+    it "returns 200 after successfully merged by GA" do
       parent = ProjectFactory.create_new test_user
       Project.count.should eq(1)
 
@@ -584,6 +607,25 @@ describe V2::ProjectsApiV2, :type => :request do
       Project.where(:parent_id.ne => nil).count.should eq(0)
 
       merge_uri = "#{project_uri}/#{parent.id.to_s}/merge/#{child.id.to_s}?api_key=#{user_api.api_key}"
+      response = get merge_uri
+      response.status.should eq(200)
+      Project.where(:parent_id.ne => nil).count.should eq(1)
+      child = Project.find child.id
+      child.parent_id.to_s.should eq(parent.id.to_s)
+    end
+
+    it "returns 200 after successfully merged by GA with orga api key" do
+      orga = OrganisationService.create_new test_user, 'test_orga'
+      expect( orga.save ).to be_truthy
+
+      parent = ProjectFactory.create_new test_user
+      Project.count.should eq(1)
+
+      child = ProjectFactory.create_new test_user, {:name => "child"}, true
+      Project.count.should eq(2)
+      Project.where(:parent_id.ne => nil).count.should eq(0)
+
+      merge_uri = "#{project_uri}/#{parent.id.to_s}/merge/#{child.id.to_s}?api_key=#{orga.api.api_key}"
       response = get merge_uri
       response.status.should eq(200)
       Project.where(:parent_id.ne => nil).count.should eq(1)
@@ -626,6 +668,27 @@ describe V2::ProjectsApiV2, :type => :request do
       Project.where(:parent_id.ne => nil).count.should eq(1)
 
       merge_uri = "#{project_uri}/#{parent.id.to_s}/unmerge/#{child.id.to_s}?api_key=#{user_api.api_key}"
+      response = get merge_uri
+      response.status.should eq(200)
+      Project.where(:parent_id.ne => nil).count.should eq(0)
+      child = Project.find child.id
+      child.parent_id.to_s.should eq("")
+    end
+
+    it "returns 200 after successfully unmerged with orga api key" do
+      orga = OrganisationService.create_new test_user, 'test_orga'
+      expect( orga.save ).to be_truthy
+
+      parent = ProjectFactory.create_new test_user
+      Project.count.should eq(1)
+
+      child = ProjectFactory.create_new test_user, {:name => "child"}, true
+      Project.count.should eq(2)
+      child.parent_id = parent.id.to_s
+      child.save
+      Project.where(:parent_id.ne => nil).count.should eq(1)
+
+      merge_uri = "#{project_uri}/#{parent.id.to_s}/unmerge/#{child.id.to_s}?api_key=#{orga.api.api_key}"
       response = get merge_uri
       response.status.should eq(200)
       Project.where(:parent_id.ne => nil).count.should eq(0)
