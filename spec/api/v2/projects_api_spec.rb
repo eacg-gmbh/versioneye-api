@@ -231,6 +231,24 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( Project.first.temp ).to be_truthy
     end
 
+    it "returns 201 and project info, when upload was successfully" do
+      file = test_file
+      orga = Organisation.new({:name => 'test_roga'})
+      expect( orga.save ).to be_truthy
+      response = post project_uri, {
+        upload:    file,
+        api_key:   orga.api.api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      response.status.should eq(201)
+      expect( Project.count ).to eq(1)
+      expect( Project.first.name ).to eq('Gemfile.lock')
+      expect( Project.first.public ).to be_truthy
+      expect( Project.first.temp ).to be_falsey
+    end
+
     it "creates a new project and assignes it to an organisation" do
       orga = Organisation.new :name => 'orga'
       expect( orga.save ).to be_truthy
