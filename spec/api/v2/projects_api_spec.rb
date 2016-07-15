@@ -426,6 +426,57 @@ describe V2::ProjectsApiV2, :type => :request do
       response.status.should eq(201)
     end
 
+    it "returns 403 because user is not a collaborator of the project" do
+      user = UserFactory.create_new 1212
+      project = ProjectFactory.create_new user
+      expect( Project.count ).to eq(1)
+      update_uri = "#{project_uri}/#{project.ids}?api_key=#{user_api.api_key}"
+      file = test_file
+      response = post update_uri, {
+        project_file: file,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      expect( response.status ).to eq(403)
+    end
+
+    it "returns 403 because api key from orga is not a collaborator of the project" do
+      orga = Organisation.new({:name => "test_orga"})
+      expect( orga.save ).to be_truthy
+      project = ProjectFactory.create_new test_user
+      expect( Project.count ).to eq(1)
+      update_uri = "#{project_uri}/#{project.ids}?api_key=#{orga.api.api_key}"
+      file = test_file
+      response = post update_uri, {
+        project_file: file,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      expect( response.status ).to eq(403)
+    end
+
+    it "updates an project with orga api key" do
+      orga = Organisation.new({:name => "test_orga"})
+      expect( orga.save ).to be_truthy
+
+      project = ProjectFactory.create_new test_user
+      project.organisation_id = orga.ids
+      expect( project.save  ).to be_truthy
+      expect( Project.count ).to eq(1)
+
+      update_uri = "#{project_uri}/#{project.ids}?api_key=#{orga.api.api_key}"
+      file = test_file
+      response = post update_uri, {
+        project_file: file,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      expect( response.status ).to eq(201)
+    end
+
     it "updates an project as team member of the organisation" do
       member = UserFactory.create_new 23
       api = ApiFactory.create_new member, true
@@ -838,6 +889,42 @@ describe V2::ProjectsApiV2, :type => :request do
       response.status.should eql(200)
       msg = JSON.parse response.body
       msg["success"].should be_truthy
+    end
+
+    it "delete fails because wrong user" do
+      user = UserFactory.create_new 1293
+      expect( user.save ).to be_truthy
+      ids = Project.first.ids
+      response = delete "#{project_uri}/#{ids}.json", { :api_key => user.api.api_key }
+      response.status.should eql(403)
+      msg = JSON.parse response.body
+      msg["error"].should eq('You are not a collaborator of the requested project')
+    end
+
+    it "deletes existing project successfully with an orga api key" do
+      orga = Organisation.new({:name => 'test_orga'})
+      expect( orga.save ).to be_truthy
+      project = Project.first
+      project.organisation_id = orga.ids
+      expect( project.save )
+      response = delete "#{project_uri}/#{project.ids}", { :api_key => orga.api.api_key }
+      response.status.should eql(200)
+      msg = JSON.parse response.body
+      msg["success"].should be_truthy
+    end
+
+    it "can not delete existing project because different orga api key" do
+      orgie = Organisation.new({:name => 'test_orgie'})
+      expect( orgie.save ).to be_truthy
+      orga = Organisation.new({:name => 'test_orga'})
+      expect( orga.save ).to be_truthy
+      project = Project.first
+      project.organisation_id = orga.ids
+      expect( project.save )
+      response = delete "#{project_uri}/#{project.ids}", { :api_key => orgie.api.api_key }
+      response.status.should eql(403)
+      msg = JSON.parse response.body
+      msg["error"].should eq('You are not a collaborator of the requested project')
     end
 
   end
