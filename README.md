@@ -81,6 +81,8 @@ with this command:
 
 Make sure that you followed the steps in the configuration section, before you run the tests!
 
+All Files (90.07% covered at 12.1 hits/line).
+
 ## Support
 
 For commercial support send a message to `support@versioneye.com`.
