@@ -858,6 +858,33 @@ describe V2::ProjectsApiV2, :type => :request do
       apache_licences.include?("log4j").should be_truthy
       apache_licences.include?("junit").should be_falsey
     end
+
+    it "return 400 because project does not exist." do
+      response = get "#{project_uri}/NaN/licenses.json"
+      expect( response.status ).to eql(400)
+    end
+
+    it "return 403 because user is not collaborator." do
+      user = UserFactory.create_new 111
+      user.save
+
+      project = ProjectFactory.create_new test_user
+      project.save
+
+      response = get "#{project_uri}/#{project.ids}/licenses.json", {:api_key => user.api.api_key}
+      expect( response.status ).to eql(403)
+    end
+
+    it "return 403 because orga is not collaborator." do
+      orga = Organisation.new :name => 'test_orga'
+      orga.save
+
+      project = ProjectFactory.create_new test_user
+      project.save
+
+      response = get "#{project_uri}/#{project.ids}/licenses.json", {:api_key => orga.api.api_key}
+      expect( response.status ).to eql(403)
+    end
   end
 
   describe "Accessing existing project as authorized user" do
