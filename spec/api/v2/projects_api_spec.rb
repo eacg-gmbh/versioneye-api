@@ -84,6 +84,69 @@ describe V2::ProjectsApiV2, :type => :request do
   end
 
 
+  describe "list orga projects" do
+    include Rack::Test::Methods
+    it 'lists 0 because orga has no projects' do
+      orga = Organisation.new({ :name => "test_orga" })
+      orga.save
+      response = get project_uri, {api_key: orga.api.api_key}, "HTTPS" => "on"
+      result   = JSON.parse response.body
+      expect( response.status ).to eq(200)
+      expect( result ).to be_empty
+    end
+    it 'lists 1 project from orga' do
+      orga = Organisation.new({ :name => "test_orga" })
+      orga.save
+
+      user = UserFactory.create_new 125
+      proj = ProjectFactory.create_new user
+      proj.organisation_id = orga.ids
+      expect( proj.save ).to be_truthy
+
+      response = get project_uri, {api_key: orga.api.api_key}, "HTTPS" => "on"
+      result = JSON.parse response.body
+      expect( response.status ).to eq(200)
+      expect( result ).to_not be_empty
+      expect( result.count ).to eq(1)
+    end
+
+    it 'lists 1 project from orga' do
+      orga = Organisation.new({ :name => "test_orga" })
+      orga.save
+
+      owners = Team.new({:name => "Owners", :organisation_id => orga.ids})
+      expect( owners.save ).to be_truthy
+
+      dev = Team.new({:name => "dev", :organisation_id => orga.ids})
+      expect( dev.save ).to be_truthy
+
+      user = UserFactory.create_new 125
+      proj = ProjectFactory.create_new user
+      proj.organisation_id = orga.ids
+      proj.team_ids = [owners.ids]
+      expect( proj.save ).to be_truthy
+
+      proj2 = ProjectFactory.create_new user
+      proj2.organisation_id = orga.ids
+      proj2.team_ids = [dev.ids]
+      expect( proj2.save ).to be_truthy
+
+      response = get project_uri, {api_key: orga.api.api_key}, "HTTPS" => "on"
+      result = JSON.parse response.body
+      expect( response.status ).to eq(200)
+      expect( result ).to_not be_empty
+      expect( result.count ).to eq(2)
+
+      response = get project_uri, {api_key: orga.api.api_key, team_name: 'dev'}, "HTTPS" => "on"
+      result = JSON.parse response.body
+      expect( response.status ).to eq(200)
+      expect( result ).to_not be_empty
+      expect( result.count ).to eq(1)
+      expect( result.first["ids"] ).to eq(proj2.ids)
+    end
+  end
+
+
   describe "Uploading new project as authorized user" do
     include Rack::Test::Methods
 
@@ -540,6 +603,18 @@ describe V2::ProjectsApiV2, :type => :request do
       project_info2["name"].should eq(project_name)
       project_info2["source"].should eq("API")
       project_info2["dependencies"].count.should eql(7)
+    end
+
+    it "returns an error because user has no access to it." do
+      user = UserFactory.create_new 1923
+      ids = Project.first.ids
+      response = get "#{project_uri}/#{ids}.json", {
+        api_key: user.api.api_key
+      }
+
+      response.status.should eq(403)
+      bod = JSON.parse response.body
+      expect( bod["error"] ).to eq('You are not a collaborator of the requested project')
     end
 
     it "return correct licences in project dependencies for existing project" do

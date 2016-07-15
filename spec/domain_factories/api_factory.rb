@@ -18,4 +18,22 @@ class ApiFactory
     @user_api
   end
 
+
+  def self.create_new_for_orga(orga, save = true)
+    if orga.nil?
+      Rails.logger.error "Orga is not specified or can't create random test-orga"
+      return nil
+    end
+    new_api_key = Api.generate_api_key
+    @orga_api   = Api.new organisation_id: orga.ids, api_key: new_api_key
+
+    if save
+      unless @orga_api.save
+        p @orga_api.errors.full_messages.to_sentence
+      end
+    end
+    @orga_api
+  end
+
+
 end
