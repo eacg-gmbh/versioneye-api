@@ -1,14 +1,6 @@
 module ProjectHelpers
 
 
-  def destroy_project( project )
-    project.dependencies.each do |dep|
-      dep.remove
-    end
-    project.remove
-  end
-
-
   def upload_and_store file, visibility = 'private', name = nil, orga_name = nil, team_name = nil
     project = ProjectImportService.import_from_upload file, @current_user, true, @orga
 
