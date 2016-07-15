@@ -1,11 +1,19 @@
 require 'grape'
 
 module EntitiesV2
+
+  class ProjectListItemOrga < Grape::Entity
+    expose :name
+    expose :company
+    expose :location
+  end
+
   class ProjectListItemEntity < Grape::Entity
     expose :id
+    expose :ids
     expose :name
     expose :project_type
-    expose :organisation
+    expose :organisation, using: ProjectListItemOrga
     expose :team
     expose :public
     expose :private_project, :as => :private_scm
@@ -23,4 +31,5 @@ module EntitiesV2
     expose :created_at
     expose :updated_at
   end
+
 end

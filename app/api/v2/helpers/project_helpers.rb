@@ -1,17 +1,7 @@
 module ProjectHelpers
 
 
-  def fetch_project_by_key_and_user(project_key, current_user)
-    project = Project.find project_key.to_s
-    if project && project.is_collaborator?( current_user )
-      return project
-    end
-    nil
-  end
-
-
-  def destroy_project(project_id)
-    project = Project.find_by_id(project_id)
+  def destroy_project( project )
     project.dependencies.each do |dep|
       dep.remove
     end
@@ -20,7 +10,7 @@ module ProjectHelpers
 
 
   def upload_and_store file, visibility = 'private', name = nil, orga_name = nil, team_name = nil
-    project = ProjectImportService.import_from_upload file, current_user, true
+    project = ProjectImportService.import_from_upload file, @current_user, true, @orga
 
     project.public = false if visibility.to_s.eql?('private')
     project.public = true  if visibility.to_s.eql?('public')
@@ -28,12 +18,12 @@ module ProjectHelpers
     project.name   = name  if !name.to_s.empty?
     project.save
 
-    if orga_name.to_s.empty?
-      orga = OrganisationService.index(current_user, true).first
+    if @orga.nil? && @current_user && orga_name.to_s.empty?
+      orga = OrganisationService.index(@current_user, true).first
       orga_name = orga.name if orga
     end
 
-    if !orga_name.to_s.empty?
+    if @orga.nil? && @current_user && !orga_name.to_s.empty?
       assign_organisation project, orga_name
     end
 

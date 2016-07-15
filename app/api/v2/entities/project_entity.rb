@@ -2,10 +2,16 @@ require 'grape'
 require_relative 'project_dependency_entity.rb'
 
 module EntitiesV2
+  class ProjectListItemOrga < Grape::Entity
+    expose :name
+    expose :company
+    expose :location
+  end
   class ProjectEntity < Grape::Entity
     expose :ids, :as => :id
     expose :name
     expose :project_type
+    expose :organisation, using: ProjectListItemOrga
     expose :public
     expose :private_project, :as => :private_scm
     expose :period

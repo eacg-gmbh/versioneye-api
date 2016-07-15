@@ -702,9 +702,9 @@ describe V2::ProjectsApiV2, :type => :request do
     it "deletes fails because project does not exist" do
       ids = Project.first.ids
       response = delete "#{project_uri}/NaN.json"
-      response.status.should eql(500)
+      response.status.should eql(400)
       msg = JSON.parse response.body
-      expect( msg["error"] ).to eq("Deletion failed because you don't have such project: NaN")
+      expect( msg["error"] ).to eq("Project `NaN` dosn't exists")
     end
 
     it "deletes existing project successfully" do

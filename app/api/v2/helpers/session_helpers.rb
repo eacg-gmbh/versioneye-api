@@ -1,33 +1,36 @@
-
 module SessionHelpers
 
 
   def authorized?
-    @api_key = header['api_key']
-    @api_key = params[:api_key] if @api_key.to_s.empty?
-    cookies[:api_key] = @api_key if @api_key
-    @current_user = current_user()
-    if @current_user.nil?
+    @api = fetch_api
+    cookies[:api_key] = @api.api_key if @api
+
+    user = current_user()
+    orga = current_orga()
+    if user.nil? && orga.nil?
       error! "Request not authorized.", 401
     end
-    @current_user
-  end
-
-
-  def authorize( token )
-    @current_user = User.authenticate_with_apikey( token )
-    if @current_user.nil?
-      error! "API token not valid.", 401
-    end
-    cookies[:api_key] = token
-    @current_user
+    return user if user
+    return orga if orga
+    nil
   end
 
 
   def current_user
-    cookie_token  = cookies[:api_key]
-    @current_user = authorize( cookie_token ) if cookie_token
+    api = fetch_api
+    return nil if api.nil?
+
+    @current_user = api.user
     @current_user
+  end
+
+
+  def current_orga
+    api = fetch_api
+    return nil if api.nil?
+
+    @orga = api.organisation
+    @orga
   end
 
 
@@ -118,8 +121,9 @@ module SessionHelpers
 
   def track_apikey
     api_key  = fetch_api_key
-    user_api = fetch_api
-    user     = user_api.user if user_api
+    api      = fetch_api
+    user     = api.user if api
+    orga     = api.organisation if api
     method   = http_method_type
     protocol = fetch_protocol
     ip       = remote_ip_address
@@ -129,7 +133,8 @@ module SessionHelpers
       http_method: method,
       ip:       ip,
       api_key:  api_key,
-      user_id:  (user.nil?) ? nil : user.id
+      user_id:  (user.nil?) ? nil : user.ids,
+      organisation_id: (orga.nil?) ? nil : orga.ids
     }
     new_api_call =  ApiCall.new call_data
     new_api_call.save

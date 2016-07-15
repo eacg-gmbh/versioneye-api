@@ -38,7 +38,6 @@ module V2
         requires :api_key, type: String,  :desc => "your personal token for API."
       end
       post do
-        authorize(params[:api_key])
         (authorized?) ? "true" : "false"
       end
 

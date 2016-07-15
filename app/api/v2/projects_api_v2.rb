@@ -1,4 +1,4 @@
-require 'grape'
+
 require 'entities_v2'
 
 require_relative 'helpers/project_helpers.rb'
@@ -10,26 +10,13 @@ module V2
     helpers ProjectHelpers
     helpers SessionHelpers
 
-    def self.fetch_project(user, proj_key)
-      project = Project.by_user(user).where(_id: proj_key).shift if project.nil?
-      project
-    end
-
-    def self.fetch_product(dep)
-      if !dep.group_id.to_s.empty? && !dep.artifact_id.to_s.empty?
-        return Product.find_by_group_and_artifact dep.group_id, dep.artifact_id
-      else
-        return Product.fetch_product( dep.language, dep.prod_key )
-      end
-    end
-
     resource :projects do
 
       before do
         authorized?
       end
 
-      desc "shows user`s projects", {
+      desc "list of projects", {
         notes: %q[
 
               To use this resource you need either an active session or you have to append
@@ -45,12 +32,22 @@ module V2
         rate_limit
         track_apikey
 
-        filter = {}
-        filter[:organisation] = params[:orga_name] if !params[:orga_name].to_s.empty?
-        filter[:team]         = params[:team_name] if !params[:team_name].to_s.empty?
         projects = []
-        user_projects = ProjectService.index @current_user, filter
-        user_projects.each do |project|
+        if @current_user
+          filter = {}
+          filter[:organisation] = params[:orga_name] if !params[:orga_name].to_s.empty?
+          filter[:team]         = params[:team_name] if !params[:team_name].to_s.empty?
+          projects = ProjectService.index @current_user, filter
+        elsif @orga
+          team = nil
+          if !params[:team_name].to_s.empty?
+            team = @orga.team_by params[:team_name]
+          end
+          projects = @orga.parent_projects         if team.nil?
+          projects = @orga.team_projects(team.ids) if team
+        end
+
+        projects.each do |project|
           project_dto = ProjectListitemDto.new
           project_dto.update_from project
           projects << project_dto
@@ -70,10 +67,19 @@ module V2
         track_apikey
 
         project_key = params[:project_key]
-        project     = fetch_project_by_key_and_user(project_key, current_user)
+        project     = Project.find project_key.to_s
         if project.nil?
-          error! "Project `#{params[:project_key]}` don't exists", 400
+          error! "Project `#{params[:project_key]}` dosn't exists", 400
         end
+
+        if current_user && project.is_collaborator?( current_user ) == false
+          error! "You are not a collaborator of the requested project", 403
+        end
+
+        if @orga && !project.organisation_id.to_s.eql?(@orga.ids)
+          error! "You are not a collaborator of the requested project", 403
+        end
+
         present project, with: EntitiesV2::ProjectEntity, type: :full
       end
 
@@ -130,16 +136,25 @@ module V2
         rate_limit
         track_apikey
 
-        project = fetch_project_by_key_and_user( params[:project_key], current_user )
+        project_key = params[:project_key]
+        project     = Project.find project_key.to_s
         if project.nil?
-          error! "Project `#{params[:project_key]}` dosn't exists or you don't have permission to update it!", 400
+          error! "Project `#{params[:project_key]}` dosn't exists", 400
+        end
+
+        if @current_user && project.is_collaborator?( @current_user ) == false
+          error! "You are not a collaborator of the requested project", 403
+        end
+
+        if @orga && !project.organisation_id.to_s.eql?(@orga.ids)
+          error! "You are not a collaborator of the requested project", 403
         end
 
         datafile = ActionDispatch::Http::UploadedFile.new( params[:project_file] )
         project_file = {'datafile' => datafile}
 
         begin
-          project = ProjectUpdateService.update_from_upload project, project_file, current_user, true
+          project = ProjectUpdateService.update_from_upload project, project_file, true
         rescue => e
           error! e.message, 500
         end
@@ -174,16 +189,21 @@ module V2
         rate_limit
         track_apikey
 
-        proj_key = params[:project_key]
-        error!("Project key can't be empty", 400) if proj_key.nil? or proj_key.empty?
-
-        project = Project.by_user(@current_user).where(_id: proj_key).shift
-        project = Project.by_user(@current_user).where(project_key: proj_key).shift if project.nil?
+        project_key = params[:project_key]
+        project     = Project.find project_key.to_s
         if project.nil?
-          error! "Deletion failed because you don't have such project: #{proj_key}", 500
+          error! "Project `#{params[:project_key]}` dosn't exists", 400
         end
 
-        destroy_project(project.id)
+        if @current_user && project.is_collaborator?( @current_user ) == false
+          error! "You are not a collaborator of the requested project", 403
+        end
+
+        if @orga && !project.organisation_id.to_s.eql?(@orga.ids)
+          error! "You are not a collaborator of the requested project", 403
+        end
+
+        ProjectService.destroy project
         {success: true, message: "Project deleted successfully."}
       end
 
@@ -203,14 +223,26 @@ module V2
         rate_limit
         track_apikey
 
-        project = ProjectsApiV2.fetch_project @current_user, params[:project_key]
+        project_key = params[:project_key]
+        project     = Project.find project_key.to_s
+        if project.nil?
+          error! "Project `#{params[:project_key]}` dosn't exists", 400
+        end
+
+        if @current_user && project.is_collaborator?( @current_user ) == false
+          error! "You are not a collaborator of the requested project", 403
+        end
+
+        if @orga && !project.organisation_id.to_s.eql?(@orga.ids)
+          error! "You are not a collaborator of the requested project", 403
+        end
 
         licenses = {}
 
         project.dependencies.each do |dep|
           license = "unknown"
           unless dep[:prod_key].nil?
-            product = ProjectsApiV2.fetch_product dep
+            product = dep.product
             license = product.license_info if product
           end
 
@@ -260,7 +292,12 @@ module V2
           error! "Project `#{child_id}` doesn't exists", 400
         end
 
-        ProjectService.merge_by_ga group_id, artifact_id, child_id, current_user.id
+        if @current_user.nil? && @orga
+          owner_team = @orga.owner_team
+          @current_user = owner_team.members.first.user
+        end
+
+        ProjectService.merge_by_ga group_id, artifact_id, child_id, @current_user.ids
 
         {success: true}
       end
@@ -296,7 +333,12 @@ module V2
           error! "Project `#{child_id}` doesn't exists", 400
         end
 
-        ProjectService.merge parent_id, child_id, current_user.id
+        if @current_user.nil? && @orga
+          owner_team = @orga.owner_team
+          @current_user = owner_team.members.first.user
+        end
+
+        ProjectService.merge parent_id, child_id, @current_user.ids
 
         {success: true}
       end
@@ -333,7 +375,12 @@ module V2
           error! "Project `#{child_id}` doesn't exists", 400
         end
 
-        ProjectService.unmerge parent_id, child_id, current_user.id
+        if @current_user.nil? && @orga
+          owner_team = @orga.owner_team
+          @current_user = owner_team.members.first.user
+        end
+
+        ProjectService.unmerge parent_id, child_id, @current_user.ids
 
         {success: true}
       end

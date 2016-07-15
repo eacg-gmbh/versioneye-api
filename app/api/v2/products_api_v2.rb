@@ -141,6 +141,9 @@ module V2
       end
       get '/:lang/:prod_key/follow' do
         authorized?
+        if @current_user.nil?
+          error! "For this action a user is required.", 403
+        end
         current_product = fetch_product(params[:lang], params[:prod_key])
         user_follow = UserFollow.new
         user_follow.username = @current_user.username
@@ -170,8 +173,11 @@ module V2
       end
       post '/:lang/:prod_key/follow' do
         authorized?
-        current_product = fetch_product(params[:lang], params[:prod_key])
+        if @current_user.nil?
+          error! "For this action a user is required.", 403
+        end
 
+        current_product = fetch_product(params[:lang], params[:prod_key])
         result = ProductService.follow current_product.language, current_product.prod_key, current_user
         if result == false
           error!("Something went wrong", 400)
@@ -205,9 +211,11 @@ module V2
       end
       delete '/:lang/:prod_key/follow' do
         authorized?
-        @current_user = current_user
-        current_product = fetch_product(params[:lang], params[:prod_key])
+        if @current_user.nil?
+          error! "For this action a user is required.", 403
+        end
 
+        current_product = fetch_product(params[:lang], params[:prod_key])
         result = ProductService.unfollow current_product.language, current_product.prod_key, current_user
         if result == false
           error!("Something went wrong", 400)
