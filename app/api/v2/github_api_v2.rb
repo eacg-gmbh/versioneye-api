@@ -249,6 +249,11 @@ module V2
         authorized?
         track_apikey
 
+        Rails.logger.info params
+        Rails.logger.info "----"
+        Rails.logger.info params[:commits]
+        Rails.logger.info "----"
+
         project_file_changed = false
         commits = params[:commits] # Returns an Array of Hash
         commits = [] if commits.nil?
@@ -257,6 +262,7 @@ module V2
           modified_files = commit[:modified] # Array of modifield files
           modified_files.each do |file_path|
             next if ProjectService.type_by_filename( file_path ).nil?
+
             project_file_changed = true
             break
           end
