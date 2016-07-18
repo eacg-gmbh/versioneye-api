@@ -277,15 +277,15 @@ module V2
           error! "You do not have access to this project!", 400
         end
 
+        message = ''
         branch = params[:ref].to_s.gsub('refs/heads/', '')
         if project.scm_branch.to_s.eql?( branch )
-          Rails.logger.info "Going to update project #{project.scm_fullname} (#{project.ids}) after GitHub Hook."
+          message = "A background job was triggered to update the project #{project.scm_fullname} (#{project.ids})."
           ProjectUpdateService.update_async project, project.notify_after_api_update
         else
-          Rails.logger.info "Project branch is #{project.scm_branch}, branch is payload is #{branch}."
+          message = "Project branch is #{project.scm_branch} but branch in payload is #{branch}. As the branches are not matching we will ignore this."
         end
 
-        message = 'A background job was triggered to update the project.'
         Rails.logger.info message
         present :success, message
       end
