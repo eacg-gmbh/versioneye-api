@@ -249,20 +249,12 @@ module V2
         authorized?
         track_apikey
 
-        Rails.logger.info params
-        Rails.logger.info "----"
-        Rails.logger.info params[:commits]
-        Rails.logger.info "----"
-        Rails.logger.info params[:head_commit]
-        Rails.logger.info "----"
-        Rails.logger.info params[:ref]
-        Rails.logger.info "----"
-
         project_file_changed = false
         commits = params[:commits] # Returns an Array of Hash
         commits = [] if commits.nil?
         commits.each do |commit|
           commit.deep_symbolize_keys!
+          Rails.logger.info "GitHub hook for commit #{commit[:message]}. - #{commit[:url]}"
           modified_files = commit[:modified] # Array of modifield files
           modified_files.each do |file_path|
             next if ProjectService.type_by_filename( file_path ).nil?
@@ -285,7 +277,13 @@ module V2
           error! "You do not have access to this project!", 400
         end
 
-        ProjectUpdateService.update_async project, project.notify_after_api_update
+        branch = params[:ref].to_s.gsub('refs/heads/', '')
+        if project.scm_branch.to_s.eql?( branch )
+          Rails.logger.info "Going to update project #{project.scm_fullname} (#{project.ids}) after GitHub Hook."
+          ProjectUpdateService.update_async project, project.notify_after_api_update
+        else
+          Rails.logger.info "Project branch is #{project.scm_branch}, branch is payload is #{branch}."
+        end
 
         message = 'A background was triggered to update the project.'
         Rails.logger.info message
