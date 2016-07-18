@@ -255,7 +255,7 @@ module V2
         Rails.logger.info "----"
         Rails.logger.info params[:head_commit]
         Rails.logger.info "----"
-        Rails.logger.info params[:refs]
+        Rails.logger.info params[:ref]
         Rails.logger.info "----"
 
         project_file_changed = false
