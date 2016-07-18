@@ -254,7 +254,7 @@ module V2
         commits = [] if commits.nil?
         commits.each do |commit|
           commit.deep_symbolize_keys!
-          Rails.logger.info "GitHub hook for commit #{commit[:message]}. - #{commit[:url]}"
+          Rails.logger.info "GitHub hook for commit #{commit[:url]} with commit message -#{commit[:message]}-"
           modified_files = commit[:modified] # Array of modifield files
           modified_files.each do |file_path|
             next if ProjectService.type_by_filename( file_path ).nil?
@@ -285,7 +285,7 @@ module V2
           Rails.logger.info "Project branch is #{project.scm_branch}, branch is payload is #{branch}."
         end
 
-        message = 'A background was triggered to update the project.'
+        message = 'A background job was triggered to update the project.'
         Rails.logger.info message
         present :success, message
       end
