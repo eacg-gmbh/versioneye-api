@@ -2,11 +2,10 @@ module GithubHelpers
 
 
   def handle_pull_request params
-    json_params = params.to_json
-    action = json_params[:action]
-    number = json_params[:number]
+    action = params[:action]
+    number = params[:number]
 
-    pull_request = json_params[:pull_request]
+    pull_request = params[:pull_request].deep_symbolize_keys!
     commits_url  = pull_request[:commits_url]
 
     Rails.logger.info "Pull Request #{number} #{action} - #{commits_url}"
