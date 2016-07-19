@@ -239,7 +239,7 @@ module V2
 
 
       #-- POST '/hook' -----------------------------------------------
-      desc "GitHub Hook", {
+      desc "github service hook", {
         notes: %q[This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ]
       }
       params do
@@ -290,6 +290,25 @@ module V2
         present :success, message
       end
 
-    end #end of resource block
+
+      #-- POST '/hook' -----------------------------------------------
+      desc "github web hook", {
+        notes: %q[This endpoint is registered as webhook on GitHub. It triggers a project re-parse on each git push and pull request. ]
+      }
+      params do
+        requires :project_id, type: String, desc: "Project ID"
+      end
+      post '/webhook/:project_id' do
+        # authorized?
+        # track_apikey
+
+        Rails.logger.info "--"
+        Rails.logger.info params
+        Rails.logger.info "--"
+
+        present :success, message
+      end
+
+    end # end of resource block
   end
 end
