@@ -4,22 +4,15 @@ module GithubHelpers
   def handle_pull_request params
     action = params[:action]
     number = params[:number]
+    project_id = params[:project_id]
 
     pull_request = params[:pull_request].deep_symbolize_keys!
     commits_url  = pull_request[:commits_url]
+    branch       = pull_request[:base][:ref]
 
-    Rails.logger.info "Pull Request #{number} #{action} - #{commits_url}"
+    Rails.logger.info "Pull Request #{number} #{action} - #{commits_url} - on branch #{branch}"
 
-    response = HttpService.fetch_response commits_url
-    commits = JSON.parse response.body
-    Rails.logger.info "commits: #{commits}"
-    Rails.logger.info "commits: #{commits.count}"
-    last_commit = commits.last
-    sha = last_commit['commit']['tree']['sha']
-    url = last_commit['commit']['tree']['url']
-
-    Rails.logger.info "Going to check #{sha} - #{url}"
-    # TODO do the actual checking thing!
+    GithubPullRequestService.process project_id, commits_url, number, branch
 
     "Done"
   end
