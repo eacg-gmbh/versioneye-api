@@ -4,6 +4,7 @@ require 'entities_v2'
 require_relative 'helpers/session_helpers'
 require_relative 'helpers/paging_helpers'
 require_relative 'helpers/product_helpers'
+require_relative 'helpers/github_helpers'
 
 module V2
   class GithubApiV2 < Grape::API
@@ -246,80 +247,26 @@ module V2
         requires :project_id, type: String, desc: "Project ID"
       end
       post '/hook/:project_id' do
+        authorized?
+        track_apikey
 
         Rails.logger.info "--"
         Rails.logger.info params.to_json
         Rails.logger.info "--"
 
-        pr = params[:pull_request]
-        if pr
-          commits = pr[:commits]
-          Rails.logger.info "PR #{params[:number]} with commits: #{commits}"
-          error! "It is a PR.", 400
-        end
-
-        authorized?
-        track_apikey
-
-        project_file_changed = false
-        commits = params[:commits] # Returns an Array of Hash
-        commits = [] if commits.nil?
-        commits.each do |commit|
-          commit.deep_symbolize_keys!
-          Rails.logger.info "GitHub hook for commit #{commit[:url]} with commit message -#{commit[:message]}-"
-          modified_files = commit[:modified] # Array of modifield files
-          modified_files.each do |file_path|
-            next if ProjectService.type_by_filename( file_path ).nil?
-
-            project_file_changed = true
-            break
-          end
-        end
-
-        if project_file_changed == false
-          error! "Dependencies did not change.", 400
-        end
-
-        project = Project.find_by_id( params[:project_id] )
-        if project.nil?
-          error! "Project with ID #{params[:project_id]} not found.", 400
-        end
-
-        if !project.is_collaborator?( current_user )
-          error! "You do not have access to this project!", 400
-        end
-
         message = ''
-        branch = params[:ref].to_s.gsub('refs/heads/', '')
-        if project.scm_branch.to_s.eql?( branch )
-          message = "A background job was triggered to update the project #{project.scm_fullname} (#{project.ids})."
-          ProjectUpdateService.update_async project, project.notify_after_api_update
+        if params[:pull_request]
+          message = handle_pull_request( params )
+        elsif params[:commits]
+          message = handle_commit( params )
         else
-          message = "Project branch is #{project.scm_branch} but branch in payload is #{branch}. As the branches are not matching we will ignore this."
+          error! "Type of payload not recognized", 400
         end
 
         Rails.logger.info message
         present :success, message
       end
 
-
-      #-- POST '/hook' -----------------------------------------------
-      desc "github web hook", {
-        notes: %q[This endpoint is registered as webhook on GitHub. It triggers a project re-parse on each git push and pull request. ]
-      }
-      params do
-        requires :project_id, type: String, desc: "Project ID"
-      end
-      post '/webhook/:project_id' do
-        # authorized?
-        # track_apikey
-
-        Rails.logger.info "--"
-        Rails.logger.info params
-        Rails.logger.info "--"
-
-        present :success, message
-      end
 
     end # end of resource block
   end
