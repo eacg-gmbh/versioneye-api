@@ -248,8 +248,15 @@ module V2
       post '/hook/:project_id' do
 
         Rails.logger.info "--"
-        Rails.logger.info params
+        Rails.logger.info params.to_json
         Rails.logger.info "--"
+
+        pr = params[:pull_request]
+        if pr
+          commits = pr[:commits]
+          Rails.logger.info "PR #{params[:number]} with commits: #{commits}"
+          error! "It is a PR.", 400
+        end
 
         authorized?
         track_apikey
