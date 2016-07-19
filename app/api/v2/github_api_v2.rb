@@ -12,6 +12,7 @@ module V2
     helpers SessionHelpers
     helpers PagingHelpers
     helpers ProductHelpers
+    helpers GithubHelpers
 
     resource :github do
 
