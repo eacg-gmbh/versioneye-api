@@ -246,6 +246,11 @@ module V2
         requires :project_id, type: String, desc: "Project ID"
       end
       post '/hook/:project_id' do
+
+        Rails.logger.info "--"
+        Rails.logger.info params
+        Rails.logger.info "--"
+
         authorized?
         track_apikey
 
