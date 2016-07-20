@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 9934b202c4752a7a5690253182539b5c9ad8cbb5
-  tag: v9.4.3
+  revision: b477570eba7224db74d92146da199f3eeedf7dac
+  tag: v9.4.5
   specs:
-    versioneye-core (9.4.3)
+    versioneye-core (9.4.5)
       actionmailer (~> 4.2.6)
       aws-sdk (~> 2.4.0)
       bundler (~> 1.12.5)
@@ -221,7 +221,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     psych (2.1.0)
-    puma (3.5.0)
+    puma (3.5.2)
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
