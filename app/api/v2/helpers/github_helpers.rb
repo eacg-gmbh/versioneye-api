@@ -36,15 +36,18 @@ module GithubHelpers
     end
 
     if project_file_changed == false
+      Rails.logger.error "Dependencies did not change."
       error! "Dependencies did not change.", 400
     end
 
     project = Project.find_by_id( params[:project_id] )
     if project.nil?
+      Rails.logger.error "Project with ID #{params[:project_id]} not found."
       error! "Project with ID #{params[:project_id]} not found.", 400
     end
 
     if !project.is_collaborator?( current_user )
+      Rails.logger.error "You do not have access to this project!"
       error! "You do not have access to this project!", 400
     end
 
@@ -57,6 +60,8 @@ module GithubHelpers
       message = "Project branch is #{project.scm_branch} but branch in payload is #{branch}. As the branches are not matching we will ignore this."
     end
     message
+  rescue => e
+    e.message
   end
 
 

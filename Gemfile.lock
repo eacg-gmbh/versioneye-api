@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: ef9647435367b617ffbc59bc5cddffd2cf475625
-  tag: v9.4.17
+  revision: 3723f9c93ff135be8f27ecb4c8757dc50e8cba91
+  tag: v9.6.0
   specs:
-    versioneye-core (9.4.17)
+    versioneye-core (9.6.0)
       actionmailer (~> 4.2.6)
       aws-sdk (~> 2.4.0)
       bundler (~> 1.12.5)
@@ -76,12 +76,12 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.4.0)
-      aws-sdk-resources (= 2.4.0)
-    aws-sdk-core (2.4.0)
+    aws-sdk (2.4.3)
+      aws-sdk-resources (= 2.4.3)
+    aws-sdk-core (2.4.3)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.4.0)
-      aws-sdk-core (= 2.4.0)
+    aws-sdk-resources (2.4.3)
+      aws-sdk-core (= 2.4.3)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -106,7 +106,6 @@ GEM
       activesupport (>= 4.0.2)
       fuzzy_match (~> 2.0.4)
       nap (~> 1.0)
-    coderay (1.1.1)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     coffee-rails (4.2.1)
@@ -148,7 +147,7 @@ GEM
     fuzzy_match (2.0.4)
     gene_pool (1.4.1)
       thread_safe
-    globalid (0.3.6)
+    globalid (0.3.7)
       activesupport (>= 4.1.0)
     grape (0.7.0)
       activesupport
@@ -182,14 +181,12 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
-    method_source (0.8.2)
     mime-types (2.99.2)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     mixlib-log (1.6.0)
-    mongo (2.2.6)
+    mongo (2.2.7)
       bson (~> 4.0)
-      pry
     mongoid (5.1.3)
       activemodel (~> 4.0)
       mongo (~> 2.1)
@@ -216,10 +213,6 @@ GEM
       httparty (~> 0.9)
       persistent_http (< 2)
     pkg-config (1.1.7)
-    pry (0.10.4)
-      coderay (~> 1.1.0)
-      method_source (~> 0.8.1)
-      slop (~> 3.4)
     psych (2.1.0)
     puma (3.5.2)
     rack (1.6.4)
@@ -291,7 +284,7 @@ GEM
     rubyzip (1.2.0)
     safe_yaml (1.0.4)
     sass (3.4.22)
-    sass-rails (5.0.5)
+    sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
@@ -310,7 +303,6 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
-    slop (3.6.0)
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
