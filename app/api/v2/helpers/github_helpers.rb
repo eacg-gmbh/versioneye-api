@@ -46,7 +46,10 @@ module GithubHelpers
       error! "Project with ID #{params[:project_id]} not found.", 400
     end
 
-    if !project.is_collaborator?( current_user )
+    orga = current_orga
+    orga_id = nil
+    orga_id = orga.ids if orga
+    if !project.is_collaborator?( current_user ) && !project.organisation_id.to_s.eql?( orga_id.to_s ) && !orga_id.to_s.empty?
       Rails.logger.error "You do not have access to this project!"
       error! "You do not have access to this project!", 400
     end
