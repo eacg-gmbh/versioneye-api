@@ -235,6 +235,7 @@ describe V2::ProjectsApiV2, :type => :request do
       file = test_file
       orga = Organisation.new({:name => 'test_roga'})
       expect( orga.save ).to be_truthy
+      expect( Organisation.all.count ).to eq(1)
       response = post project_uri, {
         upload:    file,
         api_key:   orga.api.api_key,

@@ -2,7 +2,10 @@ module ProjectHelpers
 
 
   def upload_and_store file, visibility = 'private', name = nil, orga_name = nil, team_name = nil
-    project = ProjectImportService.import_from_upload file, @current_user, true, @orga
+    orga = current_orga
+    orga_id = nil
+    orga_id = orga.ids if orga
+    project = ProjectImportService.import_from_upload file, current_user, true, orga_id
 
     project.public = false if visibility.to_s.eql?('private')
     project.public = true  if visibility.to_s.eql?('public')
