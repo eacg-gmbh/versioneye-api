@@ -189,22 +189,25 @@ module V2
         rate_limit
         track_apikey
 
+        message = ''
         project_key = params[:project_key]
         project     = Project.find project_key.to_s
         if project.nil?
-          error! "Project `#{params[:project_key]}` dosn't exists", 400
+          message = 'Project was removed already.'
+        else
+          if @current_user && project.is_collaborator?( @current_user ) == false
+            error! "You are not a collaborator of the requested project", 403
+          end
+
+          if @orga && !project.organisation_id.to_s.eql?(@orga.ids)
+            error! "You are not a collaborator of the requested project", 403
+          end
+
+          ProjectService.destroy project
+          message = "Project deleted successfully."
         end
 
-        if @current_user && project.is_collaborator?( @current_user ) == false
-          error! "You are not a collaborator of the requested project", 403
-        end
-
-        if @orga && !project.organisation_id.to_s.eql?(@orga.ids)
-          error! "You are not a collaborator of the requested project", 403
-        end
-
-        ProjectService.destroy project
-        {success: true, message: "Project deleted successfully."}
+        {success: true, message: message}
       end
 
 
