@@ -25,15 +25,23 @@ module V2
       get do
         authorized?
 
-        api = Api.by_user( @current_user )
-
-        me = Me.new(@current_user)
-        me.enterprise_projects = api.enterprise_projects
-        me.active = api.active
-        me.notifications = {
-          :new => Notification.by_user_id(@current_user.id).all_not_sent.count,
-          :total => Notification.by_user_id(@current_user.id).count
-        }
+        orga = current_orga
+        if orga
+          api = orga.api
+          me = Me.new
+          me.update_from_orga( orga )
+          me.enterprise_projects = api.enterprise_projects
+        else
+          api = Api.by_user( @current_user )
+          me = Me.new
+          me.update_from_user( @current_user )
+          me.enterprise_projects = api.enterprise_projects
+          me.active = api.active
+          me.notifications = {
+            :new => Notification.by_user_id(@current_user.id).all_not_sent.count,
+            :total => Notification.by_user_id(@current_user.id).count
+          }
+        end
 
         present me, with: EntitiesV2::UserDetailedEntity
       end
