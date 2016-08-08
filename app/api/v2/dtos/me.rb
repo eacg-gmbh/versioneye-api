@@ -12,7 +12,7 @@ class Me
   end
 
   def update_from_orga orga
-    self.organisation = user.organisation
+    self.organisation = orga.name
   end
 
 end
