@@ -112,6 +112,21 @@ module SessionHelpers
   end
 
 
+  def cmp_limit
+    return if Rails.env.enterprise? == true
+
+    api = fetch_api
+    if api
+      cmp_count = ApiCall.where( :api_key => api.api_key ).distinct(:prod_key).count
+      if cmp_count.to_i > api.comp_limit.to_i
+        Rails.logger.info "API component limit exceeded for #{api.api_key}. Synced already #{cmp_count} components!"
+        error! "API component limit exceeded! You synced already #{cmp_count} components. If you want to sync more components you need a higher plan.", 403
+        return
+      end
+    end
+  end
+
+
   def get_rate_limit_for api
     rate_limit = 50
     rate_limit = api.rate_limit if api && api.respond_to?(:rate_limit)

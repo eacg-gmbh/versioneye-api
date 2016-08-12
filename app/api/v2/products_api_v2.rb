@@ -84,8 +84,9 @@ module V2
         optional :prod_version, :type => String, :desc => %Q["Version string"]
       end
       get '/:lang/:prod_key' do
-        product = fetch_product(params[:lang], params[:prod_key])
+        cmp_limit # Check component limit
 
+        product = fetch_product(params[:lang], params[:prod_key])
         prod_version = params[:prod_version]
         if !prod_version.to_s.empty?
           version_obj = product.version_by_number prod_version

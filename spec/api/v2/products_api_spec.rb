@@ -50,6 +50,29 @@ describe V2::ProductsApiV2, :type => :request do
       response_data["name"].should eql( test_product.name )
       response_data["version"].should eql( "test_1.0" )
     end
+    it "returns exception because component limit exceeded" do
+      user_api.comp_limit = 1
+      user_api.save
+
+      test_product = ProductFactory.create_new 1
+      test_product.add_version "test_1.0"
+      test_product.save
+
+      test_product_2 = ProductFactory.create_new 2
+      test_product_2.add_version "1.0.0"
+      test_product_2.save
+      prod_key_safe = encode_prod_key( test_product.prod_key )
+      package_url =  "#{product_uri}/#{test_product.language}/#{prod_key_safe}?prod_version=test_1.0"
+      get package_url, :api_key => user_api.api_key
+      response.status.should eql(200)
+
+      prod_key_safe = encode_prod_key( test_product_2.prod_key )
+      package_url = "#{product_uri}/#{test_product_2.language}/#{prod_key_safe}"
+      get package_url, :api_key => user_api.api_key
+      response.status.should eql(403)
+      response_data = JSON.parse(response.body)
+      expect( response_data['error'] ).to eq('API component limit exceeded! You synced already 2 components. If you want to sync more components you need a higher plan.')
+    end
   end
 
 
