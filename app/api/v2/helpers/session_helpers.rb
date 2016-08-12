@@ -127,16 +127,19 @@ module SessionHelpers
     method   = http_method_type
     protocol = fetch_protocol
     ip       = remote_ip_address
+    language = params[:lang].to_s
+    prod_key = params[:prod_key].to_s
 
-    call_data = {
+    new_api_call = ApiCall.new({
       fullpath: "#{protocol}#{request.host_with_port}#{request.fullpath}",
       http_method: method,
       ip:       ip,
       api_key:  api_key,
-      user_id:  (user.nil?) ? nil : user.ids,
-      organisation_id: (orga.nil?) ? nil : orga.ids
-    }
-    new_api_call =  ApiCall.new call_data
+      language: language,
+      prod_key: prod_key
+    })
+    new_api_call.user_id = user.ids if user
+    new_api_call.organisation_id = orga.ids if orga
     new_api_call.save
   rescue => e
     p "ERROR in track_apikey - #{e.message}"
