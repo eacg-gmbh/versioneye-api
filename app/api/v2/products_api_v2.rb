@@ -15,12 +15,6 @@ module V2
 
     resource :products do
 
-      before do
-        rate_limit
-        track_apikey
-      end
-
-
       desc "search packages", {
         notes: %q[
 
@@ -40,6 +34,9 @@ module V2
         optional :page, :type => Integer, :desc => "Specify page for paging", :regexp => /^[\d]+$/
       end
       get '/search/:q' do
+        rate_limit
+        track_apikey
+
         query    = parse_query(params[:q])
         group_id = params[:g]
         lang     = get_language_param(params[:lang])
@@ -85,6 +82,7 @@ module V2
       end
       get '/:lang/:prod_key' do
         cmp_limit # Check component limit
+        track_apikey
 
         product = fetch_product(params[:lang], params[:prod_key])
         prod_version = params[:prod_version]
@@ -118,6 +116,9 @@ module V2
                             :desc => %Q["Encoded product key, replace all `/` and `.`]
       end
       get '/:lang/:prod_key/versions' do
+        cmp_limit # Check component limit
+        track_apikey
+
         product = fetch_product(params[:lang], params[:prod_key])
 
         present product, with: EntitiesV2::ProductEntityVersions, type: :full
@@ -141,6 +142,8 @@ module V2
         requires :prod_key, :type => String, :desc => "Package specifier"
       end
       get '/:lang/:prod_key/follow' do
+        rate_limit
+        track_apikey
         authorized?
         if @current_user.nil?
           error! "For this action a user is required.", 403
@@ -173,6 +176,8 @@ module V2
                             :desc => %Q{ Package product key. }
       end
       post '/:lang/:prod_key/follow' do
+        rate_limit
+        track_apikey
         authorized?
         if @current_user.nil?
           error! "For this action a user is required.", 403
@@ -211,6 +216,8 @@ module V2
         requires :prod_key, :type => String, :desc => "Package specifier"
       end
       delete '/:lang/:prod_key/follow' do
+        rate_limit
+        track_apikey
         authorized?
         if @current_user.nil?
           error! "For this action a user is required.", 403
@@ -251,6 +258,9 @@ module V2
         optional :page, :type => Integer, :desc => "Page for paging", :regexp => /^[\d]+$/
       end
       get '/:lang/:prod_key/references' do
+        rate_limit
+        track_apikey
+
         page     = params[:page]
         page     = 1 if page.to_i < 1
         product = fetch_product(params[:lang], params[:prod_key])
@@ -296,6 +306,8 @@ module V2
         requires :scm_changes_file, type: Hash, desc: "changelog.xml"
       end
       post '/:lang/:prod_key/:prod_version/scm_changes' do
+        rate_limit
+        track_apikey
         authorized?
 
         product = fetch_product(params[:lang], params[:prod_key])

@@ -71,7 +71,7 @@ describe V2::ProductsApiV2, :type => :request do
       get package_url, :api_key => user_api.api_key
       response.status.should eql(403)
       response_data = JSON.parse(response.body)
-      expect( response_data['error'] ).to eq('API component limit exceeded! You synced already 2 components. If you want to sync more components you need a higher plan.')
+      expect( response_data['error'] ).to eq('API component limit exceeded! You synced already 1 components. If you want to sync more components you need a higher plan.')
     end
   end
 
@@ -158,10 +158,10 @@ describe V2::ProductsApiV2, :type => :request do
         get "#{product_uri}/search/#{search_term}", :api_key => user_api.api_key
         response.status.should == 200
       end
-      get "#{product_uri}/search/#{search_term}", :page => 0
+      get "#{product_uri}/search/#{search_term}", :api_key => user_api.api_key
       response.status.should == 403
       response_data  = JSON.parse(response.body)
-      expect( response_data['error'] ).to eq('API rate limit exceeded. Unauthenticated API cals are limited to 5 calls per hour. With an API key you can extend your rate limit. Sign up for free and get an API key!')
+      expect( response_data['error'] ).to eq("API rate limit of #{user_api.rate_limit} calls per hour exceeded. Write an email to support@versioneye.com if you need a higher rate limit. Used API Key: #{user_api.api_key}")
     end
   end
 
