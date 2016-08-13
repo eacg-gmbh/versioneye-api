@@ -31,12 +31,17 @@ module V2
           me = Me.new
           me.update_from_orga( orga )
           me.enterprise_projects = api.enterprise_projects
+          me.rate_limit          = api.rate_limit
+          me.comp_limit          = api.comp_limit
+          me.active              = api.active
         else
           api = Api.by_user( @current_user )
           me = Me.new
           me.update_from_user( @current_user )
           me.enterprise_projects = api.enterprise_projects
-          me.active = api.active
+          me.rate_limit          = api.rate_limit
+          me.comp_limit          = api.comp_limit
+          me.active              = api.active
           me.notifications = {
             :new => Notification.by_user_id(@current_user.id).all_not_sent.count,
             :total => Notification.by_user_id(@current_user.id).count

@@ -1,6 +1,7 @@
 class Me
 
-  attr_accessor :username, :fullname, :email, :admin, :organisation, :deleted_user, :enterprise_projects, :active
+  attr_accessor :username, :fullname, :email, :admin, :organisation, :deleted_user
+  attr_accessor :enterprise_projects, :rate_limit, :comp_limit, :active
   attr_accessor :notifications
 
   def update_from_user user
