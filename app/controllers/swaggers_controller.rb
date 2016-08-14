@@ -1,8 +1,10 @@
 class SwaggersController < ApplicationController
 
   def index
-    Settings.instance.reload_from_db GlobalSetting.new
-    ENV['API_BASE_PATH'] = "#{Settings.instance.server_url}/api"
+    env        = Settings.instance.environment
+    server_url = GlobalSetting.get( env, 'server_url' )
+    server_url = 'http://127.0.0.1:9090' if server_url.to_s.empty?
+    ENV['API_BASE_PATH'] = "#{server_url}/api"
 
     user_api = nil
     user = current_user
@@ -18,7 +20,7 @@ class SwaggersController < ApplicationController
       @api_key = user_api.api_key
     end
 
-    version = params.has_key?(:version) ? params[:version] : 'v2'
+    version  = params.has_key?(:version) ? params[:version] : 'v2'
     @api_url = "/api/#{version}"
   end
 
