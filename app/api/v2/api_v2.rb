@@ -26,7 +26,16 @@ module V2
     mount GithubApiV2
     mount SecurityApiV2
 
-    add_swagger_documentation :base_path => ENV['API_BASE_PATH'],
+    env        = Settings.instance.environment
+    server_url = GlobalSetting.get( env, 'server_url' )
+    server_url = 'https://www.versioneye.com/api' if env.to_s.eql?('production')
+    server_url = 'http://127.0.0.1:3000/api' if env.to_s.eql?('test')
+    server_url = 'http://127.0.0.1:9090' if server_url.to_s.empty?
+
+    base_url = "#{server_url}/api"
+    ENV['API_BASE_PATH'] = base_url
+
+    add_swagger_documentation :base_path => "#{base_url}",
                               :class_name => "swagger_doc2",
                               :markdown => true,
                               :hide_format => true,

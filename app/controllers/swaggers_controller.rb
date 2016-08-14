@@ -1,11 +1,6 @@
 class SwaggersController < ApplicationController
 
   def index
-    env        = Settings.instance.environment
-    server_url = GlobalSetting.get( env, 'server_url' )
-    server_url = 'http://127.0.0.1:9090' if server_url.to_s.empty?
-    ENV['API_BASE_PATH'] = "#{server_url}/api"
-
     user_api = nil
     user = current_user
     if user

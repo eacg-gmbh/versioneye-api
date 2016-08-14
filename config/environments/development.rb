@@ -48,8 +48,6 @@ Versioneye::Application.configure do
 
   routes.default_url_options = { host: Settings.instance.server_host, port: Settings.instance.server_port }
 
-  ENV['API_BASE_PATH'] = "#{Settings.instance.server_url}/api"
-
   Octokit.configure do |c|
     c.api_endpoint = Settings.instance.github_api_url
     c.web_endpoint = Settings.instance.github_base_url
