@@ -257,7 +257,7 @@
     "mvn_repo_1_user": "admin",
     "mvn_repo_1_password": "password",
     "mvn_repo_1_schedule": "",
-    "server_url": "http://localhost:3000",
+    "server_url": "http://127.0.0.1:9090",
     "server_host": "localhost",
     "server_port": 3000,
     "smtp_address": "env_SMTP_ADDRESS",
