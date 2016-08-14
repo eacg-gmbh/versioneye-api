@@ -28,8 +28,8 @@ module V2
 
     env        = Settings.instance.environment
     server_url = GlobalSetting.get( env, 'server_url' )
-    server_url = 'https://www.versioneye.com/api' if env.to_s.eql?('production')
-    server_url = 'http://127.0.0.1:3000/api' if env.to_s.eql?('test')
+    server_url = 'https://www.versioneye.com' if env.to_s.eql?('production')
+    server_url = 'http://127.0.0.1:3000' if env.to_s.eql?('test')
     server_url = 'http://127.0.0.1:9090' if server_url.to_s.empty?
 
     base_url = "#{server_url}/api"
