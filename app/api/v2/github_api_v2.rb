@@ -260,6 +260,8 @@ module V2
           message = handle_pull_request( params )
         elsif params[:commits]
           message = handle_commit( params )
+        elsif params[:hook_id]
+          message = "Hook #{params[:hook_id]} registered"
         else
           error! "Type of payload not recognized", 400
         end

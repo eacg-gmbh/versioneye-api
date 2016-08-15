@@ -36,8 +36,7 @@ module GithubHelpers
     end
 
     if project_file_changed == false
-      Rails.logger.error "Dependencies did not change."
-      error! "Dependencies did not change.", 400
+      return "Dependencies did not change. Nothing to worry about."
     end
 
     project = Project.find_by_id( params[:project_id] )
