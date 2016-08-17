@@ -117,7 +117,7 @@ module SessionHelpers
 
     api = fetch_api
     if api
-      cmp_count = ApiCall.where( :api_key => api.api_key ).distinct(:prod_key).count
+      cmp_count = ApiCall.where( :api_key => api.api_key ).distinct(:prod_key).count # This takes to long time!
       if cmp_count.to_i >= api.comp_limit.to_i
         Rails.logger.info "API component limit exceeded for #{api.api_key}. Synced already #{cmp_count} components!"
         error! "API component limit exceeded! You synced already #{cmp_count} components. If you want to sync more components you need a higher plan.", 403
