@@ -251,10 +251,6 @@ module V2
         authorized?
         track_apikey
 
-        Rails.logger.info "--"
-        Rails.logger.info params.to_json
-        Rails.logger.info "--"
-
         message = ''
         if params[:pull_request]
           message = handle_pull_request( params )
