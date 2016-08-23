@@ -13,12 +13,12 @@ module ProjectHelpers
     project.name   = name  if !name.to_s.empty?
     project.save
 
-    if @orga.nil? && @current_user && orga_name.to_s.empty?
+    if orga_name.to_s.empty? && @current_user
       orga = OrganisationService.index(@current_user, true).first
       orga_name = orga.name if orga
     end
 
-    if @orga.nil? && @current_user && !orga_name.to_s.empty?
+    if !orga_name.to_s.empty? && @current_user
       assign_organisation project, orga_name
     end
 
