@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 44b36d3f2abe543b52f497d0deaf9956ac3539f0
-  tag: v9.7.46
+  revision: e2997f51a66622ef6cc278ddc377f59e9abe8416
+  tag: v9.7.50
   specs:
-    versioneye-core (9.7.46)
+    versioneye-core (9.7.50)
       actionmailer (~> 4.2.7)
       aws-sdk (~> 2.4.0)
       bundler (~> 1.12.5)
@@ -333,7 +333,7 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2016.6)
       tzinfo (>= 1.0.0)
-    uglifier (3.0.1)
+    uglifier (3.0.2)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
