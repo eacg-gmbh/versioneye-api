@@ -9,6 +9,7 @@ class ApiFactory
     end
     new_api_key = Api.generate_api_key
     @user_api = Api.new user_id: user.id, api_key: new_api_key
+    @user_api.comp_limit = 1
 
     if save
       unless @user_api.save

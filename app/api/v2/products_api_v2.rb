@@ -81,8 +81,7 @@ module V2
         optional :prod_version, :type => String, :desc => %Q["Version string"]
       end
       get '/:lang/:prod_key' do
-        # cmp_limit # Check component limit
-        rate_limit
+        cmp_limit # Check component limit
         track_apikey
 
         product = fetch_product(params[:lang], params[:prod_key])
@@ -117,8 +116,7 @@ module V2
                             :desc => %Q["Encoded product key, replace all `/` and `.`]
       end
       get '/:lang/:prod_key/versions' do
-        # cmp_limit # Check component limit
-        rate_limit
+        cmp_limit # Check component limit
         track_apikey
 
         product = fetch_product(params[:lang], params[:prod_key])
