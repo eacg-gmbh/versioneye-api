@@ -69,7 +69,7 @@ module V2
         project_key = params[:project_key]
         project     = Project.find project_key.to_s
         if project.nil?
-          error! "Project `#{params[:project_key]}` dosn't exists", 400
+          error! "Project `#{params[:project_key]}` does not exists", 400
         end
 
         if current_user && project.is_collaborator?( current_user ) == false
@@ -145,7 +145,7 @@ module V2
         project_key = params[:project_key]
         project     = Project.find project_key.to_s
         if project.nil?
-          error! "Project `#{params[:project_key]}` dosn't exists", 400
+          error! "Project `#{params[:project_key]}` does not exists", 400
         end
 
         if @current_user && project.is_collaborator?( @current_user ) == false
@@ -235,7 +235,7 @@ module V2
         project_key = params[:project_key]
         project     = Project.find project_key.to_s
         if project.nil?
-          error! "Project `#{params[:project_key]}` dosn't exists", 400
+          error! "Project `#{params[:project_key]}` does not exists", 400
         end
 
         if @current_user && project.is_collaborator?( @current_user ) == false

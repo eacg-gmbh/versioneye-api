@@ -184,7 +184,7 @@ GEM
       mime-types (>= 1.16, < 4)
     mime-types (2.99.3)
     mini_portile2 (2.1.0)
-    minitest (5.9.0)
+    minitest (5.9.1)
     mixlib-log (1.7.1)
     mongo (2.3.0)
       bson (~> 4.1)
@@ -236,7 +236,7 @@ GEM
       sprockets-rails
     rails-assets-bootstrap (3.3.7)
       rails-assets-jquery (>= 1.9.1, < 4)
-    rails-assets-jquery (3.1.0)
+    rails-assets-jquery (3.1.1)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.7)
