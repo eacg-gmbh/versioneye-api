@@ -1,7 +1,7 @@
 module ProjectHelpers
 
 
-  def upload_and_store file, visibility = 'private', name = nil, orga_name = nil, team_name = nil
+  def upload_and_store file, visibility = 'private', name = nil, orga_name = nil, team_name = Team::A_OWNERS
     orga = current_orga
     orga_id = nil
     orga_id = orga.ids if orga
@@ -22,9 +22,7 @@ module ProjectHelpers
       assign_organisation project, orga_name
     end
 
-    if !team_name.to_s.empty?
-      assign_team project, team_name
-    end
+    assign_team project, team_name
 
     project
   end
@@ -42,7 +40,8 @@ module ProjectHelpers
     end
 
 
-    def assign_team project, team_name
+    def assign_team project, team_name = Team::A_OWNERS
+      team_name = Team::A_OWNERS if team_name.to_s.empty?
       return false if project.nil? || project.organisation.nil?
 
       team = project.organisation.team_by team_name

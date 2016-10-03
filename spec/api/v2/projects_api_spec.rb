@@ -18,6 +18,14 @@ describe V2::ProjectsApiV2, :type => :request do
     WebMock.allow_net_connect!
   end
 
+  before :each do
+    Plan.create_defaults
+    @orga = OrganisationService.create_new test_user, "test_orga"
+    @orga.plan = Plan.micro
+    @orga.save
+    @orga_api = @orga.api
+  end
+
   after :all do
     WebMock.allow_net_connect!
   end
@@ -87,23 +95,18 @@ describe V2::ProjectsApiV2, :type => :request do
   describe "list orga projects" do
     include Rack::Test::Methods
     it 'lists 0 because orga has no projects' do
-      orga = Organisation.new({ :name => "test_orga" })
-      orga.save
-      response = get project_uri, {api_key: orga.api.api_key}, "HTTPS" => "on"
+      response = get project_uri, {api_key: @orga.api.api_key}, "HTTPS" => "on"
       result   = JSON.parse response.body
       expect( response.status ).to eq(200)
       expect( result ).to be_empty
     end
     it 'lists 1 project from orga' do
-      orga = Organisation.new({ :name => "test_orga" })
-      orga.save
-
       user = UserFactory.create_new 125
       proj = ProjectFactory.create_new user
-      proj.organisation_id = orga.ids
+      proj.organisation_id = @orga.ids
       expect( proj.save ).to be_truthy
 
-      response = get project_uri, {api_key: orga.api.api_key}, "HTTPS" => "on"
+      response = get project_uri, {api_key: @orga.api.api_key}, "HTTPS" => "on"
       result = JSON.parse response.body
       expect( response.status ).to eq(200)
       expect( result ).to_not be_empty
@@ -111,33 +114,30 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it 'lists 1 project from orga' do
-      orga = Organisation.new({ :name => "test_orga" })
-      orga.save
-
-      owners = Team.new({:name => "Owners", :organisation_id => orga.ids})
+      owners = Team.new({:name => "Owners", :organisation_id => @orga.ids})
       expect( owners.save ).to be_truthy
 
-      dev = Team.new({:name => "dev", :organisation_id => orga.ids})
+      dev = Team.new({:name => "dev", :organisation_id => @orga.ids})
       expect( dev.save ).to be_truthy
 
       user = UserFactory.create_new 125
       proj = ProjectFactory.create_new user
-      proj.organisation_id = orga.ids
+      proj.organisation_id = @orga.ids
       proj.team_ids = [owners.ids]
       expect( proj.save ).to be_truthy
 
       proj2 = ProjectFactory.create_new user
-      proj2.organisation_id = orga.ids
+      proj2.organisation_id = @orga.ids
       proj2.team_ids = [dev.ids]
       expect( proj2.save ).to be_truthy
 
-      response = get project_uri, {api_key: orga.api.api_key}, "HTTPS" => "on"
+      response = get project_uri, {api_key: @orga.api.api_key}, "HTTPS" => "on"
       result = JSON.parse response.body
       expect( response.status ).to eq(200)
       expect( result ).to_not be_empty
       expect( result.count ).to eq(2)
 
-      response = get project_uri, {api_key: orga.api.api_key, team_name: 'dev'}, "HTTPS" => "on"
+      response = get project_uri, {api_key: @orga.api.api_key, team_name: 'dev'}, "HTTPS" => "on"
       result = JSON.parse response.body
       expect( response.status ).to eq(200)
       expect( result ).to_not be_empty
@@ -166,13 +166,15 @@ describe V2::ProjectsApiV2, :type => :request do
 
     it "returns 500 because project is empty" do
       file = empty_file
+      p @orga_api.api_key
       response = post project_uri, {
         upload:    file,
-        api_key:   user_api.api_key,
+        api_key:   @orga_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
       file.close
+      p response.body
       response.status.should eq(500)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq('project file could not be parsed. Maybe the file is empty? Or not valid?')
@@ -182,7 +184,7 @@ describe V2::ProjectsApiV2, :type => :request do
       file = test_file
       response = post project_uri, {
         upload:    file,
-        api_key:   user_api.api_key,
+        api_key:   @orga_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
@@ -200,7 +202,7 @@ describe V2::ProjectsApiV2, :type => :request do
         upload:    file,
         name:      'my_new_project',
         visibility: 'public',
-        api_key:   user_api.api_key,
+        api_key:   @orga_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
@@ -219,7 +221,7 @@ describe V2::ProjectsApiV2, :type => :request do
         name:      'my_new_project',
         visibility: 'public',
         temp:       'true',
-        api_key:   user_api.api_key,
+        api_key:   @orga_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
@@ -233,12 +235,10 @@ describe V2::ProjectsApiV2, :type => :request do
 
     it "returns 201 and project info, when upload was successfully" do
       file = test_file
-      orga = Organisation.new({:name => 'test_roga'})
-      expect( orga.save ).to be_truthy
       expect( Organisation.all.count ).to eq(1)
       response = post project_uri, {
         upload:    file,
-        api_key:   orga.api.api_key,
+        api_key:   @orga.api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
@@ -251,11 +251,9 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "creates a new project and assignes it to an organisation" do
-      orga = Organisation.new :name => 'orga'
+      orga = OrganisationService.create_new test_user, "orga"
+      orga.plan = Plan.micro
       expect( orga.save ).to be_truthy
-      team = Team.new :name => Team::A_OWNERS, :organisation_id => orga.ids
-      expect( team.save ).to be_truthy
-      expect( team.add_member( test_user )).to be_truthy
 
       file = test_file
       response = post project_uri, {
@@ -263,7 +261,7 @@ describe V2::ProjectsApiV2, :type => :request do
         name:      'my_new_project',
         orga_name: 'orga',
         visibility: 'public',
-        api_key:   user_api.api_key,
+        api_key:   orga.api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
@@ -280,6 +278,7 @@ describe V2::ProjectsApiV2, :type => :request do
 
     it "creates a new project and assignes it to an organisation and a team" do
       orga = Organisation.new :name => 'orga'
+      orga.plan = Plan.micro
       expect( orga.save ).to be_truthy
 
       team = Team.new :name => Team::A_OWNERS, :organisation_id => orga.ids
@@ -297,7 +296,7 @@ describe V2::ProjectsApiV2, :type => :request do
         orga_name: 'orga',
         team_name: 'backend_devs',
         visibility: 'public',
-        api_key:   user_api.api_key,
+        api_key:   orga.api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
@@ -310,60 +309,6 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( Project.first.organisation.name ).to eq('orga')
       expect( Project.first.teams ).to_not be_empty
       expect( Project.first.teams.first.name ).to eq('backend_devs')
-    end
-
-    it "can not create a new project because user is not member of the owners team" do
-      orga = Organisation.new :name => 'orga'
-      expect( orga.save ).to be_truthy
-      team = Team.new :name => 'members', :organisation_id => orga.ids
-      expect( team.save ).to be_truthy
-      expect( team.add_member( test_user )).to be_truthy
-
-      file = test_file
-      response = post project_uri, {
-        upload:    file,
-        name:      'my_new_project',
-        orga_name: 'orga',
-        visibility: 'public',
-        api_key:   user_api.api_key,
-        send_file: true,
-        multipart: true
-      }, "HTTPS" => "on"
-      file.close
-      response.status.should eq(201)
-      expect( Project.count ).to eq(1)
-      expect( Project.first.name ).to eq('my_new_project')
-      expect( Project.first.public ).to be_truthy
-      expect( Project.first.organisation ).to be_nil
-      expect( Project.first.teams ).to be_empty
-    end
-
-    it "can not create a new project because user is not member of the owners team" do
-      orga = Organisation.new :name => 'orga'
-      orga.mattp = true
-      expect( orga.save ).to be_truthy
-      team = Team.new :name => 'members', :organisation_id => orga.ids
-      expect( team.save ).to be_truthy
-      expect( team.add_member( test_user )).to be_truthy
-
-      file = test_file
-      response = post project_uri, {
-        upload:    file,
-        name:      'my_new_project',
-        orga_name: 'orga',
-        visibility: 'public',
-        api_key:   user_api.api_key,
-        send_file: true,
-        multipart: true
-      }, "HTTPS" => "on"
-      file.close
-      response.status.should eq(201)
-      expect( Project.count ).to eq(1)
-      expect( Project.first.name ).to eq('my_new_project')
-      expect( Project.first.public ).to be_truthy
-      expect( Project.first.organisation ).to_not be_nil
-      expect( Project.first.organisation.name ).to eq('orga')
-      expect( Project.first.teams ).to be_empty
     end
   end
 
@@ -443,11 +388,9 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "returns 403 because api key from orga is not a collaborator of the project" do
-      orga = Organisation.new({:name => "test_orga"})
-      expect( orga.save ).to be_truthy
       project = ProjectFactory.create_new test_user
       expect( Project.count ).to eq(1)
-      update_uri = "#{project_uri}/#{project.ids}?api_key=#{orga.api.api_key}"
+      update_uri = "#{project_uri}/#{project.ids}?api_key=#{@orga.api.api_key}"
       file = test_file
       response = post update_uri, {
         project_file: file,
@@ -459,15 +402,12 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "updates an project with orga api key" do
-      orga = Organisation.new({:name => "test_orga"})
-      expect( orga.save ).to be_truthy
-
       project = ProjectFactory.create_new test_user
-      project.organisation_id = orga.ids
+      project.organisation_id = @orga.ids
       expect( project.save  ).to be_truthy
       expect( Project.count ).to eq(1)
 
-      update_uri = "#{project_uri}/#{project.ids}?api_key=#{orga.api.api_key}"
+      update_uri = "#{project_uri}/#{project.ids}?api_key=#{@orga.api.api_key}"
       file = test_file
       response = post update_uri, {
         project_file: file,
@@ -553,9 +493,6 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "returns 200 after successfully merged" do
-      orga = OrganisationService.create_new test_user, 'test_orga'
-      expect( orga.save ).to be_truthy
-
       parent = ProjectFactory.create_new test_user
       parent.group_id = "com.spring"
       parent.artifact_id = 'tx.core'
@@ -567,7 +504,7 @@ describe V2::ProjectsApiV2, :type => :request do
 
       group    = parent.group_id.gsub(".", "~")
       artifact = parent.artifact_id.gsub(".", "~")
-      merge_uri = "#{project_uri}/#{group}/#{artifact}/merge_ga/#{child.id.to_s}?api_key=#{orga.api.api_key}"
+      merge_uri = "#{project_uri}/#{group}/#{artifact}/merge_ga/#{child.id.to_s}?api_key=#{@orga.api.api_key}"
       response = get merge_uri
       response.status.should eq(200)
       Project.where(:parent_id.ne => nil).count.should eq(1)
@@ -616,9 +553,6 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "returns 200 after successfully merged by GA with orga api key" do
-      orga = OrganisationService.create_new test_user, 'test_orga'
-      expect( orga.save ).to be_truthy
-
       parent = ProjectFactory.create_new test_user
       Project.count.should eq(1)
 
@@ -626,7 +560,7 @@ describe V2::ProjectsApiV2, :type => :request do
       Project.count.should eq(2)
       Project.where(:parent_id.ne => nil).count.should eq(0)
 
-      merge_uri = "#{project_uri}/#{parent.id.to_s}/merge/#{child.id.to_s}?api_key=#{orga.api.api_key}"
+      merge_uri = "#{project_uri}/#{parent.id.to_s}/merge/#{child.id.to_s}?api_key=#{@orga.api.api_key}"
       response = get merge_uri
       response.status.should eq(200)
       Project.where(:parent_id.ne => nil).count.should eq(1)
@@ -677,9 +611,6 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "returns 200 after successfully unmerged with orga api key" do
-      orga = OrganisationService.create_new test_user, 'test_orga'
-      expect( orga.save ).to be_truthy
-
       parent = ProjectFactory.create_new test_user
       Project.count.should eq(1)
 
@@ -689,7 +620,7 @@ describe V2::ProjectsApiV2, :type => :request do
       child.save
       Project.where(:parent_id.ne => nil).count.should eq(1)
 
-      merge_uri = "#{project_uri}/#{parent.id.to_s}/unmerge/#{child.id.to_s}?api_key=#{orga.api.api_key}"
+      merge_uri = "#{project_uri}/#{parent.id.to_s}/unmerge/#{child.id.to_s}?api_key=#{@orga.api.api_key}"
       response = get merge_uri
       response.status.should eq(200)
       Project.where(:parent_id.ne => nil).count.should eq(0)
@@ -717,7 +648,7 @@ describe V2::ProjectsApiV2, :type => :request do
       file = test_file
       response = post project_uri, {
         upload:    file,
-        api_key:   user_api.api_key,
+        api_key:   @orga_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
@@ -728,7 +659,7 @@ describe V2::ProjectsApiV2, :type => :request do
     it "returns correct project info for existing project" do
       ids = Project.first.ids
       response = get "#{project_uri}/#{ids}.json", {
-        api_key: user_api.api_key
+        api_key: @orga_api.api_key
       }
 
       response.status.should eq(200)
@@ -751,13 +682,11 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "returns correct project for orga key" do
-      orga = Organisation.new({ :name => "test_orga" })
-      orga.save
       project = Project.first
-      project.organisation_id = orga.ids
+      project.organisation_id = @orga.ids
       project.save
       response = get "#{project_uri}/#{project.ids}", {
-        api_key: orga.api.api_key
+        api_key: @orga.api.api_key
       }
 
       response.status.should eq(200)
@@ -768,9 +697,10 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "returns error code because orga key has no access" do
-      orga0 = Organisation.new({ :name => "test_orga" })
+      orga0 = Organisation.new({ :name => "test_orga0" })
       orga0.save
-      orga = Organisation.new({ :name => "test_orga" })
+      orga = Organisation.new({ :name => "test_orga1" })
+      orga.plan = Plan.micro
       orga.save
       project = Project.first
       project.organisation_id = orga.ids
@@ -814,7 +744,7 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( Project.count ).to eq(1)
 
       response = get "#{project_uri}/#{project.ids}.json", {
-        api_key: user_api.api_key
+        api_key: @orga_api.api_key
       }
       expect( response.status ).to eq(200)
       data = JSON.parse response.body
@@ -849,6 +779,7 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( license.save ).to be_truthy
 
       project = ProjectFactory.create_new test_user
+      project.organisation_id = @orga.ids
       project.save
       ProjectdependencyFactory.create_new project, prod1
       ProjectdependencyFactory.create_new project, prod2
@@ -858,7 +789,7 @@ describe V2::ProjectsApiV2, :type => :request do
       project.save
 
       response = get "#{project_uri}/#{project.ids}.json", {
-        api_key: user_api.api_key
+        api_key: @orga_api.api_key
       }
       expect( response.status ).to eq(200)
       data = JSON.parse response.body
@@ -902,7 +833,8 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( license.save ).to be_truthy
 
       project = ProjectFactory.create_new test_user
-      project.save
+      project.organisation_id = @orga.ids
+      expect( project.save ).to be_truthy
       ProjectdependencyFactory.create_new project, prod1
       ProjectdependencyFactory.create_new project, prod2
 
@@ -940,13 +872,10 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "return 403 because orga is not collaborator." do
-      orga = Organisation.new :name => 'test_orga'
-      orga.save
-
       project = ProjectFactory.create_new test_user
       project.save
 
-      response = get "#{project_uri}/#{project.ids}/licenses.json", {:api_key => orga.api.api_key}
+      response = get "#{project_uri}/#{project.ids}/licenses.json", {:api_key => @orga.api.api_key}
       expect( response.status ).to eql(403)
     end
   end
@@ -958,7 +887,7 @@ describe V2::ProjectsApiV2, :type => :request do
       file = test_file
       response = post project_uri, {
         upload:    file,
-        api_key:   user_api.api_key,
+        api_key:   @orga_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
@@ -992,12 +921,10 @@ describe V2::ProjectsApiV2, :type => :request do
     end
 
     it "deletes existing project successfully with an orga api key" do
-      orga = Organisation.new({:name => 'test_orga'})
-      expect( orga.save ).to be_truthy
       project = Project.first
-      project.organisation_id = orga.ids
+      project.organisation_id = @orga.ids
       expect( project.save )
-      response = delete "#{project_uri}/#{project.ids}", { :api_key => orga.api.api_key }
+      response = delete "#{project_uri}/#{project.ids}", { :api_key => @orga.api.api_key }
       response.status.should eql(200)
       msg = JSON.parse response.body
       msg["success"].should be_truthy
@@ -1006,10 +933,8 @@ describe V2::ProjectsApiV2, :type => :request do
     it "can not delete existing project because different orga api key" do
       orgie = Organisation.new({:name => 'test_orgie'})
       expect( orgie.save ).to be_truthy
-      orga = Organisation.new({:name => 'test_orga'})
-      expect( orga.save ).to be_truthy
       project = Project.first
-      project.organisation_id = orga.ids
+      project.organisation_id = @orga.ids
       expect( project.save )
       response = delete "#{project_uri}/#{project.ids}", { :api_key => orgie.api.api_key }
       response.status.should eql(403)
