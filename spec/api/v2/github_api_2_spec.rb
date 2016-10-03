@@ -203,6 +203,11 @@ describe "GithubApiV2", :type => :request do
         cache = Versioneye::Cache.instance.mc
         cache.delete user_task_key
 
+        Plan.create_defaults
+        orga = OrganisationService.create_new user, "test_orga"
+        orga.plan = Plan.micro
+        orga.save
+
         get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
 
         sleep 4
@@ -246,6 +251,11 @@ describe "GithubApiV2", :type => :request do
         user_task_key = "#{user[:username]}-#{user[:github_id]}"
         cache = Versioneye::Cache.instance.mc
         cache.delete user_task_key
+
+        Plan.create_defaults
+        orga = OrganisationService.create_new user, "test_orga"
+        orga.plan = Plan.micro
+        orga.save
 
         get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
 

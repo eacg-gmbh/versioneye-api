@@ -190,7 +190,8 @@ module V2
 
         Rails.logger.info "Going to import #{repo_name}:#{branch}:#{project_file} for #{user.username}"
         begin
-          ProjectImportService.import_from_github(user, repo_name, project_file, branch)
+          orga = OrganisationService.index(user, true).first
+          ProjectImportService.import_from_github(user, repo_name, project_file, branch, orga.ids)
         rescue => e
           error! e.message, 500
         end
