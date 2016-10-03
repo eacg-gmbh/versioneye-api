@@ -28,6 +28,8 @@ module EntitiesV2
     expose :licenses_red_sum
     expose :licenses_unknown_sum
     expose :license_whitelist_name
+    expose :child_ids
+    expose :parent_id
     expose :created_at
     expose :updated_at
   end
