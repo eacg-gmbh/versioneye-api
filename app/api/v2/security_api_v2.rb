@@ -24,6 +24,11 @@ module V2
         optional :desc_sort, :type => String, :desc => "Desc sort by value"
       end
       get '/' do
+        orga = current_orga
+        if env.to_s.eql?('production') && (orga.nil? || orga.plan.nil? || orga.plan.price.to_i == 0)
+          error! "This API endpoint is only for paying customers. Please upgrade your plan.", 403
+        end
+
         prod_key = decode_prod_key(params[:prod_key])
         lang = get_language_param(params[:language])
         page = 0
