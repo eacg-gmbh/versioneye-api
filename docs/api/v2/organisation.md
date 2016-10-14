@@ -61,6 +61,8 @@ And here is an example for Java:
 }
 ```
 
+In the example above we can see that the component `org.apache.maven/maven-plugin-api` is used by 3 projects in 2 different versions. The projects `versioneye/versioneye_maven_plugin` and `versioneye-maven-crawler` are using it in version 3.3.9. The `maven-indexer` project is using the same component in version 3.0.5.
+
 The results can be filtered by: 
 
  - language 
