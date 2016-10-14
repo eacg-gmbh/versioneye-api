@@ -14,7 +14,9 @@ For example:
 https://www.versioneye.com/api/v2/organisations/versioneye/inventory?language=Java&api_key=0123456789
 ```
 
-That will return a JSON object with this structure: 
+The `ORGA_NAME` must fit to the used `API_KEY`. Please always use the `API_KEY` from the organisation you are using in your API request.
+
+The response is a JSON object with this structure: 
 
 ```
 {
