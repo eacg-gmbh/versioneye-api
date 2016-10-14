@@ -21,6 +21,7 @@ module V2
     mount ProductsApiV2
     mount ServicesApiV2
     mount ProjectsApiV2
+    mount OrganisationsApiV2
     mount SessionsApiV2
     mount UsersApiV2
     mount GithubApiV2
