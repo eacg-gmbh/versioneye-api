@@ -27,7 +27,7 @@ end
 
 group :development do
   gem 'psych'             , '~> 2.1.0'
-  gem 'terminal-notifier' , '~> 1.6.0'
+  gem 'terminal-notifier' , '~> 1.7.1'
   gem 'fakes3'            , '~> 0.2.0'
 end
 
@@ -38,7 +38,7 @@ group :test do
   gem 'rspec-rails'       , '~> 3.2'
   gem 'rspec_junit_formatter', '0.2.3'
   gem 'rspec-mocks'       , '~> 3.2'
-  gem 'capybara'          , '~> 2.7.0'
+  gem 'capybara'          , '~> 2.10.1'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'vcr'               , '~> 3.0.1', :require => false
   gem 'webmock'           , '~> 2.1.0', :require => false
