@@ -33,24 +33,24 @@ describe V2::ProjectsApiV2, :type => :request do
   describe "Unauthorized user shouldnt have access, " do
     it "returns 401, when user tries to fetch list of project" do
       get "#{project_uri}.json"
-      response.status.should eq(401)
+      expect( response.status ).to eq(401)
     end
 
     it "return 401, when user tries to get project info" do
       get "#{project_uri}/12abcdef12343434.json", nil, "HTTPS" => "on"
-      response.status.should eq(401)
+      expect( response.status ).to eq(401)
     end
 
     it "returns 401, when user tries to upload file" do
       file = test_file
       post project_uri + '.json', {upload: file, multipart:true, send_file: true}, "HTTPS" => "on"
       file.close
-      response.status.should eq(401)
+      expect( response.status ).to eq(401)
     end
 
     it "returns 401, when user tries to delete file" do
       delete project_uri + '/1223335454545324.json', :upload => "123456", "HTTPS" => "on"
-      response.status.should eq(401)
+      expect( response.status ).to eq(401)
     end
   end
 
@@ -59,22 +59,22 @@ describe V2::ProjectsApiV2, :type => :request do
     include Rack::Test::Methods
     it 'lists 0 because user has no projects' do
       response = get "#{project_uri}", {api_key: user_api.api_key}, "HTTPS" => "on"
-      response.status.should eq(200)
+      expect( response.status ).to eq(200)
       project_info2 = JSON.parse response.body
 
       response = get project_uri, {:api_key => user_api.api_key}, "HTTPS" => "on"
-      response.status.should eq(200)
+      expect( response.status ).to eq(200)
     end
     it 'lists 1 because user has 1 project, but 2 are in the db.' do
       user = UserFactory.create_new 124
-      proj = ProjectFactory.create_new user
+      proj = ProjectFactory.create_new user, nil, true, @orga
       expect( proj.save ).to be_truthy
 
       project = ProjectFactory.create_new test_user
       expect( project.save ).to be_truthy
 
       response = get project_uri, {:api_key => user_api.api_key}, "HTTPS" => "on"
-      response.status.should eq(200)
+      expect( response.status ).to eq(200)
       resp = JSON.parse response.body
       expect( resp.count ).to eq(1)
       expect( resp.first['id'] ).to_not be_nil
@@ -175,7 +175,7 @@ describe V2::ProjectsApiV2, :type => :request do
       }, "HTTPS" => "on"
       file.close
       p response.body
-      response.status.should eq(500)
+      expect( response.status ).to eq(500)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq('project file could not be parsed. Maybe the file is empty? Or not valid?')
     end
@@ -189,7 +189,7 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      response.status.should eq(201)
+      expect( response.status ).to eq(201)
       expect( Project.count ).to eq(1)
       expect( Project.first.name ).to eq('Gemfile.lock')
       expect( Project.first.public ).to be_truthy
@@ -207,7 +207,7 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      response.status.should eq(201)
+      expect( response.status ).to eq(201)
       expect( Project.count ).to eq(1)
       expect( Project.first.name ).to eq('my_new_project')
       expect( Project.first.public ).to be_truthy
@@ -226,7 +226,7 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      response.status.should eq(201)
+      expect( response.status ).to eq(201)
       expect( Project.count ).to eq(1)
       expect( Project.first.name ).to eq('my_new_project')
       expect( Project.first.public ).to be_truthy
@@ -243,7 +243,7 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      response.status.should eq(201)
+      expect( response.status ).to eq(201)
       expect( Project.count ).to eq(1)
       expect( Project.first.name ).to eq('Gemfile.lock')
       expect( Project.first.public ).to be_truthy
@@ -266,7 +266,7 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      response.status.should eq(201)
+      expect( response.status ).to eq(201)
       expect( Project.count ).to eq(1)
       expect( Project.first.name ).to eq('my_new_project')
       expect( Project.first.public ).to be_truthy
@@ -301,7 +301,7 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      response.status.should eq(201)
+      expect( response.status ).to eq(201)
       expect( Project.count ).to eq(1)
       expect( Project.first.name ).to eq('my_new_project')
       expect( Project.first.public ).to be_truthy
@@ -318,14 +318,14 @@ describe V2::ProjectsApiV2, :type => :request do
 
     it "fails, when upload-file is missing" do
       response = post "#{project_uri}/test_key", {:api_key => user_api.api_key}, "HTTPS" => "on"
-      response.status.should eq(400)
+      expect( response.status ).to eq(400)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq('project_file is missing')
     end
 
     it "fails, when upload-file is a string" do
       response = post "#{project_uri}/test_key", {:api_key => user_api.api_key, :project_file => ''}, "HTTPS" => "on"
-      response.status.should eq(400)
+      expect( response.status ).to eq(400)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq('project_file is invalid')
     end
@@ -339,12 +339,12 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      response.status.should eq(400)
+      expect( response.status ).to eq(400)
     end
 
     it "returns 500 because uploaded file is empty." do
       project = ProjectFactory.create_new test_user
-      Project.count.should eq(1)
+      expect( Project.count ).to eq(1)
       update_uri = "#{project_uri}/#{project.id.to_s}?api_key=#{user_api.api_key}"
       file = empty_file
       response = post update_uri, {
@@ -353,14 +353,14 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      response.status.should eq(500)
+      expect( response.status ).to eq(500)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq('project file could not be parsed. Maybe the file is empty? Or not valid?')
     end
 
     it "returns 200 after successfully project update" do
       project = ProjectFactory.create_new test_user
-      Project.count.should eq(1)
+      expect( Project.count ).to eq(1)
       update_uri = "#{project_uri}/#{project.id.to_s}?api_key=#{user_api.api_key}"
       file = test_file
       response = post update_uri, {
@@ -369,7 +369,7 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      response.status.should eq(201)
+      expect( response.status ).to eq(201)
     end
 
     it "returns 403 because user is not a collaborator of the project" do
@@ -423,16 +423,15 @@ describe V2::ProjectsApiV2, :type => :request do
       api = ApiFactory.create_new member, true
       api = Api.where(:user_id => member.ids).first
       expect( api ).to_not be_nil
-      orga = Organisation.new :name => 'orga'
-      expect( orga.save ).to be_truthy
-      team = Team.new :name => 'updates', :organisation_id => orga.ids
+
+      team = Team.new :name => 'updates', :organisation_id => @orga.ids
       expect( team.save ).to be_truthy
       expect( team.add_member(member)).to be_truthy
-      project = ProjectFactory.create_new test_user
-      project.organisation_id = orga.ids
-      project.teams.push team
+      project = ProjectFactory.create_new test_user, nil, true, @orga
+      project.teams = [team]
       expect( project.save ).to be_truthy
-      Project.count.should eq(1)
+
+      expect( Project.count ).to eq(1)
       update_uri = "#{project_uri}/#{project.id.to_s}?api_key=#{api.api_key}"
       file = test_file
       response = post update_uri, {
@@ -452,7 +451,7 @@ describe V2::ProjectsApiV2, :type => :request do
     it "returns 400 because project does not exist" do
       merge_uri = "#{project_uri}/testng/testng/merge_ga/888?api_key=#{user_api.api_key}"
       response = get merge_uri
-      response.status.should eq(400)
+      expect( response.status ).to eq(400)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq("Project `testng/testng` doesn't exists")
     end
@@ -467,7 +466,7 @@ describe V2::ProjectsApiV2, :type => :request do
       artifact = parent.artifact_id.gsub(".", "~")
       merge_uri = "#{project_uri}/#{group}/#{artifact}/merge_ga/NaN?api_key=#{user_api.api_key}"
       response = get merge_uri
-      response.status.should eq(400)
+      expect( response.status ).to eq(400)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq("Project `NaN` doesn't exists")
     end
@@ -479,17 +478,17 @@ describe V2::ProjectsApiV2, :type => :request do
       parent.save
 
       child = ProjectFactory.create_new test_user, {:name => "child"}, true
-      Project.count.should eq(2)
-      Project.where(:parent_id.ne => nil).count.should eq(0)
+      expect( Project.count ).to eq(2)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(0)
 
       group    = parent.group_id.gsub(".", "~")
       artifact = parent.artifact_id.gsub(".", "~")
       merge_uri = "#{project_uri}/#{group}/#{artifact}/merge_ga/#{child.id.to_s}?api_key=#{user_api.api_key}"
       response = get merge_uri
-      response.status.should eq(200)
-      Project.where(:parent_id.ne => nil).count.should eq(1)
+      expect( response.status ).to eq(200)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(1)
       child = Project.find child.id
-      child.parent_id.to_s.should eq(parent.id.to_s)
+      expect( child.parent_id.to_s ).to eq(parent.id.to_s)
     end
 
     it "returns 200 after successfully merged" do
@@ -499,17 +498,17 @@ describe V2::ProjectsApiV2, :type => :request do
       parent.save
 
       child = ProjectFactory.create_new test_user, {:name => "child"}, true
-      Project.count.should eq(2)
-      Project.where(:parent_id.ne => nil).count.should eq(0)
+      expect( Project.count ).to eq(2)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(0)
 
       group    = parent.group_id.gsub(".", "~")
       artifact = parent.artifact_id.gsub(".", "~")
       merge_uri = "#{project_uri}/#{group}/#{artifact}/merge_ga/#{child.id.to_s}?api_key=#{@orga.api.api_key}"
       response = get merge_uri
-      response.status.should eq(200)
-      Project.where(:parent_id.ne => nil).count.should eq(1)
+      expect( response.status ).to eq(200)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(1)
       child = Project.find child.id
-      child.parent_id.to_s.should eq(parent.id.to_s)
+      expect( child.parent_id.to_s ).to eq(parent.id.to_s)
     end
   end
 
@@ -520,52 +519,52 @@ describe V2::ProjectsApiV2, :type => :request do
     it "returns 400 because project does not exist" do
       merge_uri = "#{project_uri}/111111/merge/2222?api_key=#{user_api.api_key}"
       response = get merge_uri
-      response.status.should eq(400)
+      expect( response.status ).to eq(400)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq("Project `111111` doesn't exists")
     end
 
     it "returns 400 because child does not exist" do
       parent = ProjectFactory.create_new test_user
-      Project.count.should eq(1)
+      expect( Project.count ).to eq(1)
 
       merge_uri = "#{project_uri}/#{parent.id.to_s}/merge/2222?api_key=#{user_api.api_key}"
       response = get merge_uri
-      response.status.should eq(400)
+      expect( response.status ).to eq(400)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq("Project `2222` doesn't exists")
     end
 
     it "returns 200 after successfully merged by GA" do
       parent = ProjectFactory.create_new test_user
-      Project.count.should eq(1)
+      expect( Project.count ).to eq(1)
 
       child = ProjectFactory.create_new test_user, {:name => "child"}, true
-      Project.count.should eq(2)
-      Project.where(:parent_id.ne => nil).count.should eq(0)
+      expect( Project.count ).to eq(2)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(0)
 
       merge_uri = "#{project_uri}/#{parent.id.to_s}/merge/#{child.id.to_s}?api_key=#{user_api.api_key}"
       response = get merge_uri
-      response.status.should eq(200)
-      Project.where(:parent_id.ne => nil).count.should eq(1)
+      expect( response.status ).to eq(200)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(1)
       child = Project.find child.id
-      child.parent_id.to_s.should eq(parent.id.to_s)
+      expect( child.parent_id.to_s ).to eq(parent.id.to_s)
     end
 
     it "returns 200 after successfully merged by GA with orga api key" do
       parent = ProjectFactory.create_new test_user
-      Project.count.should eq(1)
+      expect( Project.count ).to eq(1)
 
       child = ProjectFactory.create_new test_user, {:name => "child"}, true
-      Project.count.should eq(2)
-      Project.where(:parent_id.ne => nil).count.should eq(0)
+      expect( Project.count ).to eq(2)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(0)
 
       merge_uri = "#{project_uri}/#{parent.id.to_s}/merge/#{child.id.to_s}?api_key=#{@orga.api.api_key}"
       response = get merge_uri
-      response.status.should eq(200)
-      Project.where(:parent_id.ne => nil).count.should eq(1)
+      expect( response.status ).to eq(200)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(1)
       child = Project.find child.id
-      child.parent_id.to_s.should eq(parent.id.to_s)
+      expect( child.parent_id.to_s ).to eq(parent.id.to_s)
     end
   end
 
@@ -576,56 +575,56 @@ describe V2::ProjectsApiV2, :type => :request do
     it "returns 400 because project does not exist" do
       merge_uri = "#{project_uri}/11/unmerge/22?api_key=#{user_api.api_key}"
       response = get merge_uri
-      response.status.should eq(400)
+      expect( response.status ).to eq(400)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq("Project `11` doesn't exists")
     end
 
     it "returns 400 because child does not exist" do
       parent = ProjectFactory.create_new test_user
-      Project.count.should eq(1)
+      expect( Project.count ).to eq(1)
 
       merge_uri = "#{project_uri}/#{parent.id.to_s}/unmerge/22?api_key=#{user_api.api_key}"
       response = get merge_uri
-      response.status.should eq(400)
+      expect( response.status ).to eq(400)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq("Project `22` doesn't exists")
     end
 
     it "returns 200 after successfully unmerged" do
       parent = ProjectFactory.create_new test_user
-      Project.count.should eq(1)
+      expect( Project.count ).to eq(1)
 
       child = ProjectFactory.create_new test_user, {:name => "child"}, true
-      Project.count.should eq(2)
+      expect( Project.count ).to eq(2)
       child.parent_id = parent.id.to_s
       child.save
-      Project.where(:parent_id.ne => nil).count.should eq(1)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(1)
 
       merge_uri = "#{project_uri}/#{parent.id.to_s}/unmerge/#{child.id.to_s}?api_key=#{user_api.api_key}"
       response = get merge_uri
-      response.status.should eq(200)
-      Project.where(:parent_id.ne => nil).count.should eq(0)
+      expect( response.status ).to eq(200)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(0)
       child = Project.find child.id
-      child.parent_id.to_s.should eq("")
+      expect( child.parent_id.to_s ).to eq("")
     end
 
     it "returns 200 after successfully unmerged with orga api key" do
       parent = ProjectFactory.create_new test_user
-      Project.count.should eq(1)
+      expect( Project.count ).to eq(1)
 
       child = ProjectFactory.create_new test_user, {:name => "child"}, true
-      Project.count.should eq(2)
+      expect( Project.count ).to eq(2)
       child.parent_id = parent.id.to_s
       child.save
-      Project.where(:parent_id.ne => nil).count.should eq(1)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(1)
 
       merge_uri = "#{project_uri}/#{parent.id.to_s}/unmerge/#{child.id.to_s}?api_key=#{@orga.api.api_key}"
       response = get merge_uri
-      response.status.should eq(200)
-      Project.where(:parent_id.ne => nil).count.should eq(0)
+      expect( response.status ).to eq(200)
+      expect( Project.where(:parent_id.ne => nil).count ).to eq(0)
       child = Project.find child.id
-      child.parent_id.to_s.should eq("")
+      expect( child.parent_id.to_s ).to eq("")
     end
   end
 
@@ -637,7 +636,7 @@ describe V2::ProjectsApiV2, :type => :request do
         api_key: user_api.api_key
       }
 
-      response.status.should eq(400)
+      expect( response.status ).to eq(400)
     end
   end
 
@@ -653,7 +652,7 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      response.status.should eq(201)
+      expect( response.status ).to eq(201)
     end
 
     it "returns correct project info for existing project" do
@@ -662,11 +661,11 @@ describe V2::ProjectsApiV2, :type => :request do
         api_key: @orga_api.api_key
       }
 
-      response.status.should eq(200)
+      expect( response.status ).to eq(200)
       project_info2 = JSON.parse response.body
-      project_info2["name"].should eq(project_name)
-      project_info2["source"].should eq("API")
-      project_info2["dependencies"].count.should eql(7)
+      expect( project_info2["name"] ).to eq(project_name)
+      expect( project_info2["source"] ).to eq("API")
+      expect( project_info2["dependencies"].count ).to eql(7)
     end
 
     it "returns an error because user has no access to it." do
@@ -676,7 +675,7 @@ describe V2::ProjectsApiV2, :type => :request do
         api_key: user.api.api_key
       }
 
-      response.status.should eq(403)
+      expect( response.status ).to eq(403)
       bod = JSON.parse response.body
       expect( bod["error"] ).to eq('You are not a collaborator of the requested project')
     end
@@ -689,27 +688,31 @@ describe V2::ProjectsApiV2, :type => :request do
         api_key: @orga.api.api_key
       }
 
-      response.status.should eq(200)
+      expect( response.status ).to eq(200)
       project_info2 = JSON.parse response.body
-      project_info2["name"].should eq(project_name)
-      project_info2["source"].should eq("API")
-      project_info2["dependencies"].count.should eql(7)
+      expect( project_info2["name"] ).to eq(project_name)
+      expect( project_info2["source"] ).to eq("API")
+      expect( project_info2["dependencies"].count ).to eql(7)
     end
 
     it "returns error code because orga key has no access" do
-      orga0 = Organisation.new({ :name => "test_orga0" })
-      orga0.save
-      orga = Organisation.new({ :name => "test_orga1" })
-      orga.plan = Plan.micro
-      orga.save
+      user0 = UserFactory.create_new 1
+      orga0 = OrganisationService.create_new_for( user0 )
+      expect( orga0.save ).to be_truthy
+
+      user2 = UserFactory.create_new 2
+      orga2 = OrganisationService.create_new_for( user2 )
+      expect( orga2.save ).to be_truthy
+
       project = Project.first
-      project.organisation_id = orga.ids
-      project.save
+      project.organisation_id = orga2.ids
+      expect( project.save )
+
       response = get "#{project_uri}/#{project.ids}", {
         api_key: orga0.api.api_key
       }
 
-      response.status.should eq(403) # no access
+      expect( response.status ).to eq(403) # no access
     end
 
     it "return correct licences in project dependencies for existing project" do
@@ -731,15 +734,17 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( license.save ).to be_truthy
 
       lwl = LicenseWhitelist.new(:name => 'my_lwl')
+      lwl.organisation = @orga
       lwl.add_license_element "MIT"
       expect( lwl.save ).to be_truthy
 
       project = Project.first
       project.license_whitelist_id = lwl.ids
-      project.save
+      project.organisation = @orga
+      expect( project.save ).to be_truthy
 
       ProjectdependencyService.update_licenses project
-      project.save
+      expect( project.save ).to be_truthy
 
       expect( Project.count ).to eq(1)
 
@@ -799,23 +804,23 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( response.status ).to eql(200)
 
       data = JSON.parse response.body
-      data["success"].should be_truthy
+      expect( data["success"] ).to be_truthy
 
       unknown_licences = data["licenses"]["unknown"].map {|x| x['name']}
       unknown_licences = unknown_licences.to_set
-      unknown_licences.include?("log4r").should be_truthy
-      unknown_licences.include?("sinatra").should be_falsey
-      unknown_licences.include?("rails").should be_falsey
+      expect( unknown_licences.include?("log4r") ).to be_truthy
+      expect( unknown_licences.include?("sinatra") ).to be_falsey
+      expect( unknown_licences.include?("rails") ).to be_falsey
 
       mit_licences = data["licenses"]["MIT"].map {|x| x['name']}
       mit_licences = mit_licences.to_set
-      mit_licences.include?("sinatra").should be_truthy
-      mit_licences.include?("rails").should be_falsey
+      expect( mit_licences.include?("sinatra") ).to be_truthy
+      expect( mit_licences.include?("rails") ).to be_falsey
 
       apache_licences = data["licenses"]["Apache-2.0"].map {|x| x['name']}
       apache_licences = apache_licences.to_set
-      apache_licences.include?("rails").should be_truthy
-      apache_licences.include?("sinatra").should be_falsey
+      expect( apache_licences.include?("rails") ).to be_truthy
+      expect( apache_licences.include?("sinatra") ).to be_falsey
     end
 
 
@@ -846,13 +851,13 @@ describe V2::ProjectsApiV2, :type => :request do
 
       mit_licences = data["licenses"]["MIT"].map {|x| x['name']}
       mit_licences = mit_licences.to_set
-      mit_licences.include?("junit").should be_truthy
-      mit_licences.include?("log4j").should be_falsey
+      expect( mit_licences.include?("junit") ).to be_truthy
+      expect( mit_licences.include?("log4j") ).to be_falsey
 
       apache_licences = data["licenses"]["Apache-2.0"].map {|x| x['name']}
       apache_licences = apache_licences.to_set
-      apache_licences.include?("log4j").should be_truthy
-      apache_licences.include?("junit").should be_falsey
+      expect( apache_licences.include?("log4j") ).to be_truthy
+      expect( apache_licences.include?("junit") ).to be_falsey
     end
 
     it "return 400 because project does not exist." do
@@ -892,7 +897,7 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      response.status.should eq(201)
+      expect( response.status ).to eq(201)
     end
 
     it "deletes fails because project does not exist" do
@@ -905,9 +910,9 @@ describe V2::ProjectsApiV2, :type => :request do
     it "deletes existing project successfully" do
       ids = Project.first.ids
       response = delete "#{project_uri}/#{ids}.json"
-      response.status.should eql(200)
+      expect( response.status ).to eql(200)
       msg = JSON.parse response.body
-      msg["success"].should be_truthy
+      expect( msg["success"] ).to be_truthy
     end
 
     it "delete fails because wrong user" do
@@ -915,9 +920,9 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( user.save ).to be_truthy
       ids = Project.first.ids
       response = delete "#{project_uri}/#{ids}.json", { :api_key => user.api.api_key }
-      response.status.should eql(403)
+      expect( response.status ).to eql(403)
       msg = JSON.parse response.body
-      msg["error"].should eq('You are not a collaborator of the requested project')
+      expect( msg["error"] ).to eq('You are not a collaborator of the requested project')
     end
 
     it "deletes existing project successfully with an orga api key" do
@@ -925,21 +930,24 @@ describe V2::ProjectsApiV2, :type => :request do
       project.organisation_id = @orga.ids
       expect( project.save )
       response = delete "#{project_uri}/#{project.ids}", { :api_key => @orga.api.api_key }
-      response.status.should eql(200)
+      expect( response.status ).to eql(200)
       msg = JSON.parse response.body
-      msg["success"].should be_truthy
+      expect( msg["success"] ).to be_truthy
     end
 
     it "can not delete existing project because different orga api key" do
-      orgie = Organisation.new({:name => 'test_orgie'})
+      uran = UserFactory.create_new 291
+      orgie = OrganisationService.create_new_for uran
       expect( orgie.save ).to be_truthy
+
       project = Project.first
       project.organisation_id = @orga.ids
       expect( project.save )
+
       response = delete "#{project_uri}/#{project.ids}", { :api_key => orgie.api.api_key }
-      response.status.should eql(403)
+      expect( response.status ).to eql(403)
       msg = JSON.parse response.body
-      msg["error"].should eq('You are not a collaborator of the requested project')
+      expect( msg["error"] ).to eq('You are not a collaborator of the requested project')
     end
 
   end

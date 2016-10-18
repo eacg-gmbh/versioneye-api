@@ -12,7 +12,11 @@ module V2
         authorized?
       end
 
-      desc 'Returns the inventory list of the organisation'
+      desc 'Returns the inventory list of the organisation', {
+        notes: %q[
+                Find a detailed description here: https://github.com/versioneye/versioneye-api/blob/master/docs/api/v2/organisation.md
+              ]
+      }
       params do
         optional :team_name, :type => String, :desc => %Q[Filter by team name]
         optional :language,  :type => String, :desc => %Q[Filter by programming language]
