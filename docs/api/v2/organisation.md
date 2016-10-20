@@ -22,7 +22,11 @@ The response is a JSON object with this structure:
 {
   "LANGUAGE:PROD_KEY:NEWEST_VERSION": {
     "PROD_KEY::VERSION::LICENSE": [
-      "LANGUAGE:PROJECT_NAME:PROJECT_ID:PROJECT_VERSION"
+      {"project_language": "", 
+       "project_name": "",
+        "project_id": "",
+        "project_version": "",
+        "project_teams: []}
     ]
   }
 }
@@ -34,7 +38,11 @@ The first row identifies the component, for example `Ruby:rails:5.0.0`. The 2nd 
 {
   "Ruby:rails:5.0.0": {
     "rails::4.0.0::MIT": [
-      "Ruby:My_first_ruby_project:1234567890:"
+      {"project_language": "Ruby", 
+       "project_name": "My_first_ruby_project",
+       "project_id": "123456789",
+       "project_version": "",
+       "project_teams: ['dev']}
     ]
   }
 }
@@ -46,16 +54,32 @@ And here is an example for Java:
 {
   "Java:org.apache.maven/maven-plugin-api:3.3.9": {
     "org.apache.maven/maven-plugin-api::3.3.9::Apache-2.0": [
-      "Java:versioneye/versioneye_maven_plugin:544d0ff9512592562c000003:3.10.2",
-      "Java:versioneye-maven-crawler:579e328f37cde6000d432c8e:1.2.0"
+      {"project_language": "Java", 
+       "project_name": "versioneye/versioneye_maven_plugin",
+       "project_id": "123456789",
+       "project_version": "3.10.2",
+       "project_teams: ['dev']},
+      {"project_language": "Java", 
+       "project_name": "versioneye-maven-crawler",
+       "project_id": "123456780",
+       "project_version": "1.2.0",
+       "project_teams: ['dev']}
     ],
     "org.apache.maven/maven-plugin-api::3.0.5::Apache-2.0": [
-      "Java:maven-indexer:56d6ba3dfa908e000e348ffc:1.1.3"
+      {"project_language": "Java", 
+       "project_name": "maven-indexer",
+       "project_id": "12345670",
+       "project_version": "1.1.3",
+       "project_teams: ['dev']}
     ]
   },
   "Java:org.apache.maven/maven-core:3.3.9": {
     "org.apache.maven/maven-core::3.3.9::Apache-2.0": [
-      "Java:versioneye/versioneye_maven_plugin:544d0ff9512592562c000003:3.10.2"
+      {"project_language": "Java", 
+       "project_name": "versioneye/versioneye_maven_plugin",
+       "project_id": "12345671",
+       "project_version": "3.10.2",
+       "project_teams: ['dev']}
     ]
   }
 }
@@ -68,6 +92,7 @@ The results can be filtered by:
  - language 
  - team_name
  - project_version
+ - post_filter
  
 Here is an example: 
 
