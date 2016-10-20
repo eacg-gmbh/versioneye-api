@@ -21,6 +21,7 @@ module V2
         optional :team_name, :type => String, :desc => %Q[Filter by team name]
         optional :language,  :type => String, :desc => %Q[Filter by programming language]
         optional :project_version, :type => String, :desc => %Q[Filter down by project version]
+        optional :post_filter, :type => String, :desc => %Q[Post processing filter. Possible values are 'ALL', 'duplicates_only', 'show_duplicates']
       end
       get '/:orga_name/inventory' do
         rate_limit
@@ -32,13 +33,17 @@ module V2
 
         team      = params[:team_name]
         team      = 'ALL' if team.to_s.empty?
+
         language  = params[:language]
         language  = 'ALL' if language.to_s.empty?
+
         pversion  = params[:project_version]
         pversion  = 'ALL' if pversion.to_s.empty?
-        inventory = @orga.component_list team, language, pversion
 
-        inventory
+        post_filter  = params[:post_filter]
+        post_filter  = 'ALL' if post_filter.to_s.empty?
+
+        @orga.component_list team, language, pversion, post_filter
       end
 
     end
