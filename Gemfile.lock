@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 3ee4d3b8322dd6a088a5c5b3cdad8e9b8e65d532
-  tag: v10.3.15
+  revision: 9302676d52df66415c0508684235b06093874cd9
+  tag: v10.3.17
   specs:
-    versioneye-core (10.3.15)
+    versioneye-core (10.3.17)
       actionmailer (~> 5.0.0.1)
       aws-sdk (~> 2.6.2)
       bundler (~> 1.13.0)
@@ -79,19 +79,19 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (7.1.4)
-    aws-sdk (2.6.11)
-      aws-sdk-resources (= 2.6.11)
-    aws-sdk-core (2.6.11)
+    aws-sdk (2.6.13)
+      aws-sdk-resources (= 2.6.13)
+    aws-sdk-core (2.6.13)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.6.11)
-      aws-sdk-core (= 2.6.11)
+    aws-sdk-resources (2.6.13)
+      aws-sdk-core (= 2.6.13)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
     bson (4.1.1)
     builder (3.2.2)
-    bunny (2.6.0)
+    bunny (2.6.1)
       amq-protocol (>= 2.0.1)
     capybara (2.10.1)
       addressable
@@ -309,7 +309,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stripe (1.55.0)
+    stripe (1.55.1)
       rest-client (>= 1.4, < 4.0)
     terminal-notifier (1.7.1)
     therubyracer (0.12.2)
@@ -330,9 +330,9 @@ GEM
       ansi
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2016.7)
+    tzinfo-data (1.2016.8)
       tzinfo (>= 1.0.0)
-    uglifier (3.0.2)
+    uglifier (3.0.3)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
