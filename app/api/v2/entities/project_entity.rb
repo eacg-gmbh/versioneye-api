@@ -21,6 +21,12 @@ module EntitiesV2
     expose :licenses_red
     expose :licenses_unknown
     expose :sv_count
+    expose :dep_number_sum
+    expose :out_number_sum
+    expose :unknown_number_sum
+    expose :licenses_red_sum
+    expose :licenses_unknown_sum
+    expose :sv_count_sum
     expose :created_at
     expose :updated_at
     expose :license_whitelist_name, :as => :license_whitelist
@@ -29,3 +35,5 @@ module EntitiesV2
     expose :parent_id
   end
 end
+
+
