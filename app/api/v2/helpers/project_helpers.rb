@@ -11,6 +11,7 @@ module ProjectHelpers
     project.public = true  if visibility.to_s.eql?('public')
     project.public = true  if visibility.to_s.empty?
     project.name   = name  if !name.to_s.empty?
+    project.private_project = true
     project.save
 
     if orga_name.to_s.empty? && @current_user
