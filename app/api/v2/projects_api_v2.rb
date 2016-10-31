@@ -106,7 +106,7 @@ module V2
 
         env  = Settings.instance.environment
         orga = current_orga
-        if env.to_s.eql?('production') && (orga.nil? || orga.plan.nil? || orga.plan.price.to_i == 0)
+        if env.to_s.eql?('production') && (orga.nil? || orga.max_private_projects_count.to_i == 0)
           error! "This API endpoint is only for paying customers. Please upgrade your plan.", 403
         end
 
