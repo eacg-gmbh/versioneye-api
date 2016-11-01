@@ -115,8 +115,10 @@ module V2
 
         project = nil
         begin
-          project = upload_and_store( project_file, params[:visibility], params[:name], params[:orga_name], params[:team_name] )
-          project.temp = true if params[:temp].to_s.eql?('true')
+          tempp = false
+          tempp = true if params[:temp].to_s.eql?('true')
+          project = upload_and_store( project_file, params[:visibility], params[:name], params[:orga_name], params[:team_name], tempp )
+          project.temp = tempp
           project.save
         rescue => e
           error! e.message, 500
