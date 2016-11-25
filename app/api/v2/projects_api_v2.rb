@@ -104,12 +104,6 @@ module V2
         rate_limit
         track_apikey
 
-        env  = Settings.instance.environment
-        orga = current_orga
-        if env.to_s.eql?('production') && (orga.nil? || orga.max_private_projects_count.to_i < 2  )
-          error! "This API endpoint is only for paying customers. Please upgrade your plan.", 403
-        end
-
         datafile = ActionDispatch::Http::UploadedFile.new( params[:upload] )
         project_file = {'datafile' => datafile}
 
@@ -117,7 +111,12 @@ module V2
         begin
           tempp = false
           tempp = true if params[:temp].to_s.eql?('true')
-          project = upload_and_store( project_file, params[:visibility], params[:name], params[:orga_name], params[:team_name], tempp )
+          project = upload_and_store( project_file,
+                                      params[:visibility],
+                                      params[:name],
+                                      params[:orga_name],
+                                      params[:team_name],
+                                      tempp )
           project.temp = tempp
           project.save
         rescue => e
