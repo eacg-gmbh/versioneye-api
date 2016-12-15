@@ -16,7 +16,7 @@ gem 'htmlentities'       , '~> 4.3.2'
 gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v10.11.7'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
-gem 'font-awesome-sass', '~> 4.6.2'
+gem 'font-awesome-sass', '~> 4.7.0'
 
 group :assets do
   gem 'sass'                  , :require => 'sass'
@@ -26,7 +26,7 @@ group :assets do
 end
 
 group :development do
-  gem 'psych'             , '~> 2.1.0'
+  gem 'psych'             , '~> 2.2.2'
   gem 'terminal-notifier' , '~> 1.7.1'
   gem 'fakes3'            , '~> 0.2.0'
 end
@@ -38,10 +38,10 @@ group :test do
   gem 'rspec-rails'       , '~> 3.2'
   gem 'rspec_junit_formatter', '0.2.3'
   gem 'rspec-mocks'       , '~> 3.2'
-  gem 'capybara'          , '~> 2.10.1'
+  gem 'capybara'          , '~> 2.11.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'vcr'               , '~> 3.0.1', :require => false
-  gem 'webmock'           , '~> 2.1.0', :require => false
+  gem 'webmock'           , '~> 2.3.1', :require => false
   gem 'database_cleaner'  , '~> 1.5.1'
   gem 'factory_girl'      , '~> 4.7.0'
   gem 'factory_girl_rails', '~> 4.7.0'
