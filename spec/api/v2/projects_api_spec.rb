@@ -166,7 +166,6 @@ describe V2::ProjectsApiV2, :type => :request do
 
     it "returns 500 because project is empty" do
       file = empty_file
-      p @orga_api.api_key
       response = post project_uri, {
         upload:    file,
         api_key:   @orga_api.api_key,
@@ -174,10 +173,57 @@ describe V2::ProjectsApiV2, :type => :request do
         multipart: true
       }, "HTTPS" => "on"
       file.close
-      p response.body
       expect( response.status ).to eq(500)
       resp = JSON.parse response.body
       expect( resp['error'] ).to eq('project file could not be parsed. Maybe the file is empty? Or not valid?')
+    end
+
+    it "returns error when user API key does not belong to Organisation" do
+      file = test_file
+
+      foreign_user = UserFactory.create_new(99)
+      user_api = Api.by_user( foreign_user )
+      if user_api.nil?
+        user_api = Api.create_new( foreign_user )
+      end
+
+      response = post project_uri, {
+        upload:    file,
+        api_key:   user_api.api_key,
+        orga_name: @orga.name,
+        team_name: @orga.owner_team.name,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      expect( response.status ).to eq(500)
+      expect( Project.count ).to eq(0)
+    end
+
+    it "returns 201 and project info, when upload was successfully with user API key" do
+      file = test_file
+
+      user_api = Api.by_user( test_user )
+      if user_api.nil?
+        user_api = Api.create_new( test_user )
+      end
+
+      @orga.owner_team.add_member( test_user )
+      response = post project_uri, {
+        upload:    file,
+        api_key:   user_api.api_key,
+        orga_name: @orga.name,
+        team_name: @orga.owner_team.name,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      expect( response.status ).to eq(201)
+      expect( Project.count ).to eq(1)
+      expect( Project.first.name ).to eq('Gemfile.lock')
+      expect( Project.first.public ).to be_truthy
+      expect( Project.first.temp ).to be_falsey
+      expect( Project.first.organisation.name ).to eq(@orga.name)
     end
 
     it "returns 201 and project info, when upload was successfully" do
@@ -194,6 +240,7 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( Project.first.name ).to eq('Gemfile.lock')
       expect( Project.first.public ).to be_truthy
       expect( Project.first.temp ).to be_falsey
+      expect( Project.first.organisation.name ).to eq(@orga.name)
     end
 
     it "returns 201 and project info, when upload was successfully" do

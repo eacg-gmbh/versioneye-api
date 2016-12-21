@@ -2,26 +2,18 @@ module ProjectHelpers
 
 
   def upload_and_store file, visibility = 'private', name = nil, orga_name = nil, team_name = Team::A_OWNERS, tempp = false
-    orga = current_orga
-    orga_id = nil
-    orga_id = orga.ids if orga
-    project = ProjectImportService.import_from_upload file, current_user, true, orga_id, tempp
+    orga = fetch_orga( orga_name )
+    if orga.nil?
+      raise "ERROR. Organisation is not defined or you do not have access to it!"
+    end
 
+    project = ProjectImportService.import_from_upload file, current_user, true, orga.ids, tempp
     project.public = false if visibility.to_s.eql?('private')
     project.public = true  if visibility.to_s.eql?('public')
     project.public = true  if visibility.to_s.empty?
     project.name   = name  if !name.to_s.empty?
     project.private_project = true
     project.save
-
-    if orga_name.to_s.empty? && @current_user
-      orga = OrganisationService.index(@current_user, true).first
-      orga_name = orga.name if orga
-    end
-
-    if !orga_name.to_s.empty? && @current_user
-      assign_organisation project, orga_name
-    end
 
     assign_team project, team_name
 
@@ -30,15 +22,6 @@ module ProjectHelpers
 
 
   private
-
-
-    def assign_organisation project, orga_name
-      orga = Organisation.where(:name => orga_name).first
-      return false if orga.nil?
-      return false if OrganisationService.allowed_to_transfer_projects?( orga, current_user ) == false
-
-      OrganisationService.transfer project, orga
-    end
 
 
     def assign_team project, team_name = Team::A_OWNERS
@@ -50,6 +33,21 @@ module ProjectHelpers
 
       project.teams = [team]
       project.save
+    end
+
+
+    def fetch_orga orga_name
+      orga = current_orga
+      return orga if orga
+      return orga if orga_name.to_s.empty?
+
+      orga = Organisation.where(:name => orga_name).first
+      if orga && OrganisationService.member?( orga, current_user )
+        @orga = orga
+        return orga
+      else
+        return nil
+      end
     end
 
 
