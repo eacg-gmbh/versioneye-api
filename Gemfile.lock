@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 0868e04f76c1f1dbd75e1b947906690d7a404521
-  tag: v11.0.3
+  revision: d941062e465ff04864fd6fffd11f110d137dc4c3
+  tag: v11.0.15
   specs:
-    versioneye-core (11.0.3)
+    versioneye-core (11.0.15)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.6.19)
       bundler (~> 1.13.0)
@@ -14,9 +14,9 @@ GIT
       gemnasium-parser (~> 0.1.9)
       httparty (~> 0.14.0)
       mongoid (~> 6.0.0)
-      naturalsorter (~> 3.0.14)
+      naturalsorter (~> 3.0.15)
       net-ldap (~> 0.15.0)
-      nokogiri (~> 1.6.8)
+      nokogiri (~> 1.6.0)
       oauth (~> 0.5.0)
       octokit (~> 4.6.0)
       pdfkit (~> 0.8.2)
@@ -80,13 +80,13 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (7.1.4)
-    aws-sdk (2.6.42)
-      aws-sdk-resources (= 2.6.42)
-    aws-sdk-core (2.6.42)
+    aws-sdk (2.6.43)
+      aws-sdk-resources (= 2.6.43)
+    aws-sdk-core (2.6.43)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.6.42)
-      aws-sdk-core (= 2.6.42)
+    aws-sdk-resources (2.6.43)
+      aws-sdk-core (= 2.6.43)
     aws-sigv4 (1.0.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -121,7 +121,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.0.3)
+    concurrent-ruby (1.0.4)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     dalli (2.7.6)
@@ -145,7 +145,7 @@ GEM
     fakes3 (0.2.5)
       builder
       thor
-    faraday (0.10.0)
+    faraday (0.10.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.14)
     font-awesome-sass (4.7.0)
@@ -169,7 +169,7 @@ GEM
     grape-entity (0.3.0)
       activesupport
       multi_json (>= 1.3.2)
-    hashdiff (0.3.1)
+    hashdiff (0.3.2)
     hashie (3.4.6)
     hashr (0.0.22)
     htmlentities (4.3.4)
@@ -201,7 +201,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     nap (1.1.0)
-    naturalsorter (3.0.14)
+    naturalsorter (3.0.15)
     net-ldap (0.15.0)
     netrc (0.11.0)
     nio4r (1.2.1)
@@ -217,7 +217,7 @@ GEM
       httparty (~> 0.9)
       persistent_http (< 2)
     psych (2.2.2)
-    public_suffix (2.0.4)
+    public_suffix (2.0.5)
     puma (3.6.2)
     rack (2.0.1)
     rack-accept (0.4.5)
@@ -241,9 +241,9 @@ GEM
     rails-assets-bootstrap (3.3.7)
       rails-assets-jquery (>= 1.9.1, < 4)
     rails-assets-jquery (3.1.1)
-    rails-dom-testing (2.0.1)
+    rails-dom-testing (2.0.2)
       activesupport (>= 4.2.0, < 6.0)
-      nokogiri (~> 1.6.0)
+      nokogiri (~> 1.6)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
     railties (5.0.1)
@@ -296,7 +296,7 @@ GEM
     sawyer (0.8.1)
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
-    selenium-webdriver (3.0.4)
+    selenium-webdriver (3.0.5)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
@@ -347,7 +347,7 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
-    webmock (2.3.1)
+    webmock (2.3.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
