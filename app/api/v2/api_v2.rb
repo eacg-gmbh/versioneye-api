@@ -7,6 +7,7 @@ require_relative 'projects_api_v2'
 require_relative 'sessions_api_v2'
 require_relative 'users_api_v2'
 require_relative 'github_api_v2'
+require_relative 'facebook_api_v2'
 require_relative 'security_api_v2'
 
 module V2
@@ -25,13 +26,14 @@ module V2
     mount SessionsApiV2
     mount UsersApiV2
     mount GithubApiV2
+    mount FacebookApiV2
     mount SecurityApiV2
 
     env        = Settings.instance.environment
     server_url = GlobalSetting.get( env, 'server_url' )
     server_url = 'https://www.versioneye.com' if env.to_s.eql?('production')
     server_url = 'http://127.0.0.1:3000' if env.to_s.eql?('test')
-    server_url = 'http://127.0.0.1:9090' if server_url.to_s.empty?
+    server_url = 'http://127.0.0.1:3000' if server_url.to_s.empty?
 
     base_url = "#{server_url}/api"
     ENV['API_BASE_PATH'] = base_url
