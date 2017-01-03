@@ -19,16 +19,22 @@ module V2
       content_type :txt, 'text/plain'
       desc "ping pong"
       get '/ping' do
-        p params['hub.mode']
-        p params['hub.verify_token']
-        p params['hub.challenge']
-        p params
-
         challenge = params['hub.challenge']
         challenge = "pong" if challenge.to_s.empty?
-
         status 200
         body challenge
+      end
+
+
+      #-- POST '/facebook/ping' --
+      content_type :txt, 'text/plain'
+      desc "ping pong"
+      post '/ping' do
+        Rails.logger.info params
+        Rails.logger.info params['object']
+        Rails.logger.info params['entry']
+
+        status 200
       end
 
 
