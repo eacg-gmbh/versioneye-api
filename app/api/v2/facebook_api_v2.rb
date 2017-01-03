@@ -30,10 +30,9 @@ module V2
       content_type :txt, 'text/plain'
       desc "ping pong"
       post '/ping' do
-        Rails.logger.info params
-        Rails.logger.info params['object']
-        Rails.logger.info params['entry']
-
+        Rails.logger.info "params: #{params}"
+        Rails.logger.info "object: #{params['object']}"
+        Rails.logger.info "entry: #{params['entry']}"
         status 200
       end
 
