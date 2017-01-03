@@ -27,6 +27,7 @@ module V2
 
 
       #-- POST '/facebook/ping' --
+      content_type :txt, 'application/json'
       desc "ping pong"
       post '/ping' do
         Rails.logger.info "params: #{params}"
