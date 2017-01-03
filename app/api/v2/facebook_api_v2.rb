@@ -30,6 +30,7 @@ module V2
       content_type :txt, 'application/json'
       desc "ping pong"
       post '/ping' do
+        Rails.logger.info "request: #{request}"
         Rails.logger.info "params: #{params}"
         Rails.logger.info "object: #{params['object']}"
         Rails.logger.info "entry: #{params['entry']}"
