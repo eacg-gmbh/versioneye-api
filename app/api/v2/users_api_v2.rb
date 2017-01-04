@@ -84,14 +84,29 @@ module V2
         authorized?
 
         unread_notifications = Notification.by_user(@current_user).desc(:created_at).limit(30)
+        notifications = []
+        unread_notifications.each do |noti|
+          ndd = NotificationDetailDto.new
+          ndd.created_at = noti.created_at
+          ndd.version_id = noti.version_id
+          ndd.sent_email = noti.sent_email
+          ndd.product_id = noti.product_id
+          ndd.read       = noti.read
+          notifications << ndd
+
+          noti.read = true
+          noti.save
+        end
+
         temp_notice = NotificationDto.new # Grape can't handle plain Hashs w.o to_json
         temp_notice.user_info     = @current_user
-        temp_notice.unread        = unread_notifications.count
-        temp_notice.notifications = unread_notifications
+        temp_notice.unread        = notifications.count
+        temp_notice.notifications = notifications
 
         present temp_notice, with: EntitiesV2::UserNotificationEntity
       end
     end
+
 
     resource :users do
       before do
