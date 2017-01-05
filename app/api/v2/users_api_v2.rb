@@ -80,6 +80,9 @@ module V2
           each new version is a new **notification** for your account.
         ]
       }
+      params do
+        optional :page, :type => Integer, :desc => "Specify page for paging", :regexp => /^[\d]+$/
+      end
       get '/notifications' do
         authorized?
 
