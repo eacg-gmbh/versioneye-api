@@ -91,7 +91,6 @@ module V2
         per_page = 30
         skip_count = page_nr.to_i * per_page.to_i
         unread_notifications = Notification.by_user( @current_user ).desc(:created_at).skip( skip_count ).limit( per_page )
-        unread_count  = unread_notifications.count
         notifications = []
         unread_notifications.each do |noti|
           ndd = NotificationDetailDto.new
@@ -108,7 +107,7 @@ module V2
 
         temp_notice = NotificationDto.new # Grape can't handle plain Hashs w.o to_json
         temp_notice.user_info     = @current_user
-        temp_notice.unread        = unread_count
+        temp_notice.unread        = Notification.by_user( @current_user ).where(:read => false).count
         temp_notice.notifications = notifications
 
         present temp_notice, with: EntitiesV2::UserNotificationEntity
