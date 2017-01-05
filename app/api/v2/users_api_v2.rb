@@ -86,11 +86,9 @@ module V2
       get '/notifications' do
         authorized?
 
-        page_nr  = params[:page]
-        page_nr  = 0 if page_nr.to_i < 1
-        per_page = 30
-        skip_count = page_nr.to_i * per_page.to_i
-        unread_notifications = Notification.by_user( @current_user ).desc(:created_at).skip( skip_count ).limit( per_page )
+        page = params[:page]
+        page = 1 if page.to_i < 1
+        unread_notifications = Notification.by_user( @current_user ).desc(:created_at).paginate(per_page: 30, :page => page.to_i)
         notifications = []
         unread_notifications.each do |noti|
           ndd = NotificationDetailDto.new

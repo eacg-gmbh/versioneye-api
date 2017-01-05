@@ -34,6 +34,7 @@ module Versioneye
     SubmittedUrl.send   :include, WillPaginateMongoid::MongoidPaginator
     User.send           :include, WillPaginateMongoid::MongoidPaginator
     Versioncomment.send :include, WillPaginateMongoid::MongoidPaginator
+    Notification.send   :include, WillPaginateMongoid::MongoidPaginator
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"

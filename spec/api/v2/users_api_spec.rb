@@ -148,7 +148,7 @@ describe V2::UsersApiV2, :type => :request do
       get @me_uri + "/notifications", :api_key => @user_api.api_key
       response.status.should == 200
       response_data = JSON.parse(response.body)
-      response_data["unread"].should == 1
+      response_data["unread"].should == 0
       response_data["notifications"].length.should == 1
       msg = response_data["notifications"].shift
       msg["version"].should eql(new_notification.version_id)
