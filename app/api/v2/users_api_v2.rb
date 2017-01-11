@@ -58,6 +58,10 @@ module V2
       end
       get '/favorites' do
         authorized?
+        if @current_user.nil?
+          error! "This API Endpoint requires the API key of a user, not an organisation.", 403
+        end
+
         make_favorite_response(@current_user, params[:page], 30)
       end
 
@@ -68,6 +72,10 @@ module V2
       end
       get '/comments' do
         authorized?
+        if @current_user.nil?
+          error! "This API Endpoint requires the API key of a user, not an organisation.", 403
+        end
+
         make_comment_response(@current_user, params[:page], 30)
       end
 
@@ -85,6 +93,9 @@ module V2
       end
       get '/notifications' do
         authorized?
+        if @current_user.nil?
+          error! "This API Endpoint requires the API key of a user, not an organisation.", 403
+        end
 
         page = params[:page]
         page = 1 if page.to_i < 1
