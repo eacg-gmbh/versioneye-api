@@ -98,7 +98,7 @@ module SessionHelpers
       rate_limit = get_rate_limit_for( api )
       if calls_last_hour.to_i >= rate_limit.to_i
         Rails.logger.info "API rate limit exceeded from #{ip} with API Key #{api.api_key} !"
-        error! "API rate limit of #{rate_limit} calls per hour exceeded. Write an email to support@versioneye.com if you need a higher rate limit. Used API Key: #{api.api_key}", 403
+        error! "API rate limit of #{rate_limit} calls per hour exceeded. Upgrade to a higher plan if you need a higher rate limit. Used API Key: #{api.api_key}", 403
         return
       end
     else
