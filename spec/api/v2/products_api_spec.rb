@@ -179,7 +179,7 @@ describe V2::ProductsApiV2, :type => :request do
       get "#{product_uri}/search/#{search_term}", :api_key => user_api.api_key
       response.status.should == 403
       response_data  = JSON.parse(response.body)
-      expect( response_data['error'] ).to eq("API rate limit of #{user_api.rate_limit} calls per hour exceeded. Write an email to support@versioneye.com if you need a higher rate limit. Used API Key: #{user_api.api_key}")
+      expect( response_data['error'] ).to eq("API rate limit of #{user_api.rate_limit} calls per hour exceeded. Upgrade to a higher plan if you need a higher rate limit. Used API Key: #{user_api.api_key}")
     end
   end
 
