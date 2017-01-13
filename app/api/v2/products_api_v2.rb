@@ -351,9 +351,9 @@ module V2
         authorized?
 
         product = fetch_product(params[:lang], params[:prod_key])
-        ls = LicenseSuggestion.new({ :language => params[:lang],
-                                     :prod_key => params[:prod_key],
-                                     :version  => params[:prod_version],
+        ls = LicenseSuggestion.new({ :language => product.language,
+                                     :prod_key => product.prod_key,
+                                     :version  => decode_prod_key( params[:prod_version] ),
                                      :name     => params[:license_name],
                                      :url      => params[:license_source],
                                      :comments => params[:comments] })
