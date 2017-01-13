@@ -351,17 +351,19 @@ module V2
         authorized?
 
         product = fetch_product(params[:lang], params[:prod_key])
-        lg = LicenseSuggestion.new({ :language => params[:lang],
+        ls = LicenseSuggestion.new({ :language => params[:lang],
                                      :prod_key => params[:prod_key],
                                      :version  => params[:prod_version],
                                      :name     => params[:license_name],
                                      :url      => params[:license_source],
                                      :comments => params[:comments] })
-        lg.user         = current_user
-        lg.organisation = current_orga
-        if lg.save == false
-          error! "Something went wrong! #{lg.errors.full_messages.to_sentence}!", 403
+        ls.user         = current_user
+        ls.organisation = current_orga
+        if ls.save == false
+          error! "Something went wrong! #{ls.errors.full_messages.to_sentence}!", 403
         end
+
+        LicenseMailer.new_license_suggestion(ls).deliver_now
 
         {success: true, message: 'Your suggestion was saved successfully and will be reviewed soon!'}
       end
