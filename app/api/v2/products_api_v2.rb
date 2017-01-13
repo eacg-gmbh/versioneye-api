@@ -334,6 +334,39 @@ module V2
       end
 
 
+      desc "suggest a license for an artifact", {
+        notes: %q[
+                  With this endpoint users can suggest a license for an artifact.
+              ]
+        }
+      params do
+        requires :lang          , :type => String, :desc => %Q[ programming language ]
+        requires :prod_key      , :type => String, :desc => %Q{ product key }
+        requires :prod_version  , :type => String, :desc => %Q[ product version ]
+        requires :license_name  , :type => String, :desc => %Q[ name of the license ]
+        requires :license_source, :type => String, :desc => %Q[ source of the license. Where did you find it? ]
+        optional :comments      , :type => String, :desc => %Q[ you wanna say anyting important to this license? ]
+      end
+      post '/:lang/:prod_key/:prod_version/license' do
+        authorized?
+
+        product = fetch_product(params[:lang], params[:prod_key])
+        lg = LicenseSuggestion.new({ :language => params[:lang],
+                                     :prod_key => params[:prod_key],
+                                     :version  => params[:prod_version],
+                                     :name     => params[:license_name],
+                                     :url      => params[:license_source],
+                                     :comments => params[:comments] })
+        lg.user         = current_user
+        lg.organisation = current_orga
+        if lg.save == false
+          error! "Something went wrong! #{lg.errors.full_messages.to_sentence}!", 403
+        end
+
+        {success: true, message: 'Your suggestion was saved successfully and will be reviewed soon!'}
+      end
+
+
     end # resource products
 
   end # class

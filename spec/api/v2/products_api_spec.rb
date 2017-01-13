@@ -431,4 +431,29 @@ describe V2::ProductsApiV2, :type => :request do
   end
 
 
+  describe "Submit new license" do
+    include Rack::Test::Methods
+
+    it "create a new license suggestion" do
+      test_product = ProductFactory.create_new
+      test_product.version = "1"
+      expect( test_product.save ).to be_truthy
+      prod_key_safe = encode_prod_key( test_product.prod_key )
+      verison_safe  = encode_prod_key( test_product.version )
+      url = "#{product_uri}/#{test_product.language}/#{prod_key_safe}/#{verison_safe}/license"
+      response = post url, {:license_name => "MIT", :license_source => "https://github.com", :comments => "yo", :api_key => user_api.api_key}, "HTTPS" => "on"
+      expect( response.status ).to eq(201)
+      response_data = JSON.parse(response.body)
+      expect( response_data['success'] ).to be_truthy
+    end
+
+    it "creation fails because product does not exist" do
+      url = "#{product_uri}/Java/locko/mocko/license"
+      response = post url, {:license_name => "MIT", :license_source => "https://github.com", :comments => "yo", :api_key => user_api.api_key}, "HTTPS" => "on"
+      expect( response.status ).to eq(404)
+    end
+
+  end
+
+
 end
