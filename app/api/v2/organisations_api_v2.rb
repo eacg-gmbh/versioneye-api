@@ -12,6 +12,21 @@ module V2
         authorized?
       end
 
+
+      desc 'Returns the list of organisations you have access to', {
+        notes: %q[
+                This endpoint requires the API key from a user. The result is a set of organisations and their API keys.
+              ]
+      }
+      get do
+        rate_limit
+        track_apikey
+
+        orgas = OrganisationService.index @current_user
+        present orgas, with: EntitiesV2::OrganisationEntity
+      end
+
+
       desc 'Returns the inventory list of the organisation', {
         notes: %q[
                 Find a detailed description here: https://github.com/versioneye/versioneye-api/blob/master/docs/api/v2/organisation.md

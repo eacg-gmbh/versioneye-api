@@ -25,6 +25,35 @@ describe V2::OrganisationsApiV2, :type => :request do
     WebMock.allow_net_connect!
   end
 
+  describe "GET /v2/organisations" do
+    it "returns an error because api key is wrong" do
+      get "/api/v2/organisations?api_key=some_random_shit"
+      expect( response.status ).to eq(401)
+      response_data = JSON.parse(response.body)
+      expect( response_data["error"] ).to eq("Request not authorized.")
+    end
+    it "returns an empty list" do
+      expect( Organisation.all.delete ).to be_truthy
+      expect( user_api.save ).to be_truthy
+      get "/api/v2/organisations?api_key=#{user_api.api_key}"
+      expect( response.status ).to eq(200)
+      response_data = JSON.parse(response.body)
+      expect( response_data ).to eq([])
+    end
+    it "returns a list of organisations" do
+      user2 = UserFactory.create_new(92)
+      OrganisationService.create_new user2, "test_orga2"
+
+      expect( user_api.save ).to be_truthy
+      get "/api/v2/organisations?api_key=#{user_api.api_key}"
+      expect( response.status ).to eq(200)
+      response_data = JSON.parse(response.body)
+      expect( response_data.count ).to eq(1)
+      expect( response_data.first["name"] ).to eq("test_orga")
+      expect( response_data.first["api_key"] ).to_not be_empty
+    end
+  end
+
   describe "GET /v2/organisations/test_orga/inventory" do
     it "returns status code 400 because of bad orga name" do
       get "/api/v2/organisations/nan/inventory?api_key=#{@orga_api.api_key}"
