@@ -8,11 +8,6 @@ module V2
 
     resource :sessions do
 
-      before do
-        rate_limit
-        track_apikey
-      end
-
 
       desc "returns session info for authorized users", {
         notes: %q[If current user has active session, then this
@@ -21,6 +16,8 @@ module V2
               ]
       }
       get do
+        rate_limit
+        track_apikey
         authorized?
 
         user_api = Api.where(user_id: @current_user.id).shift
@@ -38,7 +35,26 @@ module V2
         requires :api_key, type: String,  :desc => "your personal token for API."
       end
       post do
+        rate_limit
+        track_apikey
         (authorized?) ? "true" : "false"
+      end
+
+
+      desc "creates new sessions", {
+        notes: %q[ You need to append your api_key to request. ]
+      }
+      params do
+        requires :username, type: String,  :desc => "email or username"
+        requires :password, type: String,  :desc => "password"
+      end
+      post 'login' do
+        user = AuthService.auth(params[:username], params[:password])
+        if user.nil?
+          error!("User with username `#{params[:username]}` doesn't exists.", 400)
+        end
+
+        present user, with: EntitiesV2::UserLoginEntity
       end
 
 
@@ -47,6 +63,8 @@ module V2
                   your current API-key.]
       }
       delete do
+        rate_limit
+        track_apikey
         authorized?
         clear_session
         {:message => "Session is closed now."}

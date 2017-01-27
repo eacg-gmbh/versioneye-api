@@ -147,7 +147,7 @@ module V2
       get '/:username/favorites' do
         authorized?
         @user = User.find_by_username(params[:username])
-        error!("User with username `#{params[:username]}` don't exists.", 400) if @user.nil?
+        error!("User with username `#{params[:username]}` doesn't exists.", 400) if @user.nil?
 
         make_favorite_response(@user, params[:page], 30)
       end

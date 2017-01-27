@@ -18,4 +18,12 @@ module EntitiesV2
     expose :active
   end
 
+  class UserLoginEntity < UserEntity
+    expose :fullname
+    expose :username
+    expose :email
+    expose :admin
+    expose :api_key
+  end
+
 end
