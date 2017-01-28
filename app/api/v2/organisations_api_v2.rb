@@ -22,7 +22,7 @@ module V2
         rate_limit
         track_apikey
 
-        orgas = OrganisationService.index @current_user
+        orgas = OrganisationService.index @current_user, true
         present orgas, with: EntitiesV2::OrganisationEntity
       end
 

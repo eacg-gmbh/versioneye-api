@@ -11,4 +11,3 @@ module EntitiesV2
   end
 
 end
-
