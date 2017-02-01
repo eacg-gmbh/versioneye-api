@@ -27,7 +27,7 @@ module V2
     mount UsersApiV2
     mount GithubApiV2
     mount FacebookApiV2
-    #mount SecurityApiV2
+    mount SecurityApiV2
 
     env        = Settings.instance.environment
     server_url = GlobalSetting.get( env, 'server_url' )
