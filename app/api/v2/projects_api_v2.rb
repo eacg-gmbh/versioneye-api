@@ -214,7 +214,7 @@ module V2
           message = "Project deleted successfully."
         end
 
-        {success: true, message: message}
+        { success: true, message: message.to_s }.to_json
       end
 
 

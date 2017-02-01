@@ -13,6 +13,8 @@ require_relative 'products_api_v2'
 module V2
   class ApiV2 < Grape::API
     #version "v2", :using => :path
+    content_type :json, 'application/json'
+
     format :json
     default_format :json
 
@@ -20,7 +22,7 @@ module V2
     mount SessionsApiV2
     mount ServicesApiV2
     mount ProductsApiV2
-    #mount ProjectsApiV2
+    mount ProjectsApiV2
     #mount OrganisationsApiV2
     #mount UsersApiV2
     #mount GithubApiV2

@@ -36,11 +36,11 @@ end
 group :test do
   gem 'simplecov'         , '~> 0.12.0'
   gem 'turn'              , :require => false
-  gem 'rspec'             , '~> 3.2'
-  gem 'rspec-rails'       , '~> 3.2'
+  gem 'rspec'             , '~> 3.5'
+  gem 'rspec-rails'       , '~> 3.5'
   gem 'rspec_junit_formatter', '0.2.3'
-  gem 'rspec-mocks'       , '~> 3.2'
-  gem 'capybara'          , '~> 2.11.0'
+  gem 'rspec-mocks'       , '~> 3.5'
+  gem 'capybara'          , '~> 2.12'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'vcr'               , '~> 3.0.1', :require => false
   gem 'webmock'           , '~> 2.3.1', :require => false
