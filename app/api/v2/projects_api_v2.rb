@@ -101,6 +101,7 @@ module V2
         optional :temp      , :type => String, :desc => "If 'true' this project will not show up in the UI and gets removed later."
       end
       post do
+        authorized_for_write?
         rate_limit
         track_apikey
 
@@ -140,6 +141,7 @@ module V2
         requires :project_file, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
       end
       post '/:project_key' do
+        authorized_for_write?
         rate_limit
         track_apikey
 
@@ -193,6 +195,7 @@ module V2
         requires :project_key, :type => String, :desc => "Delete project with given project ID."
       end
       delete '/:project_key' do
+        authorized_for_write?
         rate_limit
         track_apikey
 
@@ -285,6 +288,7 @@ module V2
         requires :child_id,    :type => String, :desc => "Project ID of the child"
       end
       get '/:group_id/:artifact_id/merge_ga/:child_id' do
+        authorized_for_write?
         rate_limit
         track_apikey
 
@@ -327,6 +331,7 @@ module V2
         requires :child_id, :type => String, :desc => "Project ID of the child"
       end
       get '/:parent_id/merge/:child_id' do
+        authorized_for_write?
         rate_limit
         track_apikey
 
@@ -369,6 +374,7 @@ module V2
         requires :child_id, :type => String, :desc => "Project ID of the child"
       end
       get '/:parent_id/unmerge/:child_id' do
+        authorized_for_write?
         rate_limit
         track_apikey
 

@@ -357,6 +357,35 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( Project.first.teams ).to_not be_empty
       expect( Project.first.teams.first.name ).to eq('backend_devs')
     end
+
+    it "returns 401 for read only api key" do
+      orga = Organisation.new :name => 'orga'
+      orga.plan = Plan.micro
+      expect( orga.save ).to be_truthy
+
+      team = Team.new :name => Team::A_OWNERS, :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      team = Team.new :name => "backend_devs", :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      file = test_file
+      response = post project_uri, {
+        upload:    file,
+        name:      'my_new_project',
+        orga_name: 'orga',
+        team_name: 'backend_devs',
+        visibility: 'public',
+        api_key:   orga.api(true).api_key,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      expect( response.status ).to eq(401)
+      expect( Project.count ).to eq(0)
+    end
   end
 
 
@@ -488,6 +517,23 @@ describe V2::ProjectsApiV2, :type => :request do
       }, "HTTPS" => "on"
       file.close
       expect( response.status ).to eq(201)
+    end
+
+    it "returns 401 for read only api key" do
+      project = ProjectFactory.create_new test_user
+      project.organisation_id = @orga.ids
+      expect( project.save  ).to be_truthy
+      expect( Project.count ).to eq(1)
+
+      update_uri = "#{project_uri}/#{project.ids}?api_key=#{@orga.api(true).api_key}"
+      file = test_file
+      response = post update_uri, {
+        project_file: file,
+        send_file: true,
+        multipart: true
+      }, "HTTPS" => "on"
+      file.close
+      expect( response.status ).to eq(401)
     end
   end
 
@@ -980,6 +1026,16 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( response.status ).to eql(200)
       msg = JSON.parse response.body
       expect( msg["success"] ).to be_truthy
+    end
+
+    it "Can not delete because of read only api key" do
+      project = Project.first
+      project.organisation_id = @orga.ids
+      expect( project.save )
+      expect( Project.count ).to eq(1)
+      response = delete "#{project_uri}/#{project.ids}", { :api_key => @orga.api(true).api_key }
+      expect( response.status ).to eql(401)
+      expect( Project.count ).to eq(1)
     end
 
     it "can not delete existing project because different orga api key" do

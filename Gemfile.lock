@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 5db95e8e044edee2b6a9081efd2c58f319feb36b
-  tag: v11.4.6
+  revision: bb70dde84e3ed74fd1b7f00fab837a6c7aa67525
+  tag: v11.4.9
   specs:
-    versioneye-core (11.4.6)
+    versioneye-core (11.4.9)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.7.2)
       bunny (~> 2.6.0)
@@ -169,14 +169,14 @@ GEM
       activesupport
       multi_json (>= 1.3.2)
     hashdiff (0.3.2)
-    hashie (3.4.6)
+    hashie (3.5.1)
     hashr (0.0.22)
     htmlentities (4.3.4)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
-    i18n (0.7.0)
+    i18n (0.8.0)
     ice_nine (0.11.2)
     jmespath (1.3.1)
     json (2.0.3)
@@ -350,7 +350,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    websocket (1.2.3)
+    websocket (1.2.4)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
