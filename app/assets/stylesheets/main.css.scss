@@ -14,6 +14,17 @@ cite {
 span.http_method {
   min-width: 65px;
 }
-span.path {
-  font-family: monospace;
+
+
+.swagger-section .swagger-ui-wrap {
+	max-width: inherit;
+}
+
+
+.swagger-section #resources_container {
+  padding-left: 0px;
+}
+
+span.http_method a {
+	padding: 10px !important;
 }

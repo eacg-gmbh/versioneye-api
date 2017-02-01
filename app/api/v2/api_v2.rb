@@ -12,7 +12,7 @@ require_relative 'users_api_v2'
 
 module V2
   class ApiV2 < Grape::API
-    #version "v2", :using => :path
+    #version "v2", using: :path
     content_type :json, 'application/json'
 
     format :json
@@ -35,21 +35,21 @@ module V2
     server_url = 'http://127.0.0.1:3000' if env.to_s.eql?('test')
     server_url = 'http://127.0.0.1:3000' if server_url.to_s.empty?
 
-    base_url = "#{server_url}/api"
+    base_url = "#{server_url}/api/v2"
     ENV['API_BASE_PATH'] = base_url
 
-    add_swagger_documentation :base_path => "#{base_url}",
-                              :class_name => "swagger_doc2",
-                              :mount_path => "/swagger_doc",
-                              :doc_version => "2.0",
-                              :markdown => false,
-                              :hide_format => true,
-                              :hide_documentation_path => true,
-                              :info => {
-                                :title => "XXx",
-                                :description => "xxxx",
-                                :contact_email => ""
-                              }
+    add_swagger_documentation(
+      :base_path => "/api/v2",
+      :class_name => "swagger_doc2",
+      :mount_path => "/swagger_doc",
+      :doc_version => "2.0",
+      :markdown => false,
+      :hide_format => true,
+      :hide_documentation_path => true,
+      :info => {
+        :title => "Available API endpoints",
+      }
+    )
  
     before do
       header "Access-Control-Allow-Origin", "*"
