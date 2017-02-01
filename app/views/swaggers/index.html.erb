@@ -1,193 +1,84 @@
 
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
-  <div class="container topnav">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-      </button>
-      <a href="/" class="navbar-brand topnav" >
-        <%= image_tag "verisoneye-logo-small.png", :style => 'margin-top: -12px;' %>
-      </a>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right" style="font-weight: bold">
-        <li>
-            <a href="http://blog.versioneye.com/" target="versioneye_blog">Blog</a>
-        </li>
-        <li>
-            <a href="/faq">FAQs</a>
-        </li>
-        <% if !Rails.env.enterprise? %>
-          <li>
-            <a href="/pricing">Pricing</a>
-          </li>
-        <% end %>
-        <li style="font-weight: bold; font-size: 16px;">
-          <form style="margin: 7px;" action="/signup" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
-            <button type="submit" class="btn btn-success" >Sign up</button>
-          </form>
-        </li>
-        <li>
-          <form style="margin: 7px 0 0 7px;" action="/signin" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
-            <button type="submit" class="btn btn-primary" >Sign in</button>
-          </form>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
 
-<section class="container" >
-  <div id='header' style="margin-top: 90px;" >
-    <div class="swagger-ui-wrap" style="float: none;">
+
+<section class="swagger-section">
+  <div id='header'>
+    <div class="swagger-ui-wrap">
+      <a id="logo" href="#"><img class="logo__img" alt="swagger" height="30" width="30" src="/assets/logo_small.png" />
+        <span class="logo__title">VersionEye</span>
+      </a>
       <form id='api_selector'>
-        <div class='input'><input class="form-control" placeholder="/api/v2/swagger_doc.json" id="input_baseUrl" name="baseUrl" type="text"/></div>
-        <div class='input'><input class="form-control" placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
-        <div class='input'><a id="explore" class="btn btn-large btn-primary" href="#">Explore</a></div>
+        <div class='input'><input placeholder="<%= @api_url %>/swagger_doc.json" id="input_baseUrl" name="baseUrl" type="text"/></div>
+        <div id='auth_container'>
+          <input id="input_apiKey" type="text" name="apiKey" value="<%= @api_key %>"/>
+        </div>
+        <div class='input'><a id="explore" class="header__btn" href="#" data-sw-translate>Explore</a></div>
       </form>
     </div>
   </div>
-  <br/>
 
-  <div class="heading">
-    <br/>
-    <p>
-      Use the VersionEye <strong>API</strong> (<em>Application Programming Interface</em>)
-      for a deeper integration into your tool chain. Through the API you can integrat VersionEye
-      into your Continuous Integration process and get notifications about your dependencies on
-      each build. You can also use it to write Add-ons, mobile applications, desktop applications,
-      gadgets or widgets.
-    </p>
-    <p>
-      You can find your API key in the input field next to the <em>`Explore`</em> button.
-      The API key is visible for authorized user only. If you're logged in and the API key is still
-      missing then goto the your <a href="/settings/api">settings page</a> and generate a new one.
-    </p>
-  </div>
-
-  <div id="message-bar" class="swagger-ui-wrap">
-      &nbsp;
-  </div>
-
-  <div id="swagger-ui-container" class="swagger-ui-wrap">
-
-  </div>
-
-  <div style="padding-top: 25px;">
-    <p>
-      Here are some projects which are using the VersionEye API already:
-      <ul style="padding-left: 30px;">
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://github.com/versioneye/versioneye_maven_plugin" target="apimodule" >Maven Plugin</a>:
-          The VersionEye Maven Plugin resolves dependencies locally and can create/update a
-          VersionEye project via the API. This is especially useful for bigger <a href="https://maven.apache.org/">Maven</a> projects
-          with parent poms and reactor builds.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://github.com/versioneye/versioneye_sbt_plugin" target="apimodule">SBT Plugin</a>:
-          Just like the Maven Plugin, but for <a href="http://www.scala-sbt.org/">Scala SBT</a>. Written by <a href="https://twitter.com/mp911de">Mark Paluch</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://github.com/stempler/gradle-versioneye-plugin" target="apimodule">Gradle Plugin</a>:
-          Just like the Maven Plugin, but for <a href="https://gradle.org/">Gradle</a>. Written by <a href="https://github.com/stempler">Simon Templer</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://github.com/ethauvin/kobalt-versioneye" target="apimodule">Kobalt Plugin</a>:
-          Just like the Maven Plugin, but for <a href="http://beust.com/kobalt/home/index.html">Kobalt</a>. Written by <a href="https://github.com/ethauvin">Erik C. Thauvin</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://github.com/versioneye/veye" target="apimodule">Ruby cmd tool</a>:
-          A commandline tool to interarct with the API, implemented in Ruby. Developed by <a href="https://twitter.com/timgluz">Timo Sulg</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="http://digitalkaoz.github.io/versioneye-php/" target="apimodule">VersionEye-PHP</a>:
-          A PHP wrapper around the VersionEye API, written by <a href="https://twitter.com/digitalkaoz">Robert Schönthal</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://github.com/mattsches/VersionEyeBundle" target="apimodule">VersionEyeBundle</a>:
-          For the Symfonyprofiler, written by <a href="https://twitter.com/mattsches">Matthias Gutjahr</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://github.com/ocramius/VersionEyeModule" target="apimodule">VersionEyeModule</a>:
-          Integration module for ZF2 by <a href="https://twitter.com/Ocramius">Marco Pivetta</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://www.npmjs.com/package/versioneye-update" target="apimodule">VersionEye-Update</a>:
-          An NPM module for the VersionEye API by <a href="http://www.onwerk.de">Onwerk GmbH</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://github.com/heyupdate/versioneye-slack" target="apimodule">VersionEye-Slack</a> (PHP): VersionEye integration for <a href="https://slack.com/">Slack</a> by <a href="https://twitter.com/tompedals">Tom Graham</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://www.npmjs.com/package/versioneye-slack" target="apimodule">VersionEye-Slack</a> (Node.JS): VersionEye integration for <a href="https://slack.com/">Slack</a> by <a href="https://www.npmjs.com/~miyajan">miyajan</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://github.com/Sharpek/versioneye-slack" target="apimodule">VersionEye-Slack</a> (Python): VersionEye integration for <a href="https://slack.com/">Slack</a> by <a href="https://github.com/Sharpek">Marcin Baran</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://github.com/versioneye/versioneye_update" target="apimodule">VersionEye-Update</a>: A shell script to update existing VersionEye projects by <a href="https://twitter.com/RobertReiz">Robert Reiz</a>.
-        </li>
-        <li style="padding-bottom: 10px; padding-top: 10px; border-bottom: 1px dotted gray;" >
-          <a href="https://github.com/versioneye/versioneye_license_check" target="apimodule">VersionEye License Check</a>: A shell script which quickly check if the dependencies are violating the license whitelist on the server. By <a href="https://twitter.com/RobertReiz" target="apimodule">Robert Reiz</a>.
-        </li>
-      </ul>
-      </br>
-      Do you have a cool project you would like to see on this page? Contact us on <a href="https://twitter.com/VersionEye">Twitter</a>.
-    </p>
-  </div>
-
-  <div >
-    <h2 class="no_margin">Who is using it?</h2>
-    <p class="cite_section">
-      <cite>“We are using the VersionEye API to keep our internally hosted NodeJS projects up-to-date. We integrated the VersionEye API into our Continuous Integration Lifecycle via the NPM module versioneye-update and it saves us the hassle for checking updates manually.”</cite><br/>
-      <div>
-        <%= image_tag 'cites/jens_doose_75.jpg', :class => "img-rounded" %> <b>Jens Doose (CEO @ <a href="http://www.onwerk.de">Onwerk</a> GmbH)</b>
-      </div>
-    </p>
-  </div>
-
+  <div id="message-bar" class="swagger-ui-wrap" data-sw-translate="">&nbsp;</div>
+  <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
 </section>
 
-<script src="/api/swagger_js/lib/jquery-1.8.0.min.js" type="text/javascript"></script>
-<script src="/api/swagger_js/lib/jquery.slideto.min.js" type="text/javascript"></script>
-<script src="/api/swagger_js/lib/jquery.wiggle.min.js" type="text/javascript"></script>
-<script src="/api/swagger_js/lib/jquery.ba-bbq.min.js" type="text/javascript"></script>
-<script src="/api/swagger_js/lib/underscore-min.js" type="text/javascript"></script>
-<script src="/api/swagger_js/lib/handlebars-1.0.rc.1.js" type="text/javascript"></script>
-<script src="/api/swagger_js/lib/backbone-min.js" type="text/javascript"></script>
-<script src="/api/swagger_js/lib/highlight.7.3.pack.js" type="text/javascript"></script>
-<script src="/api/swagger_js/lib/swagger.js" type="text/javascript"></script>
-<script src="/api/swagger_js/swagger-ui.js" type="text/javascript"></script>
+
 
 <script type="text/javascript">
-    jQuery(function () {
-        window.swaggerUi = new SwaggerUi({
-          discoveryUrl: "<%= @api_url %>/swagger_doc.json",
-            apiKey:"<%= @api_key %>",
-            dom_id:"swagger-ui-container",
-            supportHeaderParams: false,
-            debug: false,
-            supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
-            docExpansion: "list",
-            onComplete: function(swaggerApi, swaggerUi){
-              if(console) {
-                    console.log("Loaded SwaggerUI")
-              }
-              $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
-            },
-            onFailure: function(data) {
-                if(console) {
-                    console.log("Unable to Load SwaggerUI");
-                    console.log(data);
-                }
-            }
-        });
+    $(function(){
+      var apiKey = "<%= @api_key %>";
+      var authClient = new window.SwaggerClient.ApiKeyAuthorization("api_key", apiKey, "query");
 
-        window.swaggerUi.load();
+      var url = window.location.search.match(/url=([^&]+)/);
+
+      if (url && url.length > 1) {
+        url = decodeURIComponent(url[1]);
+      } else {
+        url = "<%= @api_url %>/swagger_doc.json";
+      }
+
+      hljs.configure({
+        highlightSizeThreshold: 5000
+      });
+
+      // Pre load translate...
+      if(window.SwaggerTranslator) {
+        window.SwaggerTranslator.translate();
+      }
+      window.swaggerUi = new SwaggerUi({
+        url: url,
+        dom_id: "swagger-ui-container",
+        supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
+        authorizations: {key: authClient},
+        onComplete: function(swaggerApi, swaggerUi){
+          if(window.SwaggerTranslator) {
+            window.SwaggerTranslator.translate();
+          }
+        },
+        onFailure: function(data) {
+          log("Unable to Load SwaggerUI");
+        },
+        docExpansion: "list",
+        jsonEditor: false,
+        defaultModelRendering: 'schema',
+        showRequestHeaders: false
+      });
+
+      window.swaggerUi.load();
+
+      function log() {
+        if ('console' in window) {
+          console.log.apply(console, arguments);
+        }
+      }
+
+      //window.swaggerUi.api.clientAuthorizations.add("key", new window.SwaggerClient.ApiKeyAuthorization("Authorization", apiKey, "header"));
+    // add a new SwaggerClient.ApiKeyAuthorization when the api-key changes in the ui.
+    $('#input_apiKey').change(function() {
+      var key = $('#input_apiKey')[0].value;
+      if(key && key.trim() != "") {
+        window.swaggerUi.api.clientAuthorizations.add("key", new window.SwaggerClient.ApiKeyAuthorization("api_key", key, "query"));
+      }
     });
-    $ == jQuery;
-</script>
+
+  });
+  </script>
