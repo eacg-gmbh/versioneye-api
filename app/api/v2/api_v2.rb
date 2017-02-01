@@ -3,7 +3,7 @@ require 'grape-swagger'
 
 require_relative 'sessions_api_v2'
 require_relative 'services_api_v2'
-#require_relative 'products_api_v2'
+require_relative 'products_api_v2'
 #require_relative 'projects_api_v2'
 #require_relative 'users_api_v2'
 #require_relative 'github_api_v2'
@@ -19,7 +19,7 @@ module V2
     #rescue_from :all #comment out if you want to see RAILS error pages & debug on cmd-line
     mount SessionsApiV2
     mount ServicesApiV2
-    #mount ProductsApiV2
+    mount ProductsApiV2
     #mount ProjectsApiV2
     #mount OrganisationsApiV2
     #mount UsersApiV2
