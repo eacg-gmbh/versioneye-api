@@ -93,9 +93,15 @@ module V2
             ]
       }
       params do
-        requires :upload    , :type => Hash,   :desc => "Project file - [maven.pom, Gemfile ...]"
-        optional :visibility, :type => String, :desc => "By default 'public'. If 'public' everybody can see the project."
-        optional :name      , :type => String, :desc => "The name of the VersionEye project. By default it is the filename."
+        requires :upload,
+                 :type => File,
+                 :desc => "Project file - [maven.pom, Gemfile ...]"
+        optional :visibility,
+                 :type => String,
+                 :desc => "By default 'public'. If 'public' everybody can see the project."
+        optional :name,
+                 :type => String,
+                 :desc => "The name of the VersionEye project. By default it is the filename."
         optional :orga_name , :type => String, :desc => "The name of the organisation this project should be assigned to."
         optional :team_name , :type => String, :desc => "The name of the team in the organisation this project should be assigned to."
         optional :temp      , :type => String, :desc => "If 'true' this project will not show up in the UI and gets removed later."
@@ -104,6 +110,10 @@ module V2
         authorized_for_write?
         rate_limit
         track_apikey
+
+        if params[:upload].nil? or params[:upload].empty?
+          error! "upload is invalid", 400
+        end
 
         datafile = ActionDispatch::Http::UploadedFile.new( params[:upload] )
         project_file = {'datafile' => datafile}
@@ -138,7 +148,7 @@ module V2
       }
       params do
         requires :project_key, :type => String, :desc => "Project ID"
-        requires :project_file, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
+        requires :project_file, type: File, desc: "Project file - [maven.pom, Gemfile ...]"
       end
       post '/:project_key' do
         authorized_for_write?
@@ -157,6 +167,10 @@ module V2
 
         if @orga && !project.organisation_id.to_s.eql?(@orga.ids)
           error! "You are not a collaborator of the requested project", 403
+        end
+
+        if params[:project_file].nil? or params[:project_file].empty?
+          error! "Project file is missing", 400
         end
 
         datafile = ActionDispatch::Http::UploadedFile.new( params[:project_file] )
@@ -217,7 +231,7 @@ module V2
           message = "Project deleted successfully."
         end
 
-        {success: true, message: message}
+        { success: true, message: message.to_s }.to_json
       end
 
 

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe V2::UsersApiV2, :type => :request do
+  let(:root_uri){ "/api/v2"}
+  let(:me_uri) { "#{root_uri}/me"}
+  let(:users_uri) { "#{root_uri}/users" }
 
   before(:each) do
     @root_uri = "/api/v2"
@@ -11,34 +14,34 @@ describe V2::UsersApiV2, :type => :request do
 
   describe "not authorized user tries to access to user data" do
     it "returns authorization error when asking user's profile" do
-      get @me_uri
-      response.status.should == 401
+      get me_uri
+      expect( response.status ).to eq(401)
     end
 
     it "returns authorization error when asking user's favorites" do
-      get @me_uri + '/favorites'
-      response.status.should == 401
+      get me_uri + '/favorites'
+      expect( response.status ).to eq(401)
     end
 
     it "returns authorixation error when asking user's comments" do
-      get @me_uri + '/comments'
-      response.status.should == 401
+      get me_uri + '/comments'
+      expect( response.status ).to eq(401)
     end
 
     it "returns authorization error when asking user's notifications" do
-      get @me_uri + '/comments'
-      response.status.should == 401
+      get me_uri + '/comments'
+      expect( response.status ).to eq(401)
     end
 
     it "returns authorization errow when accessing other user data" do
-      get @users_uri + '/reiz'
-      response.status.should == 401
+      get users_uri + '/reiz'
+      expect( response.status ).to eq(401)
 
-      get @users_uri + '/reiz/favorites'
-      response.status.should == 401
+      get users_uri + '/reiz/favorites'
+      expect( response.status ).to eq(401)
 
-      get @users_uri + '/reiz/comments'
-      response.status.should == 401
+      get users_uri + '/reiz/comments'
+      expect( response.status ).to eq(401)
     end
   end
 
@@ -52,17 +55,18 @@ describe V2::UsersApiV2, :type => :request do
       @user_api.save
 
       #set up active session
-      post @root_uri +'/sessions', :api_key => @user_api.api_key
+      post "#{root_uri}/sessions", params: {:api_key => @user_api.api_key}
     end
 
     after(:each) do
       @test_user.delete
-      delete @root_uri + '/sessions'
+      delete root_uri + '/sessions'
     end
 
     it "returns user's miniprofile for /me" do
-      get @me_uri
-      response.status.should == 200
+      get me_uri
+      expect(response.status).to eq(200)
+
       response_data = JSON.parse(response.body)
       expect(response_data["fullname"]).to eq(@test_user.fullname)
       expect(response_data["username"]).to eq(@test_user.username)
@@ -80,10 +84,10 @@ describe V2::UsersApiV2, :type => :request do
       product = ProductFactory.create_new 1
       ProductService.follow product.language, product.prod_key, @test_user
 
-      get @me_uri + '/favorites'
-      response.status.should == 200
-      response_data = JSON.parse(response.body)
+      get "#{me_uri}/favorites"
+      expect(response.status).to eq(200)
 
+      response_data = JSON.parse(response.body)
       expect( response_data["user"] ).to_not be_nil
       expect( response_data["user"]["fullname"] ).to eq(@test_user.fullname)
       expect( response_data["user"]["username"] ).to eq(@test_user.username)
@@ -112,8 +116,8 @@ describe V2::UsersApiV2, :type => :request do
         :comment => 'This is awesome' })
       comment.save
 
-      get @me_uri + '/comments'
-      response.status.should == 200
+      get "#{me_uri}/comments"
+      expect(response.status).to eq(200)
       response_data = JSON.parse(response.body)
 
       expect( response_data["comments"] ).to_not be_nil
@@ -132,26 +136,27 @@ describe V2::UsersApiV2, :type => :request do
     end
 
     it "should return empty dataset when there's no notifications" do
-      get @me_uri + "/notifications", :api_key => @user_api.api_key
-      response.status.should == 200
+      get "#{me_uri}/notifications", params: {:api_key => @user_api.api_key}
+      expect(response.status).to eq(200)
       response_data = JSON.parse(response.body)
-      response_data["user"]["username"].should eql(@test_user.username)
-      response_data["unread"].should == 0
-      response_data["notifications"].length.should == 0
+      expect( response_data["user"]["username"] ).to eql(@test_user.username)
+      expect( response_data["unread"] ).to eq(0)
+      expect( response_data["notifications"].length ).to eq(0)
     end
 
     it "should return correct notifications when we add them" do
       new_notification = NotificationFactory.create_new @test_user
       new_notification.save
-      Notification.count.should eq(1)
+      expect(Notification.count).to eq(1)
 
-      get @me_uri + "/notifications", :api_key => @user_api.api_key
-      response.status.should == 200
+      get "#{me_uri}/notifications", params: {:api_key => @user_api.api_key}
+      expect( response.status ).to eq(200)
+
       response_data = JSON.parse(response.body)
-      response_data["unread"].should == 0
-      response_data["notifications"].length.should == 1
+      expect( response_data["unread"] ).to eq(0)
+      expect( response_data["notifications"].length ).to eq(1)
       msg = response_data["notifications"].shift
-      msg["version"].should eql(new_notification.version_id)
+      expect( msg["version"]    ).to eql(new_notification.version_id)
       expect( msg["created_at"] ).to_not be_nil
       expect( msg["sent_email"] ).to be_falsey
       expect( msg["read"] ).to be_falsey
@@ -176,8 +181,9 @@ describe V2::UsersApiV2, :type => :request do
     end
 
     it "should return the user object" do
-      get @users_uri + "/#{@test_user.username}", :api_key => @user_api.api_key
-      response.status.should == 200
+      get "#{users_uri}/#{@test_user.username}", params: {:api_key => @user_api.api_key}
+
+      expect(response.status).to eq(200)
       response_data = JSON.parse(response.body)
       expect( response_data["username"] ).to eq(@test_user.username)
       expect( response_data["fullname"] ).to eq(@test_user.fullname)
@@ -187,8 +193,8 @@ describe V2::UsersApiV2, :type => :request do
       product = ProductFactory.create_new 1
       ProductService.follow product.language, product.prod_key, @test_user
 
-      get @users_uri + "/#{@test_user.username}/favorites", :api_key => @user_api.api_key
-      response.status.should == 200
+      get "#{users_uri}/#{@test_user.username}/favorites", params: {:api_key => @user_api.api_key}
+      expect( response.status ).to eq(200)
       response_data = JSON.parse(response.body)
 
       expect( response_data["user"] ).to_not be_nil
@@ -219,8 +225,8 @@ describe V2::UsersApiV2, :type => :request do
         :comment => 'This is awesome' })
       comment.save
 
-      get @users_uri + "/#{@test_user.username}/comments", :api_key => @user_api.api_key
-      response.status.should == 200
+      get "#{@users_uri}/#{@test_user.username}/comments", params: {:api_key => @user_api.api_key}
+      expect( response.status ).to eq(200)
       response_data = JSON.parse(response.body)
 
       expect( response_data["comments"] ).to_not be_nil

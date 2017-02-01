@@ -12,7 +12,9 @@ module V2
         track_apikey
       end
 
-      desc 'Answers to request with basic pong.'
+      desc 'Answers to request with basic pong.' do
+        detail 'check is the service up and running'
+      end
       get :ping do
         {success: true, message: 'pong'}
       end

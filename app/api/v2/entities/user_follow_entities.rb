@@ -1,8 +1,8 @@
 require 'grape'
 
-require 'user_entity.rb'
-require 'product_entity.rb'
-require 'paging_entity.rb'
+require_relative 'user_entity.rb'
+require_relative 'product_entity.rb'
+require_relative 'paging_entity.rb'
 
 module EntitiesV2
   class UserFollowEntities < Grape::Entity
