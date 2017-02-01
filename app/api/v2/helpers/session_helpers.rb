@@ -16,6 +16,14 @@ module SessionHelpers
   end
 
 
+  def authorized_for_write?
+    if @api.nil? || @api.read_only == true
+      error! "Request not authorized. It seems you have only read permission. Poor guy.", 401
+    end
+    true
+  end
+
+
   def current_user
     api = fetch_api
     return nil if api.nil?
