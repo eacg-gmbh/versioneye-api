@@ -16,15 +16,26 @@ span.http_method {
 }
 
 
-.swagger-section .swagger-ui-wrap {
-	max-width: inherit;
-}
+.swagger-section {
+	div#header {
+		background: inherit;
+	}
+
+	.swagger-ui-wrap {
+		max-width: inherit;
+	}
+
+	form#api_selector {
+		float: none;
+	}
+
+ 	#resources_container {
+  		padding-left: 0px;
+	}
 
 
-.swagger-section #resources_container {
-  padding-left: 0px;
-}
 
-span.http_method a {
-	padding: 10px !important;
+	span.http_method a {
+		padding: 10px !important;
+	}
 }

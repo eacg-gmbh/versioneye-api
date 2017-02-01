@@ -6,7 +6,7 @@
       <div class="swagger-ui-wrap" style="float: none;">
         <form id='api_selector'>
           <div class='input'><input class="form-control" placeholder="/api/v2/swagger_doc.json" id="input_baseUrl" name="baseUrl" type="text"/></div>
-          <div class='input'><input class="form-control" placeholder="api_key" id="input_apiKey" name="apiKey" type="text" value="<%= @api_key %>"/></div>
+          <div class='input'><input class="form-control" placeholder="Login to see your API key" id="input_apiKey" name="apiKey" type="text" value="<%= @api_key %>"/></div>
           <div class='input'><a id="explore" class="btn btn-large btn-primary" href="#">Explore</a></div>
         </form>
       </div>
@@ -44,14 +44,6 @@
     var authClient = new window.SwaggerClient.ApiKeyAuthorization("api_key", apiKey, "query");
     var url = "<%= @api_url %>/swagger_doc.json";
     
-    /*
-    if (url && url.length > 1) {
-      url = decodeURIComponent(url[1]);
-    } else {
-      url = "<%= @api_url %>/swagger_doc.json";
-    }
-    */
-
     hljs.configure({
       highlightSizeThreshold: 5000
     });

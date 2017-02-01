@@ -10,7 +10,7 @@ class SwaggersController < ApplicationController
       end
     end
 
-    @api_key = 'Log in to get your own api token'
+    @api_key = ''
     if user_api
       @api_key = user_api.api_key
     end
