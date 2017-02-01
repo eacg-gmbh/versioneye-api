@@ -11,7 +11,7 @@ describe V2::FacebookApiV2, :type => :request do
 
   describe "POST /v2/facebook/ping.txt" do
     it "answers `pong`" do
-      post '/api/v2/facebook/ping.txt', {:object => "page", :entry => "ajo"}, "HTTPS" => "on"
+      post '/api/v2/facebook/ping.txt', params: {:object => "page", :entry => "ajo"}, env: {"HTTPS" => "on"}
       expect( response.status ).to eq(200)
     end
   end
