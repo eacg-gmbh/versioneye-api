@@ -40,22 +40,22 @@ describe "GithubApiV2", :type => :request do
     end
 
     it "raises http error when asking list of repos" do
-      get api_path,  nil, "HTTPS" => "on"
-      response.status.should eq(401)
+      get api_path, env: { "HTTPS" => "on" }
+      expect( response.status ).to eq(401)
     end
 
     it "raises http error when asking info of repo" do
-      get "#{api_path}/#{repo_key1}", nil, "HTTPS" => "on"
-      response.status.should eq(401)
+      get "#{api_path}/#{repo_key1}", env: { "HTTPS" => "on" }
+      expect( response.status ).to eq(401)
     end
 
     it "raises http error when trying to post new repo" do
-      post "#{api_path}/#{repo_key1}", nil, "HTTPS" => "on"
-      response.status.should eq(401)
+      post "#{api_path}/#{repo_key1}", env: { "HTTPS" => "on" }
+      expect( response.status ).to eq(401)
     end
     it "raises http error when unauthorized user wants remove project" do
-      delete "#{api_path}/#{repo_key1}", nil, "HTTPS" => "on"
-      response.status.should eq(401)
+      delete "#{api_path}/#{repo_key1}", env: {"HTTPS" => "on"}
+      expect( response.status ).to eq(401)
     end
   end
 
@@ -68,34 +68,33 @@ describe "GithubApiV2", :type => :request do
       user.github_id = nil
       user.github_token = nil
       user.save
-      get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(401)
+      get "#{api_path}/sync", params: {:api_key => user_api[:api_key]}, env: { "HTTPS" => "on" }
+      expect( response.status ).to eq(401)
     end
     it "does sync because connected to GitHub" do
       worker = Thread.new{ GitReposImportWorker.new.work }
       VCR.use_cassette('github_sync_hans', allow_playback_repeats: true) do
         user.github_id = '10449954'
         user.github_token = '07d9d399f1a8ff7880b'
-        user.save.should be_truthy
+        expect( user.save ).to be_truthy
 
         user_task_key = "#{user[:username]}-#{user[:github_id]}"
         cache = Versioneye::Cache.instance.mc
         cache.delete user_task_key
 
-        get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-        response.status.should eq(200)
+        get "#{api_path}/sync", params: {:api_key => user_api[:api_key]}, env: { "HTTPS" => "on" }
+        expect( response.status ).to eq(200)
         resp = JSON.parse response.body
-        resp['status'].should eq("running")
+        expect( resp['status'] ).to eq("running")
 
         p "sleep for a while"
         sleep 7
 
-        get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-        response.status.should eq(200)
+        get "#{api_path}/sync", params: {:api_key => user_api[:api_key]}, env: { "HTTPS" => "on" }
+        expect( response.status ).to eq(200)
         resp = JSON.parse response.body
-        resp['status'].should eq("done")
-
-        user.github_repos.count.should eq(4)
+        expect( resp['status'] ).to eq("done")
+        expect( user.github_repos.count ).to eq(4)
       end
       worker.exit
     end
@@ -109,7 +108,7 @@ describe "GithubApiV2", :type => :request do
     it "does list GitHub repos" do
       user.github_id = '10449954'
       user.github_token = '07d9d399f1a8ff7880b'
-      user.save.should be_truthy
+      expect( user.save ).to be_truthy
 
       user_task_key = "#{user[:username]}-#{user[:github_id]}"
       cache = Versioneye::Cache.instance.mc
@@ -117,23 +116,24 @@ describe "GithubApiV2", :type => :request do
 
       worker = Thread.new{ GitReposImportWorker.new.work }
       VCR.use_cassette('github_sync_hans', allow_playback_repeats: true) do
-        get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-        response.status.should eq(200)
+        get "#{api_path}/sync", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
+        expect( response.status ).to eq(200)
 
         sleep 7
 
-        get "#{api_path}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-        response.status.should eq(200)
+        get "#{api_path}", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
+        expect( response.status ).to eq(200)
         resp = JSON.parse response.body
-        resp['repos'].should_not be_nil
+        expect( resp['repos']       ).to_not be_nil
         expect( resp['repos'].count ).to eq(4)
       end
       worker.exit
     end
+
     it "does list GitHub repos" do
       user.github_id = '10449954'
       user.github_token = '07d9d399f1a8ff7880b'
-      user.save.should be_truthy
+      expect( user.save ).to be_truthy
 
       user_task_key = "#{user[:username]}-#{user[:github_id]}"
       cache = Versioneye::Cache.instance.mc
@@ -141,16 +141,18 @@ describe "GithubApiV2", :type => :request do
 
       worker = Thread.new{ GitReposImportWorker.new.work }
       VCR.use_cassette('github_sync_hans', allow_playback_repeats: true) do
-        get "#{api_path}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-        response.status.should eq(200)
+        get "#{api_path}", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
+
+        expect( response.status ).to eq(200)
         resp = JSON.parse response.body
-        resp['repos'].should_not be_nil
+        expect( resp['repos'] ).to_not be_nil
         expect( resp['repos'].count ).to eq(0)
         sleep 2
-        get "#{api_path}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-        response.status.should eq(200)
+        get "#{api_path}", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
+        
+        expect( response.status ).to eq(200)
         resp = JSON.parse response.body
-        resp['repos'].should_not be_nil
+        expect( resp['repos']       ).to_not be_nil
         expect( resp['repos'].count ).to eq(4)
       end
       worker.exit
@@ -158,7 +160,7 @@ describe "GithubApiV2", :type => :request do
     it "list imported GitHub repos" do
       user.github_id = '10449954'
       user.github_token = '07d9d399f1a8ff7880b'
-      user.save.should be_truthy
+      expect( user.save ).to be_truthy
 
       repo1.save
       repo2.save
@@ -171,13 +173,13 @@ describe "GithubApiV2", :type => :request do
       expect( Project.count ).to eq(1)
       expect( user.github_repos.count ).to eq(2)
 
-      get "#{api_path}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(200)
+      get "#{api_path}", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
+      expect( response.status ).to eq(200)
       resp = JSON.parse response.body
       expect( resp['repos'].count ).to eq(2)
 
-      get "#{api_path}", {:only_imported => true, :api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(200)
+      get "#{api_path}", params: {:only_imported => true, :api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
+      expect( response.status ).to eq(200)
       resp = JSON.parse response.body
       expect( resp['repos'].count ).to eq(1)
       expect( resp['repos'].first['fullname'] ).to eq(repo1.fullname)
@@ -189,6 +191,7 @@ describe "GithubApiV2", :type => :request do
     before :each do
       WebMock.allow_net_connect!
     end
+    
     it "should create new object with repo key" do
       VCR.use_cassette('github_import', allow_playback_repeats: true) do
         worker1 = Thread.new{ GitReposImportWorker.new.work }
@@ -208,29 +211,34 @@ describe "GithubApiV2", :type => :request do
         orga.plan = Plan.micro
         orga.save
 
-        get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        get "#{api_path}/sync", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
 
         sleep 4
 
-        post "#{api_path}/veye1test:docker_web_ui", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-        response.status.should eq(201)
+        post "#{api_path}/veye1test:docker_web_ui", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
+        expect( response.status ).to eq(201)
 
         repo = JSON.parse response.body
-        repo.should_not be_nil
-        repo.has_key?('repo').should be_truthy
-        repo['repo']['fullname'].should eq("veye1test/docker_web_ui")
-        repo.has_key?('imported_projects').should be_truthy
+        expect( repo ).to_not be_nil
+        expect( repo.has_key?('repo') ).to be_truthy
+        expect( repo['repo']['fullname'] ).to eq("veye1test/docker_web_ui")
+        expect( repo.has_key?('imported_projects') ).to be_truthy
 
         project = repo['imported_projects'].first
-        project["name"].should eq("veye1test/docker_web_ui")
+        expect( project["name"] ).to eq("veye1test/docker_web_ui")
 
         project_id = project['id']
 
         commit = {:modified => ['Gemfile']}
         commits = [commit]
 
-        post "#{api_path}/hook/#{project_id}", {:api_key => user_api[:api_key], :commits => commits}, "HTTPS" => "on"
-        response.status.should eq(201)
+        post(
+          "#{api_path}/hook/#{project_id}",
+          params: {:api_key => user_api[:api_key],
+                   :commits => commits},
+          env: {"HTTPS" => "on"}
+        )
+        expect( response.status ).to eq(201)
 
         worker3.exit
         worker2.exit
@@ -257,11 +265,11 @@ describe "GithubApiV2", :type => :request do
         orga.plan = Plan.micro
         orga.save
 
-        get "#{api_path}/sync", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        get "#{api_path}/sync", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
 
         sleep 2
 
-        post "#{api_path}/versioneye:test_repo", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+        post "#{api_path}/versioneye:test_repo", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
         expect( response.status ).to eq(201)
 
         repo = JSON.parse response.body

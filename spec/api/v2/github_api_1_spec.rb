@@ -24,8 +24,8 @@ describe "GithubApiV2", :type => :request do
       user_api = ApiFactory.create_new(user)
       user_api.save
 
-      get "/api/v2/github/pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(400)
+      get "/api/v2/github/pedestal", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
+      expect( response.status ).to eq(400)
       user.delete
     end
 
@@ -41,18 +41,20 @@ describe "GithubApiV2", :type => :request do
       user_api = ApiFactory.create_new(user)
       user_api.save
 
-      github_repo = GithubRepo.new({user_id: user.id.to_s, github_id: 1,
-                      fullname: "spec/repo1", user_login: "a",
-                      owner_login: "versioneye", owner_type: "user"})
-      github_repo.save.should be_truthy
+      github_repo = GithubRepo.new({
+        user_id: user.id.to_s, github_id: 1,
+        fullname: "spec/repo1", user_login: "a",
+        owner_login: "versioneye", owner_type: "user"
+      })
+      expect( github_repo.save ).to be_truthy
 
-      get "/api/v2/github/spec:repo1", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(200)
+      get "/api/v2/github/spec:repo1", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
+      expect(response.status).to eq(200)
 
       repo = JSON.parse response.body
-      repo.should_not be_nil
-      repo.has_key?('repo').should be_truthy
-      repo['repo']['fullname'].should eq("spec/repo1")
+      expect(repo).to_not be_nil
+      expect( repo.has_key?('repo') ).to be_truthy
+      expect( repo['repo']['fullname'] ).to eq("spec/repo1")
       user.delete
     end
 
@@ -74,33 +76,34 @@ describe "GithubApiV2", :type => :request do
       user.email = 'juku_3@pupu.com'
       user.github_id = 'asgasgs'
       user.github_token = 'github_otken'
-      user.save.should be_truthy
+      expect( user.save ).to be_truthy
 
       user_api = ApiFactory.create_new(user)
-      user_api.save.should be_truthy
+      expect( user_api.save ).to be_truthy
 
-      repo1 = GithubRepo.new({user_id: user.id.to_s, github_id: 1,
-                      fullname: "spec/repo1", user_login: "a",
-                      owner_login: "versioneye", owner_type: "user"})
-      repo1.save.should be_truthy
+      repo1 = GithubRepo.new({
+        user_id: user.id.to_s, github_id: 1,
+        fullname: "spec/repo1", user_login: "a",
+        owner_login: "versioneye", owner_type: "user"
+      })
+      expect( repo1.save ).to be_truthy
 
       project = ProjectFactory.create_new user
       project.name = 'Gemfile'
       project.source = Project::A_SOURCE_GITHUB
       project.scm_fullname = repo1[:fullname]
       project.scm_branch = 'master'
-      project.save.should be_truthy
-      Project.count.should eq(1)
+      expect( project.save  ).to be_truthy
+      expect( Project.count ).to eq(1)
 
-      delete "/api/v2/github/spec:repo1", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
-      response.status.should eq(200)
+      delete "/api/v2/github/spec:repo1", params: {:api_key => user_api[:api_key]}, env: {"HTTPS" => "on"}
+      expect( response.status ).to eq(200)
       msg = JSON.parse response.body
-      msg.should_not be_nil
-      msg.empty?.should be_falsey
-      msg.has_key?('success').should be_truthy
-      msg['success'].should be_truthy
-
-      Project.count.should eq(0)
+      expect(msg).to_not be_nil
+      expect(msg.empty?).to be_falsey
+      expect(msg.has_key?('success') ).to be_truthy
+      expect(msg['success'] ).to be_truthy
+      expect( Project.count ).to eq(0)
     end
   end
 

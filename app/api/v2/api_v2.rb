@@ -25,7 +25,7 @@ module V2
     mount ProjectsApiV2
     mount OrganisationsApiV2
     mount UsersApiV2
-    #mount GithubApiV2
+    mount GithubApiV2
     #mount FacebookApiV2
     #mount SecurityApiV2
 
