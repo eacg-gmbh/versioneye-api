@@ -27,6 +27,19 @@ module V2
       end
 
 
+      desc 'Returns the list of teams'
+      get '/:orga_name/teams' do
+        rate_limit
+        track_apikey
+
+        if !@orga.name.eql?(params[:orga_name])
+          error! "`orga_name` does not match with used API key!", 400
+        end
+
+        present @orga.teams, with: EntitiesV2::TeamEntity
+      end
+
+
       desc 'Returns the inventory list of the organisation', {
         notes: %q[
                 Find a detailed description here: https://github.com/versioneye/versioneye-api/blob/master/docs/api/v2/organisation.md
