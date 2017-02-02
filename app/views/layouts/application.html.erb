@@ -21,7 +21,31 @@
     <%= stylesheet_link_tag '/api/swagger_css/screen.css' %>
     <%= stylesheet_link_tag '/api/swagger_css/style.css' %>
     <%= stylesheet_link_tag 'api_application' %>
+    
+    <style>
+  
+      /* Override CSS for swagger */
+      .swagger-section div#header {
+        background: inherit;
+      }
 
+      .swagger-section .swagger-ui-wrap {
+        max-width: inherit;
+      }
+
+      .swagger-section form#api_selector {
+        float: none;
+      }
+
+      .swagger-section #resources_container {
+        padding-left: 0px;
+      }
+
+      .swagger-section span.http_method a {
+        min-width: 65px;
+        padding: 10px !important;
+      }
+    </style>
 
     <script src="/api/swagger_js/lib/es5-shim.js" type="text/javascript"></script>
     <script src="/api/swagger_js/lib/object-assign-pollyfill.js" type="text/javascript"></script>

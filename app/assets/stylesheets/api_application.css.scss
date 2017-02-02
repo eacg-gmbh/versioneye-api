@@ -25,5 +25,17 @@ $text_hover: #a0b8cf;
 
 
 @import "header.css";
-@import "main.css";
+
+cite {
+    font-style: italic;
+    font-family: times;
+    font-size: 26px;
+    color: gray;
+    line-height: 1.2;
+}
+
+.cite_section {
+  padding-top: 10px;
+}
+
 
