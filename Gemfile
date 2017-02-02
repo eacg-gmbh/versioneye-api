@@ -33,7 +33,7 @@ group :development do
 end
 
 group :test do
-  gem 'simplecov'         , '~> 0.12.0'
+  gem 'simplecov'         , '~> 0.13.0'
   gem 'turn'              , :require => false
   gem 'rspec'             , '~> 3.5'
   gem 'rspec-rails'       , '~> 3.5'
