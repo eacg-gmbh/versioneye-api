@@ -14,7 +14,7 @@ module EntitiesV2
     expose :name
     expose :project_type
     expose :organisation, using: ProjectListItemOrga
-    expose :team
+    expose :team, safe: true, documentation: {type: String, desc: "A name of team"}
     expose :public
     expose :private_project, :as => :private_scm
     expose :period
