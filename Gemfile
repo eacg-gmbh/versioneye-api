@@ -29,7 +29,6 @@ end
 group :development do
   gem 'psych'             , '~> 2.2.2'
   gem 'terminal-notifier' , '~> 1.7.1'
-  gem 'fakes3'            , '~> 0.2.0'
 end
 
 group :test do

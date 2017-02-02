@@ -136,9 +136,6 @@ GEM
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
-    fakes3 (0.2.5)
-      builder
-      thor
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.17)
@@ -383,7 +380,6 @@ DEPENDENCIES
   execjs (~> 2.7.0)
   factory_girl (~> 4.8.0)
   factory_girl_rails (~> 4.8.0)
-  fakes3 (~> 0.2.0)
   font-awesome-sass (~> 4.7.0)
   grape (~> 0.16)
   grape-entity (~> 0.6)
