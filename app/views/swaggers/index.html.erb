@@ -33,7 +33,7 @@
     <div id="message-bar" class="swagger-ui-wrap" data-sw-translate="">&nbsp;</div>
     <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
   </div>
-  
+
 </section>
 
 
@@ -43,7 +43,7 @@
     var apiKey = "<%= @api_key %>";
     var authClient = new window.SwaggerClient.ApiKeyAuthorization("api_key", apiKey, "query");
     var url = "<%= @api_url %>/swagger_doc.json";
-    
+
     hljs.configure({
       highlightSizeThreshold: 5000
     });
