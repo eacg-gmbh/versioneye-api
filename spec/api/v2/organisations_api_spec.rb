@@ -79,6 +79,30 @@ describe V2::OrganisationsApiV2, :type => :request do
     end
   end
 
+  describe "GET /v2/organisations/projects" do
+    it "returns an error because api key is wrong" do
+      get "/api/v2/organisations/test/projects?api_key=some_random_shit"
+      expect( response.status ).to eq(401)
+      response_data = JSON.parse(response.body)
+      expect( response_data["error"] ).to eq("Request not authorized.")
+    end
+    it "returns an error because orga name does not match" do
+      expect( user_api.save ).to be_truthy
+      get "/api/v2/organisations/tada/projects?api_key=#{@orga_api.api_key}"
+      expect( response.status ).to eq(400)
+    end
+    it "returns a list of projects" do
+      expect( user_api.save ).to be_truthy
+      proj = ProjectFactory.create_new test_user, nil, true, @orga
+      expect( proj.save ).to be_truthy
+      get "/api/v2/organisations/#{@orga.name}/projects?api_key=#{@orga_api.api_key}"
+      expect( response.status ).to eq(200)
+      response_data = JSON.parse(response.body)
+      expect( response_data.count ).to eq(1)
+      expect( response_data.first["name"] ).to eq(proj.name)
+    end
+  end
+
   describe "GET /v2/organisations/test_orga/inventory" do
     it "returns status code 400 because of bad orga name" do
       get "/api/v2/organisations/nan/inventory?api_key=#{@orga_api.api_key}"
