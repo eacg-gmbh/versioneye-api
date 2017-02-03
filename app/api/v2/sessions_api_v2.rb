@@ -10,9 +10,10 @@ module V2
 
 
       desc "returns session info for authorized users", {
-        notes: %q[If current user has active session, then this
-                method will return 200 with short user profile.
-                For othercase, it will return error message with status code 401.
+        detail: %q[
+If current user has active session, then this
+method will return 200 with short user profile.
+For othercase, it will return error message with status code 401.
               ]
       }
       get do
@@ -29,7 +30,7 @@ module V2
 
 
       desc "creates new sessions", {
-        notes: %q[ You need to append your api_key to request. ]
+        detail: %q[ You need to append your api_key to request. ]
       }
       params do
         requires :api_key, type: String,  :desc => "your personal token for API."
@@ -42,7 +43,7 @@ module V2
 
 
       desc "creates new sessions", {
-        notes: %q[ You need to append your api_key to request. ]
+        detail: %q[ You need to append your api_key to request. ]
       }
       params do
         requires :username, type: String,  :desc => "email or username"
@@ -59,8 +60,7 @@ module V2
 
 
       desc "delete current session aka log out.", {
-        notes: %q[Close current session. It's very handy method when you re-generated
-                  your current API-key.]
+        detail: %q[Close current session. It's very handy method when you re-generated your current API-key.]
       }
       delete do
         rate_limit

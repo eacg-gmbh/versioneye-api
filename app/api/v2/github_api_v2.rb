@@ -19,15 +19,15 @@ module V2
 
       #-- GET '/' -------------------------------------------------------------
       desc "lists your's github repos", {
-        notes: %q[
-          This endpoint shows all imported repositories from your Github account.
+        detail: %q[
+This endpoint shows all imported repositories from your Github account.
 
-          This enpoint expects that you have a GitHub account connected and the token
-          is still valid. If that is not the case please visit **https://www.versioneye.com/settings/connect**.
-          to update your GitHub credentials.
+This enpoint expects that you have a GitHub account connected and the token
+is still valid. If that is not the case please visit **https://www.versioneye.com/settings/connect**.
+to update your GitHub credentials.
 
-          If it shows no or old data, then you can use the `github/sync` endpoint
-          to update your account with the current meta data from GitHub.
+If it shows no or old data, then you can use the `github/sync` endpoint
+to update your account with the current meta data from GitHub.
         ]
       }
       params do
@@ -86,13 +86,13 @@ module V2
 
       #-- GET '/github/sync' --------------------------------------------------
       desc "re-load github data", {
-        notes: %q[
-          Reimports ALL GitHub Repositories. This Endpoint fetches meta information to all
-          repositories in your GitHub account. Meta information such as repo name, branches and
-          supported project files.
+        detail: %q[
+Reimports ALL GitHub Repositories. This Endpoint fetches meta information to all
+repositories in your GitHub account. Meta information such as repo name, branches and
+supported project files.
 
-          This endpoint works asynchronously and returns a status code. The status code is either
-          **running** or **done**.
+This endpoint works asynchronously and returns a status code. The status code is either
+**running** or **done**.
         ]
       }
       get '/sync' do
@@ -117,15 +117,15 @@ module V2
 
       #-- GET '/:repo_key' ----------------------------------------------------
       desc "shows the detailed information for the repository", {
-        notes: %q[
-          This Endpoint returns detailed information about a GitHub repository.
+        detail: %q[
+This Endpoint returns detailed information about a GitHub repository.
 
-          Due the limits of our current API framework, the repo key has to be
-          encoded as url-safe string. That means all '/' has to be replaced with
-          colons ':' and '.' has to be replaced with '~'.
+Due the limits of our current API framework, the repo key has to be
+encoded as url-safe string. That means all '/' has to be replaced with
+colons ':' and '.' has to be replaced with '~'.
 
-          For example,  repository with fullname `versioneye/veye` has to transformed
-          to `versioneye:veye`.
+For example,  repository with fullname `versioneye/veye` has to transformed
+to `versioneye:veye`.
         ]
       }
       params do
@@ -154,15 +154,15 @@ module V2
 
       #-- POST '/:repo_key' --------------------------------------------------
       desc "imports project file from github", {
-        notes: %q[
-          Use this Endpoint to import a project file from GitHub. This will create a new project on VersionEye.
+        detail: %q[
+Use this Endpoint to import a project file from GitHub. This will create a new project on VersionEye.
 
-          Due the limits of our current API framework, the repo key has to be
-          encoded as url-safe string. That means all '/' has to be replaced with
-          colons ':' and '.' has to be replaced with '~'.
+Due the limits of our current API framework, the repo key has to be
+encoded as url-safe string. That means all '/' has to be replaced with
+colons ':' and '.' has to be replaced with '~'.
 
-          For example,  repository with fullname `versioneye/veye` has to transformed
-          to `versioneye:veye`.
+For example,  repository with fullname `versioneye/veye` has to transformed
+to `versioneye:veye`.
         ]
       }
       params do
@@ -204,15 +204,15 @@ module V2
 
       #-- DELETE '/:repo_key' -------------------------------------------------
       desc "remove imported project", {
-        notes: %q[
-          This Endpoint deletes a project on VersionEye!
+        detail: %q[
+This Endpoint deletes a project on VersionEye!
 
-          Due the limits of our current API framework, the repo key has to be
-          encoded as url-safe string. That means all '/' has to be replaced with
-          colons ':' and '.' has to be replaced with '~'.
+Due the limits of our current API framework, the repo key has to be
+encoded as url-safe string. That means all '/' has to be replaced with
+colons ':' and '.' has to be replaced with '~'.
 
-          For example,  repository with fullname `versioneye/veye` has to transformed
-          to `versioneye:veye`.
+For example,  repository with fullname `versioneye/veye` has to transformed
+to `versioneye:veye`.
         ]
       }
       params do
@@ -243,7 +243,7 @@ module V2
 
       #-- POST '/hook' -----------------------------------------------
       desc "github service hook", {
-        notes: %q[This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ]
+        detail: %q[This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ]
       }
       params do
         requires :project_id, type: String, desc: "Project ID"

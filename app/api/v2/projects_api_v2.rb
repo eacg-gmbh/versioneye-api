@@ -17,11 +17,9 @@ module V2
       end
 
       desc "list of projects", {
-        notes: %q[
-
-              To use this resource you need either an active session or you have to append
-              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
-
+        detail: %q[
+To use this resource you need either an active session or you have to append
+your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
             ]
       }
       params do
@@ -57,7 +55,7 @@ module V2
 
 
       desc "shows the project's information", {
-        notes: %q[ It shows detailed info of your project. ]
+        detail: %q[ It shows detailed info of your project. ]
       }
       params do
         requires :project_key, :type => String, :desc => "Project ID"
@@ -85,11 +83,9 @@ module V2
 
 
       desc "upload project file and create a new project", {
-        notes: %q[
-
-              To use this resource you need either an active session or you have to append
-              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
-
+        detail: %q[
+To use this resource you need either an active session or you have to append
+your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
             ]
       }
       params do
@@ -139,11 +135,9 @@ module V2
 
 
       desc "update project with new file", {
-        notes: %q[
-
-              To use this resource you need either an active session or you have to append
-              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
-
+        detail: %q[
+To use this resource you need either an active session or you have to append
+your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
             ]
       }
       params do
@@ -198,11 +192,9 @@ module V2
 
 
       desc "delete given project", {
-        notes: %q[
-
-              To use this resource you need either an active session or you have to append
-              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
-
+        detail: %q[
+To use this resource you need either an active session or you have to append
+your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
             ]
       }
       params do
@@ -236,11 +228,9 @@ module V2
 
 
       desc "get grouped view of licences for dependencies", {
-        notes: %q[
-
-              To use this resource you need either an active session or you have to append
-              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
-
+        detail: %q[
+To use this resource you need either an active session or you have to append
+your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
             ]
       }
       params do
@@ -287,13 +277,11 @@ module V2
 
 
       desc "merge a project into another one", {
-        notes: %q[
-
-              This endpoint merges a project (child_id) into another project (group_id/artifact_id).
-              This endpoint is specially for Maven based projects!
-              To use this resource you need either an active session or you have to append
-              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
-
+        detail: %q[
+This endpoint merges a project (child_id) into another project (group_id/artifact_id).
+This endpoint is specially for Maven based projects!
+To use this resource you need either an active session or you have to append
+your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
             ]
       }
       params do
@@ -332,12 +320,10 @@ module V2
 
 
       desc "merge a project into another one", {
-        notes: %q[
-
-              This endpoint merges a project (child_id) into another project (parent_id).
-              To use this resource you need either an active session or you have to append
-              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
-
+        detail: %q[
+This endpoint merges a project (child_id) into another project (parent_id).
+To use this resource you need either an active session or you have to append
+your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
             ]
       }
       params do
@@ -374,13 +360,11 @@ module V2
 
 
       desc "unmerge a project", {
-        notes: %q[
-
-              This endpoint unmerges a project (child_id) from another project (parent_id). It makes the
-              chilld again a separate project!
-              To use this resource you need either an active session or you have to append
-              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
-
+        detail: %q[
+This endpoint unmerges a project (child_id) from another project (parent_id). It makes the
+chilld again a separate project!
+To use this resource you need either an active session or you have to append
+your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
             ]
       }
       params do

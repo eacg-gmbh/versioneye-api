@@ -16,12 +16,11 @@ module V2
     resource :products do
 
       desc "search packages", {
-        notes: %q[
+        detail: %q[
+This resource returns same results as our web application. But you get it as JSON objects -
+the result is an JSON array of product objects.
 
-                This resource returns same results as our web application. But you get it as JSON objects -
-                the result is an JSON array of product objects.
-
-                When there's no match for the query, the result array will be empty.
+When there's no match for the query, the result array will be empty.
               ]
       }
       params do
@@ -60,17 +59,16 @@ module V2
 
 
       desc "detailed information for specific package", {
-        notes: %q[
+        detail: %q[
+Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
-                  Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
+Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
-                  Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+#### Notes about status codes
 
-                  #### Notes about status codes
+  * API returns 404, when the product with given product key doesnt exists.
 
-                    * API returns 404, when the product with given product key doesnt exists.
-
-                    * Response 302 means that you didnt encode prod_key correctly.* (Replace all dots & slashes ) *
+  * Response 302 means that you didnt encode prod_key correctly.* (Replace all dots & slashes ) *
               ]
       }
       params do
@@ -96,17 +94,16 @@ module V2
 
 
       desc "list versions of a package", {
-        notes: %q[
+        detail: %q[
+Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
-                  Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
+Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
-                  Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+#### Notes about status codes
 
-                  #### Notes about status codes
+  * API returns 404, when the product with given product key doesnt exists.
 
-                    * API returns 404, when the product with given product key doesnt exists.
-
-                    * Response 302 means that you didnt encode prod_key correctly.* (Replace all dots & slashes ) *
+  * Response 302 means that you didnt encode prod_key correctly.* (Replace all dots & slashes ) *
               ]
       }
       params do
@@ -126,15 +123,15 @@ module V2
 
 
       desc "check your following status", {
-        notes: %q[
-                  Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
+        detail: %q[
+Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
-                  Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
-                  #### Notes about status codes
+#### Notes about status codes
 
-                  This resource will returns the status code 404 if there is no product
-                  for the given prod_key.
+This resource will returns the status code 404 if there is no product
+for the given prod_key.
               ]
       }
       params do
@@ -159,15 +156,14 @@ module V2
 
 
       desc "follow your favorite software package", {
-        notes: %q[
+        detail: %q[
+Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
-                  Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
+Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
-                  Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+#### Notes about status codes
 
-                  #### Notes about status codes
-
-                  It will respond 404, when you are using wrong product key or encode it uncorrectly.
+It will respond 404, when you are using wrong product key or encode it uncorrectly.
               ]
         }
       params do
@@ -199,16 +195,16 @@ module V2
 
 
       desc "unfollow given software package", {
-        notes: %Q[
-          Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
+        detail: %Q[
+Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
-          Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
-          #### Response codes
+#### Response codes
 
-            * 400 - bad request; you used wrong product key;
-            * 401 - unauthorized - please append api_key
-            * 403 - forbidden; you are not authorized; or just missed api_key;
+  * 400 - bad request; you used wrong product key;
+  * 401 - unauthorized - please append api_key
+  * 403 - forbidden; you are not authorized; or just missed api_key;
         ]
       }
       params do
@@ -239,17 +235,17 @@ module V2
 
 
       desc "references", {
-        notes: %q[
-                It returns the references of a package.
+        detail: %q[
+It returns the references of a package.
 
-                Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
+Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
-                Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
-                #### Notes about status codes
+#### Notes about status codes
 
-                This resource will return the status code 404 if there is no product for
-                the given prod_key or the product has 0 references.
+This resource will return the status code 404 if there is no product for
+the given prod_key or the product has 0 references.
               ]
       }
       params do
@@ -286,17 +282,17 @@ module V2
 
 
       desc "upload scm changelogs to an artifact", {
-        notes: %q[
-                  This resource can parse a changelog.xml from the maven-changelog-plugin, assign
-                  it to a specific artifact and display the changelog infos on the product page.
+        detail: %q[
+This resource can parse a changelog.xml from the maven-changelog-plugin, assign
+it to a specific artifact and display the changelog infos on the product page.
 
-                  Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
+Please replace all slashes `/` through colons `:` and all dots `.` through `~`!
 
-                  Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+Example: The clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
-                  #### Notes about status codes
+#### Notes about status codes
 
-                  It will respond 404, when you are using wrong product key or encode it uncorrectly.
+It will respond 404, when you are using wrong product key or encode it uncorrectly.
               ]
         }
       params do
@@ -335,9 +331,7 @@ module V2
 
 
       desc "suggest a license for an artifact", {
-        notes: %q[
-                  With this endpoint users can suggest a license for an artifact.
-              ]
+        detail: %q[With this endpoint users can suggest a license for an artifact.]
         }
       params do
         requires :lang          , :type => String, :desc => %Q[ programming language ]

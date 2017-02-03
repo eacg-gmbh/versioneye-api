@@ -18,9 +18,7 @@ module V2
       end
 
       desc "shows profile of authorized user", {
-        notes: %q[
-            On Swagger, you can create session by adding additional parameter :api_key.
-        ]
+        detail: %q[On Swagger, you can create session by adding additional parameter :api_key.]
       }
       get do
         authorized?
@@ -81,11 +79,11 @@ module V2
 
 
       desc "shows unread notifications of authorized user", {
-        notes: %q[
-          This Endpoint returns the 30 latest notifications.
+        detail: %q[
+This Endpoint returns the 30 latest notifications.
 
-          If there are new versions out there for software packages you follow directly on VersionEye, then
-          each new version is a new **notification** for your account.
+If there are new versions out there for software packages you follow directly on VersionEye, then
+each new version is a new **notification** for your account.
         ]
       }
       params do
