@@ -58,6 +58,21 @@ When there's no match for the query, the result array will be empty.
       end
 
 
+      desc "search by SHA value", {
+        detail: %q[
+This Endpoint expects a SHA value and returns the corresponding product to it, if available.
+              ]
+      }
+      get '/sha/:sha' do
+        rate_limit
+        track_apikey
+        authorized?
+
+        artefacts = Artefact.where(:sha_value => params[:sha].to_s)
+        present artefacts, with: EntitiesV2::ArtefactEntity
+      end
+
+
       desc "detailed information for specific package", {
         detail: %q[
 Please replace all slashes `/` through colons `:` and all dots `.` through `~`!

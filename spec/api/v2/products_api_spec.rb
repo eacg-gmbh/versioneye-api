@@ -30,7 +30,7 @@ describe V2::ProductsApiV2, :type => :request do
       response_data = JSON.parse(response.body)
       expect( response_data['error'] ).to eq("You need an API key to access this API Endpoint. Sign up for free and get an API key!")
     end
-    
+
     it "returns error code for not existing product" do
       package_url =  "#{product_uri}/ruby/not_exist"
       get package_url, params: { api_key: user_api.api_key }
@@ -56,7 +56,7 @@ describe V2::ProductsApiV2, :type => :request do
       prod_key_safe = encode_prod_key( test_product.prod_key )
       package_url =  "#{product_uri}/#{test_product.language}/#{prod_key_safe}?prod_version=test_1.0"
       get package_url, params: {:api_key => user_api.api_key}
-      
+
       expect( response.status ).to eql(200)
       response_data = JSON.parse(response.body)
       expect( response_data["name"] ).to eql( test_product.name )
@@ -85,7 +85,7 @@ describe V2::ProductsApiV2, :type => :request do
       prod_key_safe = encode_prod_key( test_product_2.prod_key )
       package_url   = "#{product_uri}/#{test_product_2.language}/#{prod_key_safe}"
       get package_url, params: {:api_key => user_api.api_key}
-      
+
       expect( response.status ).to eql(403)
       expect( ApiCmp.count ).to eq(1)
       response_data = JSON.parse(response.body)
@@ -118,7 +118,7 @@ describe V2::ProductsApiV2, :type => :request do
       prod_key_safe = encode_prod_key( test_product.prod_key )
       package_url =  "#{product_uri}/#{test_product.language}/#{prod_key_safe}/versions"
       get package_url, params: {:api_key => user_api.api_key}
-      
+
       expect( response.status ).to eql(200)
       response_data = JSON.parse(response.body)
       expect(response_data["name"]).to eql( test_product.name )
@@ -138,7 +138,7 @@ describe V2::ProductsApiV2, :type => :request do
       expect( Product.count ).to eq(55)
 
       get "#{product_uri}/search/#{search_term}"
-      
+
       expect( response.status ).to eql(200)
       response_data = JSON.parse(response.body)
       expect(response_data['results'][0]["name"]).to  match(/test_/)
@@ -168,7 +168,7 @@ describe V2::ProductsApiV2, :type => :request do
 
       5.times do |x|
         get "#{product_uri}/search/#{search_term}", params: {:page => 0}
-        
+
         expect( response.status ).to eql(200)
         response_data  = JSON.parse(response.body)
         expect( response_data['paging']["current_page"] ).to eql(1)
@@ -202,12 +202,42 @@ describe V2::ProductsApiV2, :type => :request do
   end
 
 
+  describe "Search by SHA value" do
+    it "returns statuscode 401, because API key is missing" do
+      get "#{product_uri}/sha/1"
+      expect( response.status ).to eql(401)
+    end
+    it "returns empty results" do
+      get "#{product_uri}/sha/1?api_key=#{user_api.api_key}"
+      expect( response.status ).to eql(200)
+      response_data  = JSON.parse(response.body)
+      expect( response_data ).to be_empty
+    end
+    it "returns the searched element" do
+      artefact = Artefact.new({:language => "Java",
+                  :prod_key => "org.junit/junit",
+                  :version => "1.0.0",
+                  :group_id => "org.junit",
+                  :artifact_id => "junit",
+                  :prod_type => "Maven2",
+                  :sha_value => "123456789",
+                  :sha_method => 'sha1'})
+      expect( artefact.save ).to be_truthy
+      get "#{product_uri}/sha/123456789?api_key=#{user_api.api_key}"
+      expect( response.status ).to eql(200)
+      response_data  = JSON.parse(response.body)
+      expect( response_data ).to_not be_empty
+      expect( response_data.first['prod_key'] ).to eq(artefact.prod_key)
+    end
+  end
+
+
   describe "unauthorized user tries to use follow" do
     it "returns unauthorized error, when lulsec tries to get follow status" do
       test_product  = ProductFactory.create_new 101
       safe_prod_key = encode_prod_key(test_product.prod_key)
       get "#{product_uri}/#{test_product.language}/#{safe_prod_key}/follow"
-      
+
       expect( response.status ).to eq(401)
     end
 
@@ -215,7 +245,7 @@ describe V2::ProductsApiV2, :type => :request do
       test_product  = ProductFactory.create_new 101
       safe_prod_key = encode_prod_key(test_product.prod_key)
       post "#{product_uri}/#{test_product.language}/#{safe_prod_key}/follow"
-      
+
       expect( response.status ).to eq(401)
     end
 
@@ -278,9 +308,9 @@ describe V2::ProductsApiV2, :type => :request do
       expect( Product.first.users.count ).to eq(0)
       expect( User.count ).to eq(1)
       expect( User.first.products.count ).to eq(0)
-      
+
       post "#{product_uri}/#{@test_product.language}/#{@safe_prod_key}/follow"
-      
+
       expect( response.status ).to eq(201)
       expect( User.first.products.count ).to eq(1)
       expect( Product.first.users.count ).to eq(1)
