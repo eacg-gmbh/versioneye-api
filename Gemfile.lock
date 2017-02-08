@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 6a66ee043a9b31570c49183e3208b9e830d95674
-  tag: v11.4.14
+  revision: 2a5ec1486fe370004c48e45ede6fa8689b8ce0c8
+  tag: v11.6.2
   specs:
-    versioneye-core (11.4.14)
+    versioneye-core (11.6.2)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.7.2)
       bunny (~> 2.6.0)
@@ -72,13 +72,13 @@ GEM
     amq-protocol (2.1.0)
     ansi (1.5.0)
     arel (7.1.4)
-    aws-sdk (2.7.3)
-      aws-sdk-resources (= 2.7.3)
-    aws-sdk-core (2.7.3)
+    aws-sdk (2.7.4)
+      aws-sdk-resources (= 2.7.4)
+    aws-sdk-core (2.7.4)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.7.3)
-      aws-sdk-core (= 2.7.3)
+    aws-sdk-resources (2.7.4)
+      aws-sdk-core (= 2.7.4)
     aws-sigv4 (1.0.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -162,7 +162,7 @@ GEM
       multi_json (>= 1.3.2)
     grape-swagger (0.26.0)
       grape (>= 0.16.2)
-    grape-swagger-entity (0.1.5)
+    grape-swagger-entity (0.1.6)
       grape-entity
       grape-swagger (>= 0.20.4)
     grape-swagger-representable (0.1.3)
@@ -300,7 +300,7 @@ GEM
     sawyer (0.8.1)
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
-    selenium-webdriver (3.0.5)
+    selenium-webdriver (3.0.7)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
