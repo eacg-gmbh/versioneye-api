@@ -32,6 +32,9 @@ This endpoint requires the API key from a user. The result is a set of organisat
         rate_limit
         track_apikey
 
+        if @orga.nil?
+          error! "Please use a valid API key from the target organisation.", 400
+        end
         if !@orga.name.eql?(params[:orga_name])
           error! "`orga_name` does not match with used API key!", 400
         end
@@ -45,6 +48,9 @@ This endpoint requires the API key from a user. The result is a set of organisat
         rate_limit
         track_apikey
 
+        if @orga.nil?
+          error! "Please use a valid API key from the target organisation.", 400
+        end
         if !@orga.name.eql?(params[:orga_name])
           error! "`orga_name` does not match with used API key!", 400
         end
@@ -68,6 +74,9 @@ Find a detailed description here: https://github.com/versioneye/versioneye-api/b
         rate_limit
         track_apikey
 
+        if @orga.nil?
+          error! "Please use a valid API key from the target organisation.", 400
+        end
         if !@orga.name.eql?(params[:orga_name])
           error! "`orga_name` does not match with used API key!", 400
         end
