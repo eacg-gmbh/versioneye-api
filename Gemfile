@@ -1,10 +1,10 @@
 source 'http://rubygems.org'
 
 gem 'tzinfo-data'
-gem 'rails'              , '5.0.1'
+gem 'rails'              , '5.0.2'
 gem 'execjs'             , '~> 2.7.0'
 gem 'therubyracer'       , '~> 0.12.0'
-gem 'puma'               , '~> 3.7.0'
+gem 'puma'               , '~> 3.8.1'
 gem 'grape'              , '~> 0.16'
 gem 'grape-entity'       , '~> 0.6'
 gem 'grape-swagger-entity'
@@ -14,7 +14,7 @@ gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 gem 'htmlentities'       , '~> 4.3.2'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.7.7'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.7.21'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 gem 'font-awesome-sass', '~> 4.7.0'
@@ -23,7 +23,7 @@ group :assets do
   gem 'sass'                  , :require => 'sass'
   gem 'sass-rails'            , '~> 5.0.3'
   gem 'coffee-rails'          , '~> 4.2.0'
-  gem 'uglifier'              , '~> 3.0.0'
+  gem 'uglifier'              , '~> 3.1.7'
 end
 
 group :development do
