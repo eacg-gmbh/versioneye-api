@@ -89,15 +89,9 @@ your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_66
             ]
       }
       params do
-        requires :upload,
-                 :type => File,
-                 :desc => "Project file - [maven.pom, Gemfile ...]"
-        optional :visibility,
-                 :type => String,
-                 :desc => "By default 'public'. If 'public' everybody can see the project."
-        optional :name,
-                 :type => String,
-                 :desc => "The name of the VersionEye project. By default it is the filename."
+        requires :upload    , :type => File  , :desc => "Project file - [maven.pom, Gemfile ...]"
+        optional :visibility, :type => String, :desc => "By default 'public'. If 'public' everybody can see the project."
+        optional :name      , :type => String, :desc => "The name of the VersionEye project. By default it is the filename."
         optional :orga_name , :type => String, :desc => "The name of the organisation this project should be assigned to."
         optional :team_name , :type => String, :desc => "The name of the team in the organisation this project should be assigned to."
         optional :temp      , :type => String, :desc => "If 'true' this project will not show up in the UI and gets removed later."
