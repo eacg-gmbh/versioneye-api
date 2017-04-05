@@ -47,7 +47,8 @@ module ProductHelpers
       "php" => "PHP",
       "node.js" =>  "Node.JS",
       "nodejs" => "Node.JS",
-      "javascript" => "JavaScript"
+      "javascript" => "JavaScript",
+      "csharp" => "CSharp"
     }
 
     parsed_lang = lang.downcase
@@ -79,7 +80,7 @@ module ProductHelpers
   end
 
 
-  def fetch_product(lang, prod_key)
+  def fetch_product( lang, prod_key )
     lang = parse_language(lang)
     prod_key = decode_prod_key(prod_key)
     current_product = Product.fetch_product(lang, prod_key)
