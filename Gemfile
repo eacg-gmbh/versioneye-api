@@ -23,7 +23,7 @@ group :assets do
   gem 'sass'                  , :require => 'sass'
   gem 'sass-rails'            , '~> 5.0.3'
   gem 'coffee-rails'          , '~> 4.2.0'
-  gem 'uglifier'              , '~> 3.1.7'
+  gem 'uglifier'              , '~> 3.2.0'
 end
 
 group :development do
@@ -32,7 +32,7 @@ group :development do
 end
 
 group :test do
-  gem 'simplecov'         , '~> 0.13.0'
+  gem 'simplecov'         , '~> 0.14.1'
   gem 'turn'              , :require => false
   gem 'rspec'             , '~> 3.5'
   gem 'rspec-rails'       , '~> 3.5'
