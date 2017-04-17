@@ -453,7 +453,7 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( Project.count ).to eq(1)
       update_uri = "#{project_uri}/#{project.id.to_s}?api_key=#{user_api.api_key}"
       file = empty_file
-      response = post update_uri, 
+      response = post update_uri,
                        {
                         project_file: file,
                         send_file: true,
@@ -527,7 +527,7 @@ describe V2::ProjectsApiV2, :type => :request do
 
       update_uri = "#{project_uri}/#{project.ids}?api_key=#{@orga.api.api_key}"
       file = test_file
-      response = post update_uri, 
+      response = post update_uri,
                        {
                         project_file: file,
                         send_file: true,
@@ -1033,7 +1033,7 @@ describe V2::ProjectsApiV2, :type => :request do
 
     before :each do
       file = test_file
-      response = post project_uri, 
+      response = post project_uri,
          {
           upload:    file,
           api_key:   @orga_api.api_key,
@@ -1049,7 +1049,8 @@ describe V2::ProjectsApiV2, :type => :request do
     it "deletes fails because project does not exist" do
       ids = Project.first.ids
       response = delete "#{project_uri}/NaN"
-      expect( response.status ).to eql(204)
+      p response
+      expect( response.status ).to eql(200)
       msg = JSON.parse response.body
       expect( msg['success'] ).to be_truthy
     end
@@ -1057,7 +1058,7 @@ describe V2::ProjectsApiV2, :type => :request do
     it "deletes existing project successfully" do
       ids = Project.first.ids
       response = delete "#{project_uri}/#{ids}.json"
-      expect( response.status ).to eql(204)
+      expect( response.status ).to eql(200)
       msg = JSON.parse response.body
       expect( msg["success"] ).to be_truthy
     end
@@ -1077,7 +1078,7 @@ describe V2::ProjectsApiV2, :type => :request do
       project.organisation_id = @orga.ids
       expect( project.save )
       response = delete "#{project_uri}/#{project.ids}",  { :api_key => @orga.api.api_key }
-      expect( response.status ).to eql(204)
+      expect( response.status ).to eql(200)
       msg = JSON.parse response.body
       expect( msg["success"] ).to be_truthy
     end
