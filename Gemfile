@@ -9,7 +9,7 @@ gem 'grape'              , '~> 0.16'
 gem 'grape-entity'       , '~> 0.6'
 gem 'grape-swagger-entity'
 gem 'grape-swagger-representable'
-gem 'grape-swagger'      , '0.26.0'
+gem 'grape-swagger'      , '0.27.0'
 gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 gem 'htmlentities'       , '~> 4.3.2'
@@ -41,7 +41,7 @@ group :test do
   gem 'capybara'          , '~> 2.12'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'vcr'               , '~> 3.0.1', :require => false
-  gem 'webmock'           , '~> 2.3.1', :require => false
+  gem 'webmock'           , '~> 3.0.1', :require => false
   gem 'database_cleaner'  , '~> 1.5.1'
   gem 'factory_girl'      , '~> 4.8.0'
   gem 'factory_girl_rails', '~> 4.8.0'
