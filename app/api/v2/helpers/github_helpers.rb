@@ -13,7 +13,8 @@ module GithubHelpers
 
     Rails.logger.info "Pull Request #{fullname} # #{number} #{action} - #{commits_url} - on branch #{branch}"
 
-    GithubPullRequestService.process fullname, branch, commits_url, number
+    GitPrProducer.new("#{fullname}:::#{branch}:::#{commits_url}:::#{number}")
+    # GithubPullRequestService.process fullname, branch, commits_url, number
 
     "Done"
   end
@@ -63,6 +64,7 @@ module GithubHelpers
     end
     message
   rescue => e
+    Rails.logger.error e.message
     e.message
   end
 
