@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'tzinfo-data'
-gem 'rails'              , '5.0.2'
+gem 'rails'              , '5.1.0'
 gem 'execjs'             , '~> 2.7.0'
 gem 'therubyracer'       , '~> 0.12.0'
 gem 'puma'               , '~> 3.8.1'
@@ -14,7 +14,7 @@ gem 'ruby_regex'         , '~> 0.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 gem 'htmlentities'       , '~> 4.3.2'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.9.0'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.10.1'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 gem 'font-awesome-sass', '~> 4.7.0'
