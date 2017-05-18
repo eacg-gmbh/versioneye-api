@@ -14,4 +14,3 @@ module EntitiesV2
     expose :sha_method
   end
 end
-
