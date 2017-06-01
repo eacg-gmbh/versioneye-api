@@ -1,3 +1,3 @@
 port 9090
 threads 1,8
-workers 3
+workers 4
