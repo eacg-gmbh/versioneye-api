@@ -9,6 +9,7 @@ module EntitiesV2
     expose :group_id
     expose :artifact_id
     expose :language_esc, :as => 'language'
+    expose :scope
 
     expose :version_current
     expose :version_requested
