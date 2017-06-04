@@ -129,7 +129,7 @@ module SessionHelpers
       language = params[:lang].to_s
       prod_key = params[:prod_key].to_s
       count = ApiCmp.where({ :api_key => api_key, :language => language, :prod_key => prod_key }).count
-      return true if count.to_i > 0
+      return true if count.to_i > 0 # Return true if the component is already in the bucket.
 
       cmp_count = ApiCmp.where( :api_key => api.api_key ).count
       if cmp_count.to_i >= api.comp_limit.to_i
