@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 14b3b9292c8cc7ddce64a7a75baa86a39bfa9b56
-  tag: v12.5.13
+  revision: e9b0d6754e1843cf3a833e7b1bd72c9a86d572da
+  tag: v12.6.5
   specs:
-    versioneye-core (12.5.13)
+    versioneye-core (12.6.5)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.9.1)
       bunny (~> 2.7.0)
@@ -89,7 +89,7 @@ GEM
     builder (3.2.3)
     bunny (2.7.0)
       amq-protocol (>= 2.2.0)
-    capybara (2.14.3)
+    capybara (2.14.4)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -99,7 +99,7 @@ GEM
     capybara-firebug (2.1.0)
       capybara (>= 1.0, < 3.0)
       selenium-webdriver
-    childprocess (0.7.0)
+    childprocess (0.7.1)
       ffi (~> 1.0, >= 1.0.11)
     cocoapods-core (0.39.0)
       activesupport (>= 4.0.2)
@@ -128,7 +128,7 @@ GEM
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     equalizer (0.0.11)
-    erubi (1.6.0)
+    erubi (1.6.1)
     etcd (0.3.0)
       mixlib-log
     execjs (2.7.0)
