@@ -6,9 +6,8 @@ require_relative 'services_api_v2'
 require_relative 'products_api_v2'
 require_relative 'projects_api_v2'
 require_relative 'users_api_v2'
-#require_relative 'github_api_v2'
-#require_relative 'facebook_api_v2'
-#require_relative 'security_api_v2'
+require_relative 'github_api_v2'
+require_relative 'security_api_v2'
 
 module V2
   class ApiV2 < Grape::API
@@ -26,7 +25,6 @@ module V2
     mount OrganisationsApiV2
     mount UsersApiV2
     mount GithubApiV2
-    mount FacebookApiV2
     mount SecurityApiV2
 
     env        = Settings.instance.environment
@@ -50,7 +48,7 @@ module V2
         :title => "Available API endpoints",
       }
     )
- 
+
     before do
       header "Access-Control-Allow-Origin", "*"
       header "Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, PATCH, DELETE"
