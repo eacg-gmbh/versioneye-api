@@ -3,7 +3,7 @@ if Rails.env.development?
     Rails.application.reload_routes!
   end
 
-  ActionDispatch::Callbacks.to_prepare do
-    lib_reloader.execute_if_updated
-  end
+  # ActionDispatch::Callbacks.to_prepare do
+  #   lib_reloader.execute_if_updated
+  # end
 end
