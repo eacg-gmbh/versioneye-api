@@ -1,6 +1,6 @@
 class ProjectListitemDto
 
-  attr_accessor :id, :name, :project_type, :public, :private_scm, :period, :source
+  attr_accessor :id, :name, :project_type, :public, :private_scm, :source
   attr_accessor :organisation, :team
   attr_accessor :dep_number,     :out_number,     :licenses_red,     :licenses_unknown
   attr_accessor :dep_number_sum, :out_number_sum, :licenses_red_sum, :licenses_unknown_sum
@@ -13,7 +13,6 @@ class ProjectListitemDto
     self.project_type    = project.project_type
     self.public          = project.public
     self.private_scm     = project.private_project
-    self.period          = project.period
     self.source          = project.source
 
     self.dep_number       = project.dep_number

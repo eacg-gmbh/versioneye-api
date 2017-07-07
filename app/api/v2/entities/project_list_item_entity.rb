@@ -17,7 +17,6 @@ module EntitiesV2
     expose :team, safe: true, documentation: {type: String, desc: "A name of team"}
     expose :public
     expose :private_project, :as => :private_scm
-    expose :period
     expose :source
     expose :dep_number
     expose :out_number

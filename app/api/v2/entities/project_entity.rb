@@ -14,7 +14,6 @@ module EntitiesV2
     expose :organisation, using: ProjectListItemOrga
     expose :public
     expose :private_project, :as => :private_scm
-    expose :period
     expose :source
     expose :dep_number
     expose :out_number
