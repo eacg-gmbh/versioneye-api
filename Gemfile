@@ -1,10 +1,10 @@
 source 'http://rubygems.org'
 
 gem 'tzinfo-data'
-gem 'rails'              , '5.1.1'
+gem 'rails'              , '5.1.2'
 gem 'execjs'             , '~> 2.7.0'
 gem 'therubyracer'       , '~> 0.12.0'
-gem 'puma'               , '~> 3.8.1'
+gem 'puma'               , '~> 3.9.1'
 gem 'grape'              , '~> 0.16'
 gem 'grape-entity'       , '~> 0.6'
 gem 'grape-swagger-entity'
@@ -36,7 +36,7 @@ group :test do
   gem 'turn'              , :require => false
   gem 'rspec'             , '~> 3.5'
   gem 'rspec-rails'       , '~> 3.5'
-  gem 'rspec_junit_formatter', '0.2.3'
+  gem 'rspec_junit_formatter', '0.3.0'
   gem 'rspec-mocks'       , '~> 3.5'
   gem 'capybara'          , '~> 2.12'
   gem 'capybara-firebug'  , '~> 2.1.0'
