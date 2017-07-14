@@ -6,7 +6,7 @@ module GithubHelpers
     number = params[:number]
     project_id = params[:project_id]
 
-    pull_request = params[:pull_request].deep_symbolize_keys!
+    pull_request = params[:pull_request]
     commits_url  = pull_request[:commits_url]
     branch       = pull_request[:base][:ref]
     fullname     = pull_request[:base][:repo][:full_name]
@@ -25,7 +25,6 @@ module GithubHelpers
     commits = params[:commits] # Returns an Array of Hash
     commits = [] if commits.nil?
     commits.each do |commit|
-      commit.deep_symbolize_keys!
       Rails.logger.info "GitHub hook for commit #{commit[:url]} with commit message -#{commit[:message]}-"
       modified_files = commit[:modified] # Array of modifield files
       modified_files.each do |file_path|
