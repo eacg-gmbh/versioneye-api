@@ -8,8 +8,12 @@ describe V2::ProjectsApiV2, :type => :request do
   let( :test_user   ) { UserFactory.create_new(90) }
   let( :user_api    ) { ApiFactory.create_new test_user }
   let( :file_path   ) { "#{Rails.root}/spec/files/Gemfile.lock" }
+  let( :pom_path    ) { "#{Rails.root}/spec/files/pom.xml" }
+  let( :pom2_path    ) { "#{Rails.root}/spec/files/pom/pom.xml" }
   let( :empty_file_path) { "#{Rails.root}/spec/files/Gemfile" }
   let( :test_file   ) { Rack::Test::UploadedFile.new(file_path, "text/xml") }
+  let( :pom_file    ) { Rack::Test::UploadedFile.new(pom_path, "text/xml") }
+  let( :pom2_file   ) { Rack::Test::UploadedFile.new(pom2_path, "text/xml") }
   let( :empty_file  ) { Rack::Test::UploadedFile.new(empty_file_path, "text/xml") }
 
   let(:project_name) {"Gemfile.lock"}
@@ -407,6 +411,154 @@ describe V2::ProjectsApiV2, :type => :request do
       expect( response.status ).to eq(401)
       expect( Project.count ).to eq(0)
     end
+
+    it "does not allow to create samge ga the same time" do
+      env = Settings.instance.environment
+      GlobalSetting.set( env, 'projects_unique_ga', "true" )
+      Settings.instance.reload_from_db GlobalSetting.new
+
+      orga = Organisation.new :name => 'orga'
+      orga.plan = Plan.micro
+      expect( orga.save ).to be_truthy
+
+      team = Team.new :name => Team::A_OWNERS, :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      team = Team.new :name => "backend_devs", :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      file = pom_file
+      response = post project_uri,  {
+        upload:    file,
+        name:      'ploinFaces',
+        orga_name: 'orga',
+        team_name: 'backend_devs',
+        visibility: 'public',
+        api_key:   orga.api.api_key,
+        send_file: true,
+        multipart: true
+      }, env: {"HTTPS" => "on"}
+      expect( response.status ).to eq(201)
+      expect( Project.count ).to eq(1)
+      expect( Project.first.name ).to eq('ploinFaces')
+
+      response = post project_uri,  {
+        upload:    file,
+        name:      'ploinFaces2',
+        orga_name: 'orga',
+        team_name: 'backend_devs',
+        visibility: 'public',
+        api_key:   orga.api.api_key,
+        send_file: true,
+        multipart: true
+      }, env: {"HTTPS" => "on"}
+      expect( response.status ).to eq(500)
+
+      file.close
+    end
+
+    it "Unique GAV does allow to create samge GA with different version" do
+      env = Settings.instance.environment
+      GlobalSetting.set( env, 'projects_unique_ga', "false" )
+      GlobalSetting.set( env, 'projects_unique_gav', "true" )
+      Settings.instance.reload_from_db GlobalSetting.new
+
+      orga = Organisation.new :name => 'orga'
+      orga.plan = Plan.micro
+      expect( orga.save ).to be_truthy
+
+      team = Team.new :name => Team::A_OWNERS, :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      team = Team.new :name => "backend_devs", :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      file = pom_file
+      response = post project_uri,  {
+        upload:    file,
+        name:      'ploinFaces',
+        orga_name: 'orga',
+        team_name: 'backend_devs',
+        visibility: 'public',
+        api_key:   orga.api.api_key,
+        send_file: true,
+        multipart: true
+      }, env: {"HTTPS" => "on"}
+      expect( response.status ).to eq(201)
+      expect( Project.count ).to eq(1)
+      expect( Project.first.name ).to eq('ploinFaces')
+      expect( Project.first.version ).to eq('2.2.1')
+      file.close
+
+      response = post project_uri,  {
+        upload:    pom2_file,
+        name:      'ploinFaces2',
+        orga_name: 'orga',
+        team_name: 'backend_devs',
+        visibility: 'public',
+        api_key:   orga.api.api_key,
+        send_file: true,
+        multipart: true
+      }, env: {"HTTPS" => "on"}
+      expect( response.status ).to eq(201)
+      expect( Project.count ).to eq(2)
+      expect( Project.last.name ).to eq('ploinFaces2')
+      expect( Project.last.version ).to eq('2.2.2')
+    end
+
+    it "Unique GA does not allow to create samge GA with same version" do
+      env = Settings.instance.environment
+      GlobalSetting.set( env, 'projects_unique_ga', "true" )
+      GlobalSetting.set( env, 'projects_unique_gav', "false" )
+      Settings.instance.reload_from_db GlobalSetting.new
+
+      orga = Organisation.new :name => 'orga'
+      orga.plan = Plan.micro
+      expect( orga.save ).to be_truthy
+
+      team = Team.new :name => Team::A_OWNERS, :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      team = Team.new :name => "backend_devs", :organisation_id => orga.ids
+      expect( team.save ).to be_truthy
+      expect( team.add_member( test_user )).to be_truthy
+
+      file = pom_file
+      response = post project_uri,  {
+        upload:    file,
+        name:      'ploinFaces',
+        orga_name: 'orga',
+        team_name: 'backend_devs',
+        visibility: 'public',
+        api_key:   orga.api.api_key,
+        send_file: true,
+        multipart: true
+      }, env: {"HTTPS" => "on"}
+      expect( response.status ).to eq(201)
+      expect( Project.count ).to eq(1)
+      expect( Project.first.name ).to eq('ploinFaces')
+      expect( Project.first.version ).to eq('2.2.1')
+      file.close
+
+      response = post project_uri,  {
+        upload:    pom2_file,
+        name:      'ploinFaces2',
+        orga_name: 'orga',
+        team_name: 'backend_devs',
+        visibility: 'public',
+        api_key:   orga.api.api_key,
+        send_file: true,
+        multipart: true
+      }, env: {"HTTPS" => "on"}
+      expect( response.status ).to eq(500)
+      expect( Project.count ).to eq(1)
+    end
+
   end
 
 
