@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 20fddc19c27d963a8b563fc96cbd29a9d2681265
-  tag: v12.10.5
+  revision: 2fe9d11572ea91e0c77265990818fddb83db3d14
+  tag: v12.10.7
   specs:
-    versioneye-core (12.10.5)
+    versioneye-core (12.10.7)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.10.7)
       bunny (~> 2.7.0)
@@ -412,4 +412,4 @@ DEPENDENCIES
   will_paginate_mongoid (= 2.0.1)
 
 BUNDLED WITH
-   1.15.1
+   1.15.3
