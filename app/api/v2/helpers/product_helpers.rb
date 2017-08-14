@@ -84,7 +84,15 @@ module ProductHelpers
     lang = parse_language(lang)
     prod_key = decode_prod_key(prod_key)
     current_product = Product.fetch_product(lang, prod_key)
-    current_product = Product.fetch_bower( prod_key ) if current_product.nil?
+
+    if current_product.nil? && lang.to_s.eql?(Product::A_LANGUAGE_JAVA)
+      current_product = Product.fetch_product( Product::A_LANGUAGE_CLOJURE, prod_key)
+    end
+
+    if current_product.nil?
+      current_product = Product.fetch_bower( prod_key )
+    end
+
     if current_product.nil?
       error! "Zero results for prod_key `#{params[:prod_key]}`", 404
     else
