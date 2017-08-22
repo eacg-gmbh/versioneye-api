@@ -11,6 +11,8 @@ module EntitiesV2
     expose :ids, :as => :id
     expose :name
     expose :project_type
+    expose :group_id
+    expose :artifact_id
     expose :organisation, using: ProjectListItemOrga
     expose :public
     expose :private_project, :as => :private_scm
