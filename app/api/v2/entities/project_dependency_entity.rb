@@ -4,6 +4,7 @@ require_relative 'security_vulnerability_entity.rb'
 
 module EntitiesV2
   class ProjectDependencyEntity < Grape::Entity
+    expose :project_id
     expose :name
     expose :prod_key
     expose :group_id

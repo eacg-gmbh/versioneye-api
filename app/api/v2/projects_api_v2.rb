@@ -270,6 +270,41 @@ your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_66
       end
 
 
+      desc "get a list of ALL dependencies", {
+        detail: %q[
+This Endpoint returns a list of ALL dependencies of the project. This list includes
+dependencies of child projects as well.
+
+To use this resource you need either an active session or you have to append
+your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+            ]
+      }
+      params do
+        requires :project_key, :type => String, :desc => "Project ID or project_key"
+      end
+      get '/:project_key/dependencies' do
+        rate_limit
+        track_apikey
+
+        project_key = params[:project_key]
+        project     = Project.find project_key.to_s
+        if project.nil?
+          error! "Project `#{params[:project_key]}` does not exists", 400
+        end
+
+        if @current_user && project.is_collaborator?( @current_user ) == false
+          error! "You are not a collaborator of the requested project", 403
+        end
+
+        if @orga && !project.organisation_id.to_s.eql?(@orga.ids)
+          error! "You are not a collaborator of the requested project", 403
+        end
+
+        deps = project.all_dependencies
+        present deps, with: EntitiesV2::ProjectDependencyEntity, :type => :full
+      end
+
+
       desc "merge a project into another one", {
         detail: %q[
 This endpoint merges a project (child_id) into another project (group_id/artifact_id).
