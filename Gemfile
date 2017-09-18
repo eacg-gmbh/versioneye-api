@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'tzinfo-data'
-gem 'rails'              , '5.1.3'
+gem 'rails'              , '5.1.4'
 gem 'execjs'             , '~> 2.7.0'
 gem 'therubyracer'       , '~> 0.12.0'
 gem 'puma'               , '~> 3.10.0'
