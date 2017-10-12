@@ -185,6 +185,62 @@ your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_66
       end
 
 
+
+      desc "update project properites", {
+        detail: %q[
+To use this resource you need either an active session or you have to append
+your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+            ]
+      }
+      params do
+        requires :project_key, :type => String, :desc => "Project ID"
+      end
+      post '/:project_key/update' do
+        authorized_for_write?
+        rate_limit
+        track_apikey
+
+        project_key = params[:project_key]
+        project     = Project.find project_key.to_s
+        if project.nil?
+          error! "Project `#{params[:project_key]}` does not exists", 400
+        end
+
+        if @current_user && project.is_collaborator?( @current_user ) == false
+          error! "You are not a collaborator of the requested project", 403
+        end
+
+        if @orga && !project.organisation_id.to_s.eql?(@orga.ids)
+          error! "You are not a collaborator of the requested project", 403
+        end
+
+        begin
+          if params[:public]
+            project.public = params[:public]
+          end
+          if params[:name]
+            project.name = params[:name]
+          end
+          if params[:description]
+            project.description = params[:description]
+          end
+          if params[:license]
+            project.license = params[:license]
+          end
+          if params[:version]
+            project.version = params[:version]
+          end
+          project.save
+        rescue => e
+          error! e.message, 500
+        end
+
+        project = Project.find project.ids # Reload from DB!
+        present project, with: EntitiesV2::ProjectEntity, :type => :full
+      end
+
+
+
       desc "delete given project", {
         detail: %q[
 To use this resource you need either an active session or you have to append

@@ -738,6 +738,47 @@ describe V2::ProjectsApiV2, :type => :request do
   end
 
 
+  describe "Update project properites" do
+    include Rack::Test::Methods
+
+    it "returns 200 after successfully project update" do
+      project = ProjectFactory.create_new test_user
+      expect( Project.count ).to eq(1)
+      project = Project.first
+      project.public = true
+      project.name = "test"
+      project.description = "desc"
+      project.license = "license"
+      project.version = "version"
+      expect( project.save ).to be_truthy
+
+      update_uri = "#{project_uri}/#{project.id.to_s}/update?api_key=#{user_api.api_key}"
+      file = test_file
+      response = post update_uri,
+                       {
+                        public: false,
+                        name: "toto",
+                        description: "beschreibung",
+                        license: "Lizenz",
+                        version: "Versionio",
+                        send_file: false,
+                        multipart: false
+                      },
+                      env: {"HTTPS" => "on"}
+
+      file.close
+      p response.body
+      expect( response.status ).to eq(201)
+      project = Project.find project.ids # reload from db
+      expect( project.public ).to be_falsey
+      expect( project.name ).to eq("toto")
+      expect( project.description ).to eq("beschreibung")
+      expect( project.license ).to eq("Lizenz")
+      expect( project.version ).to eq("Versionio")
+    end
+  end
+
+
   describe "Merge existing projects as authorized user" do
     include Rack::Test::Methods
 
