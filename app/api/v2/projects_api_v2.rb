@@ -190,12 +190,25 @@ your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_66
         detail: %q[
 To use this resource you need either an active session or you have to append
 your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+With this Endpoint an existing project can be updated. This are the fields which 
+can be updated: 
+
+```
+{
+  public: false,
+  name: "toto",
+  description: "beschreibung",
+  license: "Lizenz",
+  version: "Versionio"
+}
+```
             ]
       }
       params do
         requires :project_key, :type => String, :desc => "Project ID"
       end
-      post '/:project_key/update' do
+      put '/:project_key' do
         authorized_for_write?
         rate_limit
         track_apikey

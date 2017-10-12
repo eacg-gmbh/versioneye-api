@@ -752,9 +752,9 @@ describe V2::ProjectsApiV2, :type => :request do
       project.version = "version"
       expect( project.save ).to be_truthy
 
-      update_uri = "#{project_uri}/#{project.id.to_s}/update?api_key=#{user_api.api_key}"
+      update_uri = "#{project_uri}/#{project.id.to_s}?api_key=#{user_api.api_key}"
       file = test_file
-      response = post update_uri,
+      response = put update_uri,
                        {
                         public: false,
                         name: "toto",
@@ -768,7 +768,7 @@ describe V2::ProjectsApiV2, :type => :request do
 
       file.close
       p response.body
-      expect( response.status ).to eq(201)
+      expect( response.status ).to eq(200)
       project = Project.find project.ids # reload from db
       expect( project.public ).to be_falsey
       expect( project.name ).to eq("toto")
