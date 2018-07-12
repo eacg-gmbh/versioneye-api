@@ -1,4 +1,4 @@
-FROM        versioneye/ruby-base:2.3.3-15
+FROM        959013096341.dkr.ecr.eu-central-1.amazonaws.com/versioneye-core:1.0.2
 MAINTAINER  Robert Reiz <reiz@versioneye.com>
 
 RUN rm -Rf /app; \
