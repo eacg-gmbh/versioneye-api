@@ -18,4 +18,4 @@ RUN cd /app/ && bundle install;
 
 EXPOSE 9090
 
-CMD /app/start.sh
+ENTRYPOINT ["/app/start.sh"]
